@@ -86,7 +86,7 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>356</width>
+           <width>353</width>
            <height>45</height>
           </rect>
          </property>
@@ -180,6 +180,9 @@
       <property name="spacing">
        <number>4</number>
       </property>
+      <property name="rightMargin">
+       <number>4</number>
+      </property>
       <item>
        <spacer name="spacer_setup_top">
         <property name="orientation">
@@ -204,8 +207,17 @@
           <height>36</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Set up controller configs, necessary functions, etc.</string>
+        </property>
         <property name="text">
          <string>Setup</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
         </property>
        </widget>
       </item>
@@ -255,9 +267,15 @@
             <height>60</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Generate an autonomous program.</string>
+          </property>
           <property name="text">
            <string>Generate
 Program</string>
+          </property>
+          <property name="shortcut">
+           <string>Ctrl+S</string>
           </property>
           <property name="default">
            <bool>true</bool>
@@ -272,9 +290,15 @@ Program</string>
             <height>60</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Export a .png of the current diagram.</string>
+          </property>
           <property name="text">
            <string>Export
 Diagram</string>
+          </property>
+          <property name="shortcut">
+           <string>Ctrl+E</string>
           </property>
          </widget>
         </item>
@@ -321,8 +345,20 @@ Diagram</string>
           <height>36</height>
          </size>
         </property>
+        <property name="toolTip">
+         <string>Clear entire diagram. Cannot undo.</string>
+        </property>
         <property name="text">
          <string>Clear Diagram</string>
+        </property>
+        <property name="iconSize">
+         <size>
+          <width>24</width>
+          <height>24</height>
+         </size>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+W</string>
         </property>
        </widget>
       </item>
@@ -372,8 +408,20 @@ Diagram</string>
             <height>36</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Tutorials, tips, and tricks.</string>
+          </property>
           <property name="text">
            <string>Help</string>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
+          </property>
+          <property name="shortcut">
+           <string>F1</string>
           </property>
          </widget>
         </item>
@@ -385,8 +433,17 @@ Diagram</string>
             <height>36</height>
            </size>
           </property>
+          <property name="toolTip">
+           <string>Credits and info.</string>
+          </property>
           <property name="text">
            <string>About</string>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>24</width>
+            <height>24</height>
+           </size>
           </property>
          </widget>
         </item>
