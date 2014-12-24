@@ -7,5 +7,6 @@
         <file>icons/script.png</file>
         <file>icons/trash.png</file>
         <file>icons/wrench.png</file>
+        <file>icons/pencil.png</file>
     </qresource>
 </RCC>

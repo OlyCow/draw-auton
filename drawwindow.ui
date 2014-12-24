@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
+    <width>600</width>
     <height>360</height>
    </rect>
   </property>
@@ -18,7 +18,7 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>540</width>
+    <width>600</width>
     <height>360</height>
    </size>
   </property>
@@ -28,7 +28,11 @@
    </font>
   </property>
   <property name="windowTitle">
-   <string>Draw Auton</string>
+   <string>Draw Auton - 'Oly Cow</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="icons.qrc">
+    <normaloff>:/icons/pencil.png</normaloff>:/icons/pencil.png</iconset>
   </property>
   <widget class="QWidget" name="layout_main">
    <layout class="QHBoxLayout" name="horizontalLayout_4">
@@ -49,9 +53,6 @@
     </property>
     <item>
      <layout class="QVBoxLayout" name="layout_draw">
-      <property name="spacing">
-       <number>0</number>
-      </property>
       <item>
        <widget class="QScrollArea" name="scrollArea_actions">
         <property name="sizePolicy">
@@ -91,25 +92,19 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>333</width>
-           <height>58</height>
+           <width>363</width>
+           <height>54</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
           <property name="spacing">
            <number>8</number>
           </property>
-          <property name="leftMargin">
-           <number>0</number>
-          </property>
           <property name="topMargin">
            <number>4</number>
           </property>
-          <property name="rightMargin">
-           <number>0</number>
-          </property>
           <property name="bottomMargin">
-           <number>4</number>
+           <number>0</number>
           </property>
           <item>
            <widget class="QToolButton" name="toolButton_add">
@@ -226,6 +221,9 @@
          <iconset resource="icons.qrc">
           <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
         </property>
+        <property name="shortcut">
+         <string>F10</string>
+        </property>
        </widget>
       </item>
       <item>
@@ -270,7 +268,7 @@
          <widget class="QPushButton" name="pushButton_generateProgram">
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>100</width>
             <height>60</height>
            </size>
           </property>
@@ -297,7 +295,7 @@ Program</string>
          <widget class="QPushButton" name="pushButton_exportDiagram">
           <property name="minimumSize">
            <size>
-            <width>0</width>
+            <width>100</width>
             <height>60</height>
            </size>
           </property>
