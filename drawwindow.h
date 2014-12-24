@@ -9,14 +9,14 @@ class DrawWindow;
 
 class DrawWindow : public QMainWindow
 {
-    Q_OBJECT
+	Q_OBJECT
 
 public:
-    explicit DrawWindow(QWidget *parent = 0);
-    ~DrawWindow();
+	explicit DrawWindow(QWidget *parent = 0);
+	~DrawWindow();
 
 private:
-    Ui::DrawWindow *ui;
+	Ui::DrawWindow *ui;
 };
 
 #endif // DRAWWINDOW_H

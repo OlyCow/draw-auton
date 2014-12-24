@@ -2,13 +2,13 @@
 #include "ui_drawwindow.h"
 
 DrawWindow::DrawWindow(QWidget *parent) :
-    QMainWindow(parent),
-    ui(new Ui::DrawWindow)
+	QMainWindow(parent),
+	ui(new Ui::DrawWindow)
 {
-    ui->setupUi(this);
+	ui->setupUi(this);
 }
 
 DrawWindow::~DrawWindow()
 {
-    delete ui;
+	delete ui;
 }

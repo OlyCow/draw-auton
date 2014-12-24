@@ -18,3 +18,7 @@ SOURCES += main.cpp\
 HEADERS  += drawwindow.h
 
 FORMS    += drawwindow.ui
+
+RESOURCES += \
+    icons.qrc \
+    fonts.qrc
