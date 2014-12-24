@@ -4,6 +4,7 @@
 DrawWindow::DrawWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::DrawWindow),
+    setupWindow(new setupwindow),
 	list_history(new ActionList)
 {
 	ui->setupUi(this);
@@ -12,5 +13,11 @@ DrawWindow::DrawWindow(QWidget *parent) :
 DrawWindow::~DrawWindow()
 {
 	delete ui;
+    delete setupWindow;
 	delete list_history;
+}
+
+void DrawWindow::on_pushButton_setup_clicked()
+{
+    setupWindow->show();
 }
