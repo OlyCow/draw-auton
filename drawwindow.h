@@ -2,6 +2,8 @@
 #define DRAWWINDOW_H
 
 #include <QMainWindow>
+#include "action.h"
+#include "actionlist.h"
 
 namespace Ui {
 class DrawWindow;
@@ -17,6 +19,7 @@ public:
 
 private:
 	Ui::DrawWindow *ui;
+	ActionList *list_history;
 };
 
 #endif // DRAWWINDOW_H

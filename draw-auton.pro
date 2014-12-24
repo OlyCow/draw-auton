@@ -13,11 +13,24 @@ TEMPLATE = app
 
 
 SOURCES += main.cpp\
-        drawwindow.cpp
+        drawwindow.cpp \
+    actionlist.cpp \
+    action.cpp \
+    setupwindow.cpp \
+    aboutwindow.cpp \
+    helpwindow.cpp
 
-HEADERS  += drawwindow.h
+HEADERS  += drawwindow.h \
+    actionlist.h \
+    action.h \
+    setupwindow.h \
+    aboutwindow.h \
+    helpwindow.h
 
-FORMS    += drawwindow.ui
+FORMS    += drawwindow.ui \
+    setupwindow.ui \
+    aboutwindow.ui \
+    helpwindow.ui
 
 RESOURCES += \
     icons.qrc \
