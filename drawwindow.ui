@@ -10,45 +10,133 @@
     <height>360</height>
    </rect>
   </property>
-  <property name="windowTitle">
-   <string>DrawWindow</string>
+  <property name="sizePolicy">
+   <sizepolicy hsizetype="MinimumExpanding" vsizetype="MinimumExpanding">
+    <horstretch>0</horstretch>
+    <verstretch>0</verstretch>
+   </sizepolicy>
   </property>
-  <widget class="QWidget" name="centralWidget">
+  <property name="minimumSize">
+   <size>
+    <width>540</width>
+    <height>360</height>
+   </size>
+  </property>
+  <property name="font">
+   <font>
+    <pointsize>11</pointsize>
+   </font>
+  </property>
+  <property name="windowTitle">
+   <string>Draw Auton</string>
+  </property>
+  <widget class="QWidget" name="layout_main">
    <layout class="QHBoxLayout" name="horizontalLayout_4">
+    <property name="spacing">
+     <number>10</number>
+    </property>
+    <property name="leftMargin">
+     <number>5</number>
+    </property>
+    <property name="topMargin">
+     <number>5</number>
+    </property>
+    <property name="rightMargin">
+     <number>5</number>
+    </property>
+    <property name="bottomMargin">
+     <number>5</number>
+    </property>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout">
+     <layout class="QVBoxLayout" name="layout_draw">
+      <property name="spacing">
+       <number>0</number>
+      </property>
       <item>
-       <widget class="QScrollArea" name="scrollArea">
+       <widget class="QScrollArea" name="scrollArea_actions">
+        <property name="sizePolicy">
+         <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+          <horstretch>0</horstretch>
+          <verstretch>0</verstretch>
+         </sizepolicy>
+        </property>
+        <property name="maximumSize">
+         <size>
+          <width>16777215</width>
+          <height>45</height>
+         </size>
+        </property>
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="frameShape">
+         <enum>QFrame::NoFrame</enum>
+        </property>
+        <property name="lineWidth">
+         <number>0</number>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
         <property name="widgetResizable">
          <bool>true</bool>
         </property>
-        <widget class="QWidget" name="scrollAreaWidgetContents">
+        <widget class="QWidget" name="layout_scrollArea">
          <property name="geometry">
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>352</width>
-           <height>140</height>
+           <width>356</width>
+           <height>45</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
+          <property name="spacing">
+           <number>8</number>
+          </property>
+          <property name="leftMargin">
+           <number>0</number>
+          </property>
+          <property name="topMargin">
+           <number>4</number>
+          </property>
+          <property name="rightMargin">
+           <number>0</number>
+          </property>
+          <property name="bottomMargin">
+           <number>4</number>
+          </property>
           <item>
-           <spacer name="horizontalSpacer_2">
-            <property name="orientation">
-             <enum>Qt::Horizontal</enum>
+           <widget class="QToolButton" name="toolButton_add">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
             </property>
-            <property name="sizeHint" stdset="0">
+            <property name="minimumSize">
              <size>
-              <width>40</width>
-              <height>20</height>
+              <width>50</width>
+              <height>0</height>
              </size>
             </property>
-           </spacer>
-          </item>
-          <item>
-           <widget class="QToolButton" name="toolButton">
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="toolTip">
+             <string>Opens Setup dialog to add a new action.</string>
+            </property>
             <property name="text">
              <string>Add</string>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>48</width>
+              <height>48</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Shift+A</string>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextUnderIcon</enum>
@@ -56,7 +144,7 @@
            </widget>
           </item>
           <item>
-           <spacer name="horizontalSpacer">
+           <spacer name="spacer_actions">
             <property name="orientation">
              <enum>Qt::Horizontal</enum>
             </property>
@@ -73,31 +161,48 @@
        </widget>
       </item>
       <item>
-       <widget class="QGraphicsView" name="graphicsView"/>
+       <widget class="QGraphicsView" name="graphicsView">
+        <property name="focusPolicy">
+         <enum>Qt::NoFocus</enum>
+        </property>
+        <property name="verticalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="horizontalScrollBarPolicy">
+         <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+       </widget>
       </item>
      </layout>
     </item>
     <item>
-     <layout class="QVBoxLayout" name="verticalLayout_2">
+     <layout class="QVBoxLayout" name="layout_commands">
+      <property name="spacing">
+       <number>4</number>
+      </property>
       <item>
-       <spacer name="verticalSpacer_7">
+       <spacer name="spacer_setup_top">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>40</height>
+          <height>15</height>
          </size>
         </property>
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_5">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
+       <widget class="QPushButton" name="pushButton_setup">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>36</height>
+         </size>
         </property>
         <property name="text">
          <string>Setup</string>
@@ -105,7 +210,7 @@
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer">
+       <spacer name="spacer_setup_bottom">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -118,14 +223,14 @@
        </spacer>
       </item>
       <item>
-       <widget class="Line" name="line_3">
+       <widget class="Line" name="line_A">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer_2">
+       <spacer name="spacer_output_top">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -138,26 +243,34 @@
        </spacer>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_3">
+       <layout class="QHBoxLayout" name="layout_output">
+        <property name="spacing">
+         <number>8</number>
+        </property>
         <item>
-         <widget class="QPushButton" name="pushButton_3">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
+         <widget class="QPushButton" name="pushButton_generateProgram">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>60</height>
+           </size>
           </property>
           <property name="text">
            <string>Generate
 Program</string>
           </property>
+          <property name="default">
+           <bool>true</bool>
+          </property>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_4">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
+         <widget class="QPushButton" name="pushButton_exportDiagram">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>60</height>
+           </size>
           </property>
           <property name="text">
            <string>Export
@@ -168,7 +281,7 @@ Diagram</string>
        </layout>
       </item>
       <item>
-       <spacer name="verticalSpacer_3">
+       <spacer name="spacer_output_bottom">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -181,14 +294,14 @@ Diagram</string>
        </spacer>
       </item>
       <item>
-       <widget class="Line" name="line_2">
+       <widget class="Line" name="line_B">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer_4">
+       <spacer name="spacer_clear_top">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -201,11 +314,12 @@ Diagram</string>
        </spacer>
       </item>
       <item>
-       <widget class="QPushButton" name="pushButton_7">
-        <property name="font">
-         <font>
-          <pointsize>12</pointsize>
-         </font>
+       <widget class="QPushButton" name="pushButton_clear">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>36</height>
+         </size>
         </property>
         <property name="text">
          <string>Clear Diagram</string>
@@ -213,7 +327,7 @@ Diagram</string>
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer_6">
+       <spacer name="spacer_clear_bottom">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -226,14 +340,14 @@ Diagram</string>
        </spacer>
       </item>
       <item>
-       <widget class="Line" name="line">
+       <widget class="Line" name="line_C">
         <property name="orientation">
          <enum>Qt::Horizontal</enum>
         </property>
        </widget>
       </item>
       <item>
-       <spacer name="verticalSpacer_5">
+       <spacer name="spacer_info_top">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
         </property>
@@ -246,13 +360,17 @@ Diagram</string>
        </spacer>
       </item>
       <item>
-       <layout class="QHBoxLayout" name="horizontalLayout_2">
+       <layout class="QHBoxLayout" name="layout_info">
+        <property name="spacing">
+         <number>8</number>
+        </property>
         <item>
-         <widget class="QPushButton" name="pushButton">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
+         <widget class="QPushButton" name="pushButton_help">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>36</height>
+           </size>
           </property>
           <property name="text">
            <string>Help</string>
@@ -260,11 +378,12 @@ Diagram</string>
          </widget>
         </item>
         <item>
-         <widget class="QPushButton" name="pushButton_2">
-          <property name="font">
-           <font>
-            <pointsize>12</pointsize>
-           </font>
+         <widget class="QPushButton" name="pushButton_about">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>36</height>
+           </size>
           </property>
           <property name="text">
            <string>About</string>
@@ -274,14 +393,17 @@ Diagram</string>
        </layout>
       </item>
       <item>
-       <spacer name="verticalSpacer_8">
+       <spacer name="spacer_info_bottom">
         <property name="orientation">
          <enum>Qt::Vertical</enum>
+        </property>
+        <property name="sizeType">
+         <enum>QSizePolicy::Fixed</enum>
         </property>
         <property name="sizeHint" stdset="0">
          <size>
           <width>20</width>
-          <height>40</height>
+          <height>15</height>
          </size>
         </property>
        </spacer>
@@ -293,14 +415,13 @@ Diagram</string>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <tabstops>
-  <tabstop>pushButton_5</tabstop>
-  <tabstop>pushButton_3</tabstop>
-  <tabstop>pushButton_4</tabstop>
-  <tabstop>pushButton_7</tabstop>
-  <tabstop>pushButton</tabstop>
-  <tabstop>pushButton_2</tabstop>
-  <tabstop>scrollArea</tabstop>
-  <tabstop>graphicsView</tabstop>
+  <tabstop>pushButton_setup</tabstop>
+  <tabstop>toolButton_add</tabstop>
+  <tabstop>pushButton_generateProgram</tabstop>
+  <tabstop>pushButton_exportDiagram</tabstop>
+  <tabstop>pushButton_clear</tabstop>
+  <tabstop>pushButton_help</tabstop>
+  <tabstop>pushButton_about</tabstop>
  </tabstops>
  <resources/>
  <connections/>
