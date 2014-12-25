@@ -21,6 +21,10 @@ public:
 	explicit SetupWindow(QWidget *parent = 0);
 	~SetupWindow();
 
+	static QString format_code(QString input);
+	static QString read_file(QString path);
+	static void write_file(QString path, QString input);
+
 private slots:
 
 	void on_pushButton_save_clicked();
@@ -36,10 +40,6 @@ private:
 	QString controller_config;
 	QString additional_includes;
 	bool do_update;
-
-	QString format_code(QString input);
-	QString read_file(QString path);
-	void write_file(QString path, QString input);
 };
 
 #endif // SETUPWINDOW_H

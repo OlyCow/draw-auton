@@ -25,6 +25,8 @@ public:
 private slots:
     void on_pushButton_setup_clicked();
 
+	void on_pushButton_generateProgram_clicked();
+
 private:
 	Ui::DrawWindow *ui;
     SetupWindow *setupWindow;
