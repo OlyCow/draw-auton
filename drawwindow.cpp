@@ -30,6 +30,9 @@ DrawWindow::DrawWindow(QWidget *parent) :
 	canned_definitions += "\tTurn(-degrees);\n";
 	canned_definitions += "}\n";
 
+	QRectF bounds = QRectF(-10, -10, 164, 164);
+	field.addRect(bounds, QPen(Qt::NoBrush, 0, Qt::NoPen), QBrush(Qt::white));
+
 	QRectF tiles = QRectF(0, 0, 144, 144);
 	field.addRect(tiles, QPen(Qt::NoBrush, 0, Qt::NoPen), QBrush(Qt::lightGray));
 
@@ -55,7 +58,20 @@ DrawWindow::DrawWindow(QWidget *parent) :
 	field.addRect(zone_park_in_B, QPen(Qt::NoBrush, 0, Qt::NoPen), QBrush(Qt::lightGray));
 	field.addRect(ramp_B, QPen(Qt::NoBrush, 0, Qt::NoPen), QBrush(Qt::blue));
 
+	field.setSceneRect(-5, -5, 149, 149);
 	ui->graphicsView->setScene(&field);
+}
+
+void DrawWindow::resizeEvent(QResizeEvent* event)
+{
+	ui->graphicsView->fitInView(field.itemsBoundingRect(), Qt::KeepAspectRatio);
+	QMainWindow::resizeEvent(event);
+}
+
+void DrawWindow::showEvent(QShowEvent* event)
+{
+	ui->graphicsView->fitInView(field.itemsBoundingRect(), Qt::KeepAspectRatio);
+	QMainWindow::showEvent(event);
 }
 
 DrawWindow::~DrawWindow()

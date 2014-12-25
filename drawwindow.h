@@ -40,6 +40,9 @@ private:
 	QString canned_definitions;
 
 	QGraphicsScene field;
+
+	void resizeEvent(QResizeEvent* event);
+	void showEvent(QShowEvent* event);
 };
 
 #endif // DRAWWINDOW_H
