@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsRectItem>
+
 #include "action.h"
 #include "actionlist.h"
 
@@ -34,6 +38,8 @@ private:
 
 	QString canned_declares;
 	QString canned_definitions;
+
+	QGraphicsScene field;
 };
 
 #endif // DRAWWINDOW_H
