@@ -1,15 +1,20 @@
 #include "setupwindow.h"
 #include "ui_setupwindow.h"
 
-setupwindow::setupwindow(QWidget *parent) :
+SetupWindow::SetupWindow(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::setupwindow)
+	ui(new Ui::SetupWindow)
 {
 	ui->setupUi(this);
 	QFontDatabase::addApplicationFont(":/fonts/DroidSansMono.ttf");
 }
 
-setupwindow::~setupwindow()
+SetupWindow::~SetupWindow()
 {
 	delete ui;
+}
+
+void SetupWindow::on_pushButton_close_clicked()
+{
+	this->hide();
 }

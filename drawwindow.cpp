@@ -4,7 +4,7 @@
 DrawWindow::DrawWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::DrawWindow),
-    setupWindow(new setupwindow),
+    setupWindow(new SetupWindow),
 	list_history(new ActionList)
 {
 	ui->setupUi(this);

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <ui version="4.0">
- <class>setupwindow</class>
- <widget class="QDialog" name="setupwindow">
+ <class>SetupWindow</class>
+ <widget class="QDialog" name="SetupWindow">
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -90,7 +90,7 @@
             <height>278</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout_scrollArea1">
+          <layout class="QVBoxLayout" name="verticalLayout_scrollArea0">
            <item>
             <widget class="QLabel" name="label_pragmas">
              <property name="text">
@@ -99,7 +99,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPlainTextEdit" name="plainTextEdit_pragmas">
+            <widget class="QTextEdit" name="textEdit_pragmas">
              <property name="focusPolicy">
               <enum>Qt::ClickFocus</enum>
              </property>
@@ -107,13 +107,10 @@
               <string notr="true">font: 10pt &quot;Droid Sans Mono&quot;;</string>
              </property>
              <property name="lineWrapMode">
-              <enum>QPlainTextEdit::NoWrap</enum>
-             </property>
-             <property name="tabStopWidth">
-              <number>40</number>
+              <enum>QTextEdit::NoWrap</enum>
              </property>
              <property name="placeholderText">
-              <string>// Make sure there aren't any blank lines at the top.</string>
+              <string>// Make sure there are no blank lines at the top.</string>
              </property>
             </widget>
            </item>
@@ -125,7 +122,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QPlainTextEdit" name="plainTextEdit_includes">
+            <widget class="QTextEdit" name="textEdit_includes">
              <property name="focusPolicy">
               <enum>Qt::ClickFocus</enum>
              </property>
@@ -133,10 +130,7 @@
               <string notr="true">font: 10pt &quot;Droid Sans Mono&quot;;</string>
              </property>
              <property name="lineWrapMode">
-              <enum>QPlainTextEdit::NoWrap</enum>
-             </property>
-             <property name="tabStopWidth">
-              <number>40</number>
+              <enum>QTextEdit::NoWrap</enum>
              </property>
              <property name="placeholderText">
               <string>// Anything else you want to #include (such as your own libraries).</string>
@@ -149,19 +143,274 @@
        </item>
       </layout>
      </widget>
-     <widget class="QWidget" name="tab_2">
+     <widget class="QWidget" name="tab_actions_default">
       <attribute name="title">
        <string>Built-in Actions</string>
       </attribute>
+      <attribute name="toolTip">
+       <string>Basic actions (driving and turning).</string>
+      </attribute>
+      <layout class="QVBoxLayout" name="verticalLayout_tab1">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
+       <item>
+        <widget class="QScrollArea" name="scrollArea_actions_default">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="lineWidth">
+          <number>0</number>
+         </property>
+         <property name="widgetResizable">
+          <bool>true</bool>
+         </property>
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <widget class="QWidget" name="layout_actions_default">
+          <property name="geometry">
+           <rect>
+            <x>0</x>
+            <y>0</y>
+            <width>450</width>
+            <height>278</height>
+           </rect>
+          </property>
+          <layout class="QVBoxLayout" name="verticalLayout_scrollArea1">
+           <item>
+            <widget class="QLabel" name="label_move">
+             <property name="text">
+              <string>Driving (positive is forward):</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_boxes_move">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPlainTextEdit" name="plainTextEdit_move_declare">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Maximum">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::ClickFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;Droid Sans Mono&quot;;</string>
+               </property>
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="tabChangesFocus">
+                <bool>true</bool>
+               </property>
+               <property name="lineWrapMode">
+                <enum>QPlainTextEdit::NoWrap</enum>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="plainText">
+                <string>Move(int inches);</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTextEdit" name="textEdit_move">
+               <property name="focusPolicy">
+                <enum>Qt::ClickFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;Droid Sans Mono&quot;;</string>
+               </property>
+               <property name="lineWrapMode">
+                <enum>QTextEdit::NoWrap</enum>
+               </property>
+               <property name="placeholderText">
+                <string>// Implement the function here.</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_turn">
+             <property name="text">
+              <string>Turning (positive is left):</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <layout class="QVBoxLayout" name="verticalLayout_boxes_turn">
+             <property name="spacing">
+              <number>0</number>
+             </property>
+             <item>
+              <widget class="QPlainTextEdit" name="plainTextEdit_turn_declare">
+               <property name="sizePolicy">
+                <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                 <horstretch>0</horstretch>
+                 <verstretch>0</verstretch>
+                </sizepolicy>
+               </property>
+               <property name="minimumSize">
+                <size>
+                 <width>0</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="maximumSize">
+                <size>
+                 <width>16777215</width>
+                 <height>24</height>
+                </size>
+               </property>
+               <property name="focusPolicy">
+                <enum>Qt::ClickFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;Droid Sans Mono&quot;;</string>
+               </property>
+               <property name="verticalScrollBarPolicy">
+                <enum>Qt::ScrollBarAlwaysOff</enum>
+               </property>
+               <property name="sizeAdjustPolicy">
+                <enum>QAbstractScrollArea::AdjustToContents</enum>
+               </property>
+               <property name="tabChangesFocus">
+                <bool>true</bool>
+               </property>
+               <property name="lineWrapMode">
+                <enum>QPlainTextEdit::NoWrap</enum>
+               </property>
+               <property name="readOnly">
+                <bool>true</bool>
+               </property>
+               <property name="plainText">
+                <string>Turn(int degrees);</string>
+               </property>
+              </widget>
+             </item>
+             <item>
+              <widget class="QTextEdit" name="textEdit_turn">
+               <property name="focusPolicy">
+                <enum>Qt::ClickFocus</enum>
+               </property>
+               <property name="styleSheet">
+                <string notr="true">font: 10pt &quot;Droid Sans Mono&quot;;</string>
+               </property>
+               <property name="lineWrapMode">
+                <enum>QTextEdit::NoWrap</enum>
+               </property>
+               <property name="placeholderText">
+                <string>// Implement the function here.</string>
+               </property>
+              </widget>
+             </item>
+            </layout>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </item>
+      </layout>
      </widget>
-     <widget class="QWidget" name="tab_3">
+     <widget class="QWidget" name="tab_actions_custom">
       <attribute name="title">
        <string>Custom Actions</string>
       </attribute>
+      <attribute name="toolTip">
+       <string>Custom code you want to add (lift, clamp, PID, etc.).</string>
+      </attribute>
+      <widget class="QPlainTextEdit" name="plainTextEdit">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>74</y>
+         <width>431</width>
+         <height>81</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>50</y>
+         <width>431</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Other Declarations:</string>
+       </property>
+      </widget>
+      <widget class="QPlainTextEdit" name="plainTextEdit_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>188</y>
+         <width>431</width>
+         <height>81</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>10</x>
+         <y>164</y>
+         <width>431</width>
+         <height>20</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string>Other Definitions:</string>
+       </property>
+      </widget>
      </widget>
-     <widget class="QWidget" name="tab_4">
+     <widget class="QWidget" name="tab_settings">
       <attribute name="title">
        <string>Program Settings</string>
+      </attribute>
+      <attribute name="toolTip">
+       <string>Settings for the entire program.</string>
       </attribute>
      </widget>
     </widget>
@@ -206,7 +455,25 @@
       </widget>
      </item>
      <item>
-      <widget class="QPushButton" name="pushButton_reset">
+      <widget class="QPushButton" name="pushButton_clear">
+       <property name="minimumSize">
+        <size>
+         <width>0</width>
+         <height>24</height>
+        </size>
+       </property>
+       <property name="font">
+        <font>
+         <pointsize>10</pointsize>
+        </font>
+       </property>
+       <property name="text">
+        <string>Clear Changes</string>
+       </property>
+      </widget>
+     </item>
+     <item>
+      <widget class="QPushButton" name="pushButton_empty">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -219,10 +486,10 @@
         </font>
        </property>
        <property name="toolTip">
-        <string>Reset data to default (ALL tabs!).</string>
+        <string>Delete all entered data.</string>
        </property>
        <property name="text">
-        <string>Reset to Default</string>
+        <string>Clear All Data</string>
        </property>
       </widget>
      </item>
@@ -236,14 +503,14 @@
        </property>
        <property name="sizeHint" stdset="0">
         <size>
-         <width>30</width>
+         <width>15</width>
          <height>20</height>
         </size>
        </property>
       </spacer>
      </item>
      <item>
-      <widget class="QPushButton" name="pushBu_close">
+      <widget class="QPushButton" name="pushButton_close">
        <property name="minimumSize">
         <size>
          <width>0</width>
@@ -286,9 +553,9 @@
  <tabstops>
   <tabstop>tabWidget</tabstop>
   <tabstop>pushButton_save</tabstop>
-  <tabstop>pushButton_reset</tabstop>
-  <tabstop>pushBu_close</tabstop>
-  <tabstop>plainTextEdit_pragmas</tabstop>
+  <tabstop>pushButton_empty</tabstop>
+  <tabstop>pushButton_close</tabstop>
+  <tabstop>textEdit_pragmas</tabstop>
  </tabstops>
  <resources>
   <include location="icons.qrc"/>

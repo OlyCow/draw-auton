@@ -27,7 +27,7 @@ private slots:
 
 private:
 	Ui::DrawWindow *ui;
-    setupwindow *setupWindow;
+    SetupWindow *setupWindow;
 	ActionList *list_history;
 };
 

@@ -5,19 +5,22 @@
 #include <QFontDatabase>
 
 namespace Ui {
-class setupwindow;
+class SetupWindow;
 }
 
-class setupwindow : public QDialog
+class SetupWindow : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit setupwindow(QWidget *parent = 0);
-	~setupwindow();
+	explicit SetupWindow(QWidget *parent = 0);
+	~SetupWindow();
+
+private slots:
+	void on_pushButton_close_clicked();
 
 private:
-	Ui::setupwindow *ui;
+	Ui::SetupWindow *ui;
 };
 
 #endif // SETUPWINDOW_H
