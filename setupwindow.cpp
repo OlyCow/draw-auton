@@ -12,25 +12,25 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	QFontDatabase::addApplicationFont(":/fonts/DroidSansMono.ttf");
 
 	controller_config = read_file("code/controller_config.txt");
-	ui->textEdit_pragmas->setText(format_code(controller_config));
+	ui->textEdit_pragmas->setHtml(format_code(controller_config));
 
 	additional_includes = read_file("code/additional_includes.txt");
-	ui->textEdit_includes->setText(format_code(additional_includes));
+	ui->textEdit_includes->setHtml(format_code(additional_includes));
 
 	definition_move = read_file("code/definition_move.txt");
-	ui->textEdit_move->setText(format_code(definition_move));
+	ui->textEdit_move->setHtml(format_code(definition_move));
 
 	definition_turn = read_file("code/definition_turn.txt");
-	ui->textEdit_turn->setText(format_code(definition_turn));
+	ui->textEdit_turn->setHtml(format_code(definition_turn));
 
 	misc_init = read_file("code/misc_init.txt");
-	ui->textEdit_init->setText(format_code(misc_init));
+	ui->textEdit_init->setHtml(format_code(misc_init));
 
 	misc_declare = read_file("code/misc_declare.txt");
-	ui->textEdit_misc_declare->setText(format_code(misc_declare));
+	ui->textEdit_misc_declare->setHtml(format_code(misc_declare));
 
 	misc_define = read_file("code/misc_define.txt");
-	ui->textEdit_misc_define->setText(format_code(misc_define));
+	ui->textEdit_misc_define->setHtml(format_code(misc_define));
 
 	QFont monospace_font;
 	monospace_font.setFamily("Droid Sans Mono");
@@ -125,6 +125,8 @@ QString SetupWindow::format_code(QString input)
 	QStringList raw_list = input.split("\n");
 	for (int i=0; i<raw_list.size(); ++i) {
 		QString current_line = raw_list.at(i);
+		current_line.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
+		current_line.replace(" ", "&nbsp;");
 		if (raw_list.at(i).startsWith("#")) {
 			current_line = "<font color=\"Maroon\">" + current_line + "</font>";
 		}
@@ -137,11 +139,15 @@ QString SetupWindow::format_code(QString input)
 	output.chop(6); // last "<br />
 	for (int i=0; i<keywords.size(); i++) {
 		QString current = keywords[i];
-		output.replace(current, "<font color=\"Blue\">"+current+"</font>");
+		output.replace("&nbsp;"+current, "<font color=\"Blue\">&nbsp;"+current+"</font>");
+		output.replace("<br />"+current, "<br /><font color=\"Blue\">"+current+"</font>");
+		output.replace(current+"&nbsp;", "<font color=\"Blue\">"+current+"&nbsp;</font>"); // TODO: THIS SUCKS
 	}
 	for (int i=0; i<functions.size(); i++) {
 		QString current = functions[i];
-		output.replace(current, "<font color=\"DarkBlue\">"+current+"</font>");
+		output.replace("&nbsp;"+current, "<font color=\"DarkBlue\">&nbsp;"+current+"</font>");
+		output.replace("<br />"+current, "<br /><font color=\"DarkBlue\">"+current+"</font>");
+		output.replace(current+"&nbsp;", "<font color=\"DarkBlue\">"+current+"&nbsp;</font>"); // TODO: THIS SUCKS
 	}
 	return output;
 }
