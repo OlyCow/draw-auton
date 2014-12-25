@@ -6,23 +6,31 @@ QStringList SetupWindow::functions = QStringList();
 
 SetupWindow::SetupWindow(QWidget *parent) :
 	QDialog(parent),
-	ui(new Ui::SetupWindow),
-	do_update(true)
+	ui(new Ui::SetupWindow)
 {
 	ui->setupUi(this);
 	QFontDatabase::addApplicationFont(":/fonts/DroidSansMono.ttf");
 
 	controller_config = read_file("code/controller_config.txt");
-	ui->textEdit_pragmas->setText(controller_config);
+	ui->textEdit_pragmas->setText(format_code(controller_config));
 
 	additional_includes = read_file("code/additional_includes.txt");
-	ui->textEdit_includes->setText(additional_includes);
+	ui->textEdit_includes->setText(format_code(additional_includes));
 
 	definition_move = read_file("code/definition_move.txt");
-	ui->textEdit_move->setText(definition_move);
+	ui->textEdit_move->setText(format_code(definition_move);
 
 	definition_turn = read_file("code/definition_turn.txt");
-	ui->textEdit_turn->setText(definition_turn);
+	ui->textEdit_turn->setText(format_code(definition_turn));
+
+	misc_init = read_file("code/misc_init.txt");
+	ui->textEdit_init->setText(format_code(misc_init));
+
+	misc_declare = read_file("code/misc_declare.txt");
+	ui->textEdit_misc_declare->setText(format_code(misc_declare));
+
+	misc_define = read_file("code/misc_define.txt");
+	ui->textEdit_misc_define->setText(format_code(misc_define));
 
 	QFont monospace_font;
 	monospace_font.setFamily("Droid Sans Mono");
@@ -72,6 +80,15 @@ void SetupWindow::on_pushButton_save_clicked()
 
 	definition_turn = ui->textEdit_turn->toPlainText();
 	write_file("code/definition_turn.txt", definition_turn);
+
+	misc_init = ui->textEdit_init->toPlainText();
+	write_file("code/misc_init.txt", misc_init);
+
+	misc_declare = ui->textEdit_misc_declare->toPlainText();
+	write_file("code/misc_declare.txt", misc_declare);
+
+	misc_define = ui->textEdit_misc_define->toPlainText();
+	write_file("code/misc_define.txt", misc_define);
 }
 
 void SetupWindow::on_pushButton_clear_clicked()
@@ -80,6 +97,9 @@ void SetupWindow::on_pushButton_clear_clicked()
 	ui->textEdit_includes->setPlainText(additional_includes);
 	ui->textEdit_move->setPlainText(definition_move);
 	ui->textEdit_turn->setPlainText(definition_turn);
+	ui->textEdit_init->setPlainText(misc_init);
+	ui->textEdit_misc_declare->setPlainText(misc_declare);
+	ui->textEdit_misc_define->setPlainText(misc_define);
 }
 
 void SetupWindow::on_pushButton_empty_clicked()
@@ -88,6 +108,9 @@ void SetupWindow::on_pushButton_empty_clicked()
 	ui->textEdit_includes->setPlainText("");
 	ui->textEdit_move->setPlainText("");
 	ui->textEdit_turn->setPlainText("");
+	ui->textEdit_init->setPlainText("");
+	ui->textEdit_misc_declare->setPlainText("");
+	ui->textEdit_misc_define->setPlainText("");
 }
 
 void SetupWindow::on_pushButton_close_clicked()

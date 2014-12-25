@@ -54,7 +54,9 @@ private:
 	QString additional_includes;
 	QString definition_move;
 	QString definition_turn;
-	bool do_update;
+	QString misc_init;
+	QString misc_declare;
+	QString misc_define;
 
     void create_new_action();
 
