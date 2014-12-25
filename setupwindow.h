@@ -2,7 +2,12 @@
 #define SETUPWINDOW_H
 
 #include <QDialog>
+#include <QString>
+#include <QStringList>
+#include <QTextStream>
+#include <QFile>
 #include <QFontDatabase>
+#include <QTextCursor>
 
 namespace Ui {
 class SetupWindow;
@@ -17,10 +22,24 @@ public:
 	~SetupWindow();
 
 private slots:
+
+	void on_pushButton_save_clicked();
+	void on_pushButton_clear_clicked();
+	void on_pushButton_empty_clicked();
 	void on_pushButton_close_clicked();
+
+	void on_textEdit_pragmas_textChanged();
+	void on_textEdit_includes_textChanged();
 
 private:
 	Ui::SetupWindow *ui;
+	QString controller_config;
+	QString additional_includes;
+	bool do_update;
+
+	QString format_code(QString input);
+	QString read_file(QString path);
+	void write_file(QString path, QString input);
 };
 
 #endif // SETUPWINDOW_H

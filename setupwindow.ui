@@ -109,6 +109,9 @@
              <property name="lineWrapMode">
               <enum>QTextEdit::NoWrap</enum>
              </property>
+             <property name="acceptRichText">
+              <bool>false</bool>
+             </property>
              <property name="placeholderText">
               <string>// Make sure there are no blank lines at the top.</string>
              </property>
@@ -131,6 +134,9 @@
              </property>
              <property name="lineWrapMode">
               <enum>QTextEdit::NoWrap</enum>
+             </property>
+             <property name="acceptRichText">
+              <bool>false</bool>
              </property>
              <property name="placeholderText">
               <string>// Anything else you want to #include (such as your own libraries).</string>
@@ -262,6 +268,9 @@
                <property name="lineWrapMode">
                 <enum>QTextEdit::NoWrap</enum>
                </property>
+               <property name="acceptRichText">
+                <bool>false</bool>
+               </property>
                <property name="placeholderText">
                 <string>// Implement the function here.</string>
                </property>
@@ -337,6 +346,9 @@
                </property>
                <property name="lineWrapMode">
                 <enum>QTextEdit::NoWrap</enum>
+               </property>
+               <property name="acceptRichText">
+                <bool>false</bool>
                </property>
                <property name="placeholderText">
                 <string>// Implement the function here.</string>
