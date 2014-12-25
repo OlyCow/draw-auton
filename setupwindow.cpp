@@ -18,7 +18,7 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	ui->textEdit_includes->setText(format_code(additional_includes));
 
 	definition_move = read_file("code/definition_move.txt");
-	ui->textEdit_move->setText(format_code(definition_move);
+	ui->textEdit_move->setText(format_code(definition_move));
 
 	definition_turn = read_file("code/definition_turn.txt");
 	ui->textEdit_turn->setText(format_code(definition_turn));
