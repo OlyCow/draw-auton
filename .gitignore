@@ -1,5 +1,6 @@
 # Temporary ignores
 *.png
+*.ttf
 
 # C++ objects and libs
 

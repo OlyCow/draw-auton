@@ -45,31 +45,67 @@
       <attribute name="toolTip">
        <string>General #pragma configs and #includes.</string>
       </attribute>
-      <layout class="QVBoxLayout" name="verticalLayout_2">
+      <layout class="QVBoxLayout" name="verticalLayout_tab0">
+       <property name="spacing">
+        <number>0</number>
+       </property>
+       <property name="leftMargin">
+        <number>0</number>
+       </property>
+       <property name="topMargin">
+        <number>0</number>
+       </property>
+       <property name="rightMargin">
+        <number>0</number>
+       </property>
+       <property name="bottomMargin">
+        <number>0</number>
+       </property>
        <item>
-        <widget class="QScrollArea" name="scrollArea">
+        <widget class="QScrollArea" name="scrollArea_config">
+         <property name="focusPolicy">
+          <enum>Qt::NoFocus</enum>
+         </property>
+         <property name="frameShape">
+          <enum>QFrame::NoFrame</enum>
+         </property>
+         <property name="frameShadow">
+          <enum>QFrame::Plain</enum>
+         </property>
+         <property name="lineWidth">
+          <number>0</number>
+         </property>
          <property name="widgetResizable">
           <bool>true</bool>
          </property>
-         <widget class="QWidget" name="scrollAreaWidgetContents">
+         <property name="alignment">
+          <set>Qt::AlignCenter</set>
+         </property>
+         <widget class="QWidget" name="layout_scrollArea">
           <property name="geometry">
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>430</width>
-            <height>258</height>
+            <width>450</width>
+            <height>278</height>
            </rect>
           </property>
-          <layout class="QVBoxLayout" name="verticalLayout">
+          <layout class="QVBoxLayout" name="verticalLayout_scrollArea1">
            <item>
-            <widget class="QLabel" name="label">
+            <widget class="QLabel" name="label_pragmas">
              <property name="text">
               <string>Controller configuration (#pragmas):</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPlainTextEdit" name="plainTextEdit">
+            <widget class="QPlainTextEdit" name="plainTextEdit_pragmas">
+             <property name="focusPolicy">
+              <enum>Qt::ClickFocus</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">font: 10pt &quot;Droid Sans Mono&quot;;</string>
+             </property>
              <property name="lineWrapMode">
               <enum>QPlainTextEdit::NoWrap</enum>
              </property>
@@ -82,14 +118,26 @@
             </widget>
            </item>
            <item>
-            <widget class="QLabel" name="label_2">
+            <widget class="QLabel" name="label_includes">
              <property name="text">
               <string>Additional #includes:</string>
              </property>
             </widget>
            </item>
            <item>
-            <widget class="QPlainTextEdit" name="plainTextEdit_2">
+            <widget class="QPlainTextEdit" name="plainTextEdit_includes">
+             <property name="focusPolicy">
+              <enum>Qt::ClickFocus</enum>
+             </property>
+             <property name="styleSheet">
+              <string notr="true">font: 10pt &quot;Droid Sans Mono&quot;;</string>
+             </property>
+             <property name="lineWrapMode">
+              <enum>QPlainTextEdit::NoWrap</enum>
+             </property>
+             <property name="tabStopWidth">
+              <number>40</number>
+             </property>
              <property name="placeholderText">
               <string>// Anything else you want to #include (such as your own libraries).</string>
              </property>
@@ -240,7 +288,7 @@
   <tabstop>pushButton_save</tabstop>
   <tabstop>pushButton_reset</tabstop>
   <tabstop>pushBu_close</tabstop>
-  <tabstop>plainTextEdit</tabstop>
+  <tabstop>plainTextEdit_pragmas</tabstop>
  </tabstops>
  <resources>
   <include location="icons.qrc"/>

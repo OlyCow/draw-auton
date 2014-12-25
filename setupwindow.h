@@ -2,6 +2,7 @@
 #define SETUPWINDOW_H
 
 #include <QDialog>
+#include <QFontDatabase>
 
 namespace Ui {
 class setupwindow;

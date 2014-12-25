@@ -6,6 +6,7 @@ setupwindow::setupwindow(QWidget *parent) :
     ui(new Ui::setupwindow)
 {
 	ui->setupUi(this);
+	QFontDatabase::addApplicationFont(":/fonts/DroidSansMono.ttf");
 }
 
 setupwindow::~setupwindow()
