@@ -2,6 +2,16 @@
 #define SETUPWINDOW_H
 
 #include <QDialog>
+
+#include <vector>
+
+#include <QWidget>
+#include <QVBoxLayout>
+#include <QGridLayout>
+#include <QLabel>
+#include <QLineEdit>
+#include <QTextEdit>
+
 #include <QString>
 #include <QStringList>
 #include <QTextStream>
@@ -27,11 +37,10 @@ public:
 	static QString read_file(QString path);
 	static void write_file(QString path, QString input);
 
-	static QStringList keywords;
-	static QStringList functions;
+    QStringList keywords;
+    QStringList functions;
 
 private slots:
-
 	void on_pushButton_save_clicked();
 	void on_pushButton_clear_clicked();
 	void on_pushButton_empty_clicked();
@@ -42,11 +51,14 @@ private slots:
 
 private:
 	Ui::SetupWindow *ui;
+    std::vector<QWidget> custom_action;
 	QString controller_config;
 	QString additional_includes;
 	QString definition_move;
 	QString definition_turn;
 	bool do_update;
+
+    void create_new_action();
 };
 
 #endif // SETUPWINDOW_H
