@@ -6,7 +6,9 @@
 #include <QStringList>
 #include <QTextStream>
 #include <QFile>
+#include <QFont>
 #include <QFontDatabase>
+#include <QFontMetrics>
 #include <QTextCursor>
 
 namespace Ui {
@@ -25,6 +27,9 @@ public:
 	static QString read_file(QString path);
 	static void write_file(QString path, QString input);
 
+	static QStringList keywords;
+	static QStringList functions;
+
 private slots:
 
 	void on_pushButton_save_clicked();
@@ -39,6 +44,8 @@ private:
 	Ui::SetupWindow *ui;
 	QString controller_config;
 	QString additional_includes;
+	QString definition_move;
+	QString definition_turn;
 	bool do_update;
 };
 

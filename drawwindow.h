@@ -31,6 +31,9 @@ private:
 	Ui::DrawWindow *ui;
     SetupWindow *setupWindow;
 	ActionList *list_history;
+
+	QString canned_declares;
+	QString canned_definitions;
 };
 
 #endif // DRAWWINDOW_H
