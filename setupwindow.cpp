@@ -150,35 +150,35 @@ void SetupWindow::write_file(QString path, QString input)
 
 void SetupWindow::create_new_action()
 {
-    QWidget* blank_widget = new QWidget();
-    QGridLayout* blank_action = new QGridLayout(blank_widget);
-    blank_action->layout()->setMargin(0);
+	QWidget* blank_widget = new QWidget();
+	QGridLayout* blank_action = new QGridLayout(blank_widget);
+	blank_action->layout()->setMargin(0);
 
-    QLabel* label_name = new QLabel("Action Name:");
-    QLabel* label_declare = new QLabel("Declaration/\nCall:");
+	QLabel* label_name = new QLabel("Action Name:");
+	QLabel* label_declare = new QLabel("Declaration/\nCall:");
 
-    QLineEdit* lineEdit_name = new QLineEdit();
-    lineEdit_name->setStyleSheet("font: bold 10pt");
-    lineEdit_name->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
-    lineEdit_name->setClearButtonEnabled(true);
+	QLineEdit* lineEdit_name = new QLineEdit();
+	lineEdit_name->setStyleSheet("font: bold 10pt");
+	lineEdit_name->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
+	lineEdit_name->setClearButtonEnabled(true);
 
-    QLineEdit* lineEdit_declare = new QLineEdit();
-    lineEdit_declare->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
-    lineEdit_declare->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
-    lineEdit_declare->setClearButtonEnabled(true);
+	QLineEdit* lineEdit_declare = new QLineEdit();
+	lineEdit_declare->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
+	lineEdit_declare->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
+	lineEdit_declare->setClearButtonEnabled(true);
 
-    QTextEdit* textEdit_define = new QTextEdit();
-    textEdit_define->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
-    textEdit_define->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
-    textEdit_define->setLineWrapMode(QTextEdit::NoWrap);
-    textEdit_define->setAcceptRichText(false);
+	QTextEdit* textEdit_define = new QTextEdit();
+	textEdit_define->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
+	textEdit_define->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
+	textEdit_define->setLineWrapMode(QTextEdit::NoWrap);
+	textEdit_define->setAcceptRichText(false);
 
-    blank_action->addWidget(label_name, 0, 0);
-    blank_action->addWidget(lineEdit_name, 0, 1);
-    blank_action->addWidget(label_declare, 1, 0);
-    blank_action->addWidget(lineEdit_declare, 1, 1);
-    blank_action->addWidget(textEdit_define, 2, 0, 1, 2);
+	blank_action->addWidget(label_name, 0, 0);
+	blank_action->addWidget(lineEdit_name, 0, 1);
+	blank_action->addWidget(label_declare, 1, 0);
+	blank_action->addWidget(lineEdit_declare, 1, 1);
+	blank_action->addWidget(textEdit_define, 2, 0, 1, 2);
 
-    int insert_pos = 0;
-    ui->verticalLayout->insertWidget(insert_pos, blank_widget);
+	int insert_pos = 0;
+	ui->verticalLayout->insertWidget(insert_pos, blank_widget);
 }
