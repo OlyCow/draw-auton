@@ -112,9 +112,14 @@ QString SetupWindow::format_code(QString input)
 		output += "<br />";
 	}
 	output.chop(6); // last "<br />
-//	for (int i=0; i<keywords.size(); i++) {
-//		output.replace(keywords[i], "<font color=\"Blue\">"+keywords[i]+"</font>");
-//	}
+	for (int i=0; i<keywords.size(); i++) {
+		QString current = keywords[i];
+		output.replace(current, "<font color=\"Blue\">"+current+"</font>");
+	}
+	for (int i=0; i<functions.size(); i++) {
+		QString current = functions[i];
+		output.replace(current, "<font color=\"DarkBlue\">"+current+"</font>");
+	}
 	return output;
 }
 
