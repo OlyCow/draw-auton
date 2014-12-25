@@ -12,6 +12,7 @@
 #include <QLineEdit>
 #include <QTextEdit>
 
+#include <QEvent>
 #include <QString>
 #include <QStringList>
 #include <QTextStream>
@@ -37,17 +38,14 @@ public:
 	static QString read_file(QString path);
 	static void write_file(QString path, QString input);
 
-    QStringList keywords;
-    QStringList functions;
+	static QStringList keywords;
+	static QStringList functions;
 
 private slots:
 	void on_pushButton_save_clicked();
 	void on_pushButton_clear_clicked();
 	void on_pushButton_empty_clicked();
 	void on_pushButton_close_clicked();
-
-	void on_textEdit_pragmas_textChanged();
-	void on_textEdit_includes_textChanged();
 
 private:
 	Ui::SetupWindow *ui;
@@ -59,6 +57,8 @@ private:
 	bool do_update;
 
     void create_new_action();
+
+	bool eventFilter(QObject* object, QEvent* event);
 };
 
 #endif // SETUPWINDOW_H

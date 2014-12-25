@@ -1,6 +1,9 @@
 #include "setupwindow.h"
 #include "ui_setupwindow.h"
 
+QStringList SetupWindow::keywords = QStringList();
+QStringList SetupWindow::functions = QStringList();
+
 SetupWindow::SetupWindow(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::SetupWindow),
@@ -35,12 +38,20 @@ SetupWindow::SetupWindow(QWidget *parent) :
 
 	QString read_buffer;
 	read_buffer = read_file("code/keywords.txt");
-	keywords = read_buffer.split("\n");
+	SetupWindow::keywords = read_buffer.split("\n");
 
 	read_buffer = read_file("code/functions.txt");
-    functions = read_buffer.split("\n");
+	SetupWindow::functions = read_buffer.split("\n");
 
-    create_new_action();
+	ui->textEdit_pragmas->installEventFilter(this);
+	ui->textEdit_includes->installEventFilter(this);
+	ui->textEdit_move->installEventFilter(this);
+	ui->textEdit_turn->installEventFilter(this);
+	ui->textEdit_init->installEventFilter(this);
+	ui->textEdit_misc_declare->installEventFilter(this);
+	ui->textEdit_misc_define->installEventFilter(this);
+
+	create_new_action();
 }
 
 SetupWindow::~SetupWindow()
@@ -85,30 +96,6 @@ void SetupWindow::on_pushButton_close_clicked()
 	this->close();
 }
 
-void SetupWindow::on_textEdit_pragmas_textChanged()
-{
-	if (do_update == true) {
-		do_update = false;
-		QString raw = ui->textEdit_pragmas->toPlainText();
-		raw = format_code(raw);
-		ui->textEdit_pragmas->setHtml(raw);
-	} else {
-		do_update = true;
-	}
-}
-
-void SetupWindow::on_textEdit_includes_textChanged()
-{
-	if (do_update == true) {
-		do_update = false;
-		QString raw = ui->textEdit_includes->toPlainText();
-		raw = format_code(raw);
-		ui->textEdit_includes->setHtml(raw);
-	} else {
-		do_update = true;
-	}
-}
-
 QString SetupWindow::format_code(QString input)
 {
 	QString output = "";
@@ -125,6 +112,9 @@ QString SetupWindow::format_code(QString input)
 		output += "<br />";
 	}
 	output.chop(6); // last "<br />
+//	for (int i=0; i<keywords.size(); i++) {
+//		output.replace(keywords[i], "<font color=\"Blue\">"+keywords[i]+"</font>");
+//	}
 	return output;
 }
 
@@ -181,4 +171,15 @@ void SetupWindow::create_new_action()
 
 	int insert_pos = 0;
 	ui->verticalLayout->insertWidget(insert_pos, blank_widget);
+}
+
+bool SetupWindow::eventFilter(QObject *object, QEvent *event)
+{
+	if (event->type() == QEvent::FocusOut) {
+		QTextEdit* object_casted = qobject_cast<QTextEdit*>(object);
+		QString raw = object_casted->toPlainText();
+		raw = format_code(raw);
+		object_casted->setHtml(raw);
+	}
+	return false;
 }
