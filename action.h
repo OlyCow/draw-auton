@@ -14,7 +14,7 @@ public:
 
 	void setName(QString input)			{name = input;}
 	void setCall(QString input)			{call = input;}
-	void setParam(QString input)			{param = input;}
+	void setParam(QString input)		{param = input;}
 	void setDeclaration(QString input)	{declaration = input;}
 	void setDefinition(QString input)	{definition = input;}
 

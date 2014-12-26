@@ -3,14 +3,9 @@
 
 #include <QDialog>
 
-#include <vector>
+#include "actionwidget.h"
 
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTextEdit>
+#include <vector>
 
 #include <QEvent>
 #include <QString>
@@ -50,6 +45,8 @@ private slots:
 private:
 	Ui::SetupWindow *ui;
     std::vector<QWidget> custom_action;
+	std::vector<ActionWidget*> action_widget;
+	int action_widget_num;
 	QString controller_config;
 	QString additional_includes;
 	QString definition_move;
@@ -57,8 +54,6 @@ private:
 	QString misc_init;
 	QString misc_declare;
 	QString misc_define;
-
-    void create_new_action();
 
 	bool eventFilter(QObject* object, QEvent* event);
 };

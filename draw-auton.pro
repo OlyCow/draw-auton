@@ -18,14 +18,16 @@ SOURCES += main.cpp\
     action.cpp \
     setupwindow.cpp \
     aboutwindow.cpp \
-    helpwindow.cpp
+    helpwindow.cpp \
+    actionwidget.cpp
 
 HEADERS  += drawwindow.h \
     actionlist.h \
     action.h \
     setupwindow.h \
     aboutwindow.h \
-    helpwindow.h
+    helpwindow.h \
+    actionwidget.h
 
 FORMS    += drawwindow.ui \
     setupwindow.ui \
