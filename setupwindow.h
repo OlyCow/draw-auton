@@ -56,6 +56,8 @@ private:
     std::vector<QWidget> custom_action;
 	std::vector<ActionWidget*> action_widget;
 	std::vector<QTextEdit*> code_edits;
+	std::vector<QString*> code_vars;
+	std::vector<QString> code_urls;
 	int action_widget_num;
 	QString controller_config;
 	QString additional_includes;

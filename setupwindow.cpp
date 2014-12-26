@@ -12,26 +12,34 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	ui->setupUi(this);
 	QFontDatabase::addApplicationFont(":/fonts/DroidSansMono.ttf");
 
-	controller_config = read_file("code/controller_config.txt");
-	ui->textEdit_pragmas->setHtml(format_code(controller_config));
+	code_edits.push_back(ui->textEdit_pragmas);
+	code_edits.push_back(ui->textEdit_includes);
+	code_edits.push_back(ui->textEdit_move);
+	code_edits.push_back(ui->textEdit_turn);
+	code_edits.push_back(ui->textEdit_init);
+	code_edits.push_back(ui->textEdit_misc_declare);
+	code_edits.push_back(ui->textEdit_misc_define);
 
-	additional_includes = read_file("code/additional_includes.txt");
-	ui->textEdit_includes->setHtml(format_code(additional_includes));
+	code_vars.push_back(&controller_config);
+	code_vars.push_back(&additional_includes);
+	code_vars.push_back(&definition_move);
+	code_vars.push_back(&definition_turn);
+	code_vars.push_back(&misc_init);
+	code_vars.push_back(&misc_declare);
+	code_vars.push_back(&misc_define);
 
-	definition_move = read_file("code/definition_move.txt");
-	ui->textEdit_move->setHtml(format_code(definition_move));
+	code_urls.push_back("code/controller_config.txt");
+	code_urls.push_back("code/additional_includes.txt");
+	code_urls.push_back("code/definition_move.txt");
+	code_urls.push_back("code/definition_turn.txt");
+	code_urls.push_back("code/misc_init.txt");
+	code_urls.push_back("code/misc_declare.txt");
+	code_urls.push_back("code/misc_define.txt");
 
-	definition_turn = read_file("code/definition_turn.txt");
-	ui->textEdit_turn->setHtml(format_code(definition_turn));
-
-	misc_init = read_file("code/misc_init.txt");
-	ui->textEdit_init->setHtml(format_code(misc_init));
-
-	misc_declare = read_file("code/misc_declare.txt");
-	ui->textEdit_misc_declare->setHtml(format_code(misc_declare));
-
-	misc_define = read_file("code/misc_define.txt");
-	ui->textEdit_misc_define->setHtml(format_code(misc_define));
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		*(code_vars[i]) = read_file(code_urls[i]);
+		code_edits[i]->setHtml(format_code(*(code_vars[i])));
+	}
 
 	QFont monospace_font;
 	monospace_font.setFamily("Droid Sans Mono");
@@ -40,10 +48,9 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	monospace_font.setPointSize(10);
 	QFontMetrics monospace_metrics(monospace_font);
 	int tab_width = 4 * monospace_metrics.width(' ');
-	ui->textEdit_pragmas->setTabStopWidth(tab_width);
-	ui->textEdit_includes->setTabStopWidth(tab_width);
-	ui->textEdit_move->setTabStopWidth(tab_width);
-	ui->textEdit_turn->setTabStopWidth(tab_width);
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		code_edits[i]->setTabStopWidth(tab_width);
+	}
 
 	QString read_buffer;
 	read_buffer = read_file("code/keywords.txt");
@@ -58,14 +65,9 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	QObject::connect(	action_widget[0],	&ActionWidget::info_cleared,
 						this,				&SetupWindow::remove_action_widget);
 
-
-	ui->textEdit_pragmas->installEventFilter(this);
-	ui->textEdit_includes->installEventFilter(this);
-	ui->textEdit_move->installEventFilter(this);
-	ui->textEdit_turn->installEventFilter(this);
-	ui->textEdit_init->installEventFilter(this);
-	ui->textEdit_misc_declare->installEventFilter(this);
-	ui->textEdit_misc_define->installEventFilter(this);
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		code_edits[i]->installEventFilter(this);
+	}
 }
 
 SetupWindow::~SetupWindow()
@@ -105,53 +107,31 @@ void SetupWindow::delete_action_widget(int index)
 
 void SetupWindow::on_pushButton_save_clicked()
 {
-	controller_config = ui->textEdit_pragmas->toPlainText();
-	write_file("code/controller_config.txt", controller_config);
-
-	additional_includes = ui->textEdit_includes->toPlainText();
-	write_file("code/additional_includes.txt", controller_config);
-
-	definition_move = ui->textEdit_move->toPlainText();
-	write_file("code/definition_move.txt", definition_move);
-
-	definition_turn = ui->textEdit_turn->toPlainText();
-	write_file("code/definition_turn.txt", definition_turn);
-
-	misc_init = ui->textEdit_init->toPlainText();
-	write_file("code/misc_init.txt", misc_init);
-
-	misc_declare = ui->textEdit_misc_declare->toPlainText();
-	write_file("code/misc_declare.txt", misc_declare);
-
-	misc_define = ui->textEdit_misc_define->toPlainText();
-	write_file("code/misc_define.txt", misc_define);
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		*(code_vars[i]) = code_edits[i]->toPlainText();
+		write_file(code_urls[i], *(code_vars[i]));
+	}
 }
 
 void SetupWindow::on_pushButton_clear_clicked()
 {
-	ui->textEdit_pragmas->setPlainText(controller_config);
-	ui->textEdit_includes->setPlainText(additional_includes);
-	ui->textEdit_move->setPlainText(definition_move);
-	ui->textEdit_turn->setPlainText(definition_turn);
-	ui->textEdit_init->setPlainText(misc_init);
-	ui->textEdit_misc_declare->setPlainText(misc_declare);
-	ui->textEdit_misc_define->setPlainText(misc_define);
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		code_edits[i]->setHtml(format_code(*(code_vars[i])));
+	}
 }
 
 void SetupWindow::on_pushButton_empty_clicked()
 {
-	ui->textEdit_pragmas->setPlainText("");
-	ui->textEdit_includes->setPlainText("");
-	ui->textEdit_move->setPlainText("");
-	ui->textEdit_turn->setPlainText("");
-	ui->textEdit_init->setPlainText("");
-	ui->textEdit_misc_declare->setPlainText("");
-	ui->textEdit_misc_define->setPlainText("");
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		code_edits[i]->setPlainText("");
+	}
 }
 
 void SetupWindow::on_pushButton_close_clicked()
 {
-	// remember to clear data
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		code_edits[i]->setHtml(format_code(*(code_vars[i])));
+	}
 	this->close();
 }
 
