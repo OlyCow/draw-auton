@@ -131,7 +131,7 @@
             </property>
             <property name="icon">
              <iconset resource="icons.qrc">
-              <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
+              <normaloff>:/icons/arrow-up.png</normaloff>:/icons/arrow-up.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -143,6 +143,9 @@
              <bool>true</bool>
             </property>
             <property name="checked">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
              <bool>true</bool>
             </property>
             <property name="toolButtonStyle">
@@ -175,7 +178,7 @@
             </property>
             <property name="icon">
              <iconset resource="icons.qrc">
-              <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
+              <normaloff>:/icons/arrow-down.png</normaloff>:/icons/arrow-down.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -184,6 +187,9 @@
              </size>
             </property>
             <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
              <bool>true</bool>
             </property>
             <property name="toolButtonStyle">

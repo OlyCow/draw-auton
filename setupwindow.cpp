@@ -163,27 +163,51 @@ QString SetupWindow::format_code(QString input)
 		QString current_line = raw_list.at(i);
 		current_line.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
 		current_line.replace(" ", "&nbsp;");
-		if (raw_list.at(i).startsWith("#")) {
-			current_line = "<font color=\"Maroon\">" + current_line + "</font>";
-		}
-		if (raw_list.at(i).startsWith("//")) {
-			current_line = "<font color=\"Green\">" + current_line + "</font>";
-		}
 		output += current_line;
 		output += "<br />";
 	}
 	output.chop(6); // last "<br />
+	QRegularExpression find_line_comment("\/{2,}+.*");
+	QRegularExpressionMatch line_comment_match = find_line_comment.match(output);
+	for (int i=0; i<line_comment_match.capturedTexts().size(); i++) {
+		QString original = line_comment_match.captured(i);
+		QString replaced = "<font color=\"Green\">"+original+"</font>";
+		output.replace(original, replaced);
+	}
+	QRegularExpression find_pragma("#+.*");
+	QRegularExpressionMatch pragma_match = find_pragma.match(output);
+	for (int i=0; i<pragma_match.capturedTexts().size(); i++) {
+		QString original = pragma_match.captured(i);
+		QString replaced = "<font color=\"Maroon\">"+original+"</font>";
+		output.replace(original, replaced);
+	}
+	QRegularExpression find_block_comment("\/\\*.*?\\*\/");
+	find_block_comment.setPatternOptions(QRegularExpression::MultilineOption);
+	QRegularExpressionMatch block_comment_match = find_block_comment.match(output);
+	for (int i=0; i<block_comment_match.capturedTexts().size(); i++) {
+		QString original = block_comment_match.captured(i);
+		QString replaced = "<font color=\"Green\">"+original+"</font>";
+		output.replace(original, replaced);
+	}
 	for (int i=0; i<keywords.size(); i++) {
 		QString current = keywords[i];
-		output.replace("&nbsp;"+current, "<font color=\"Blue\">&nbsp;"+current+"</font>");
-		output.replace("<br />"+current, "<br /><font color=\"Blue\">"+current+"</font>");
-		output.replace(current+"&nbsp;", "<font color=\"Blue\">"+current+"&nbsp;</font>"); // TODO: THIS SUCKS
+		QRegularExpression find_keyword("\\b("+current+")\\b");
+		QRegularExpressionMatch match = find_keyword.match(current);
+		for (int j=0; j<match.capturedTexts().size(); j++) {
+			QString original = match.captured(j);
+			QString replaced = "<font color=\"Blue\">"+original+"</font>";
+			output.replace(original, replaced);
+		}
 	}
 	for (int i=0; i<functions.size(); i++) {
 		QString current = functions[i];
-		output.replace("&nbsp;"+current, "<font color=\"DarkBlue\">&nbsp;"+current+"</font>");
-		output.replace("<br />"+current, "<br /><font color=\"DarkBlue\">"+current+"</font>");
-		output.replace(current+"&nbsp;", "<font color=\"DarkBlue\">"+current+"&nbsp;</font>"); // TODO: THIS SUCKS
+		QRegularExpression find_function("\\b("+current+")\\b");
+		QRegularExpressionMatch match = find_function.match(current);
+		for (int j=0; j<match.capturedTexts().size(); j++) {
+			QString original = match.captured(j);
+			QString replaced = "<font color=\"DarkBlue\">"+original+"</font>";
+			output.replace(original, replaced);
+		}
 	}
 	return output;
 }
