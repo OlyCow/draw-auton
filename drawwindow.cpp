@@ -95,13 +95,19 @@ void DrawWindow::on_pushButton_generateProgram_clicked()
 	final += SetupWindow::read_file("code/additional_includes.txt");
 	final += "\n";
 	final += canned_declares;
+	final += "\n";
+	final += SetupWindow::read_file("code/misc_declare.txt");
 	final += "\ntask main()\n{\n";
-	final += "\t waitForStart();\n";
+	final += SetupWindow::read_file("code/misc_init.txt");
+	final += "\n\t waitForStart();\n";
 	final += "}\n\n";
 	final += SetupWindow::read_file("code/definition_move.txt");
 	final += "\n";
 	final += SetupWindow::read_file("code/definition_turn.txt");
 	final += "\n";
 	final += canned_definitions;
+	final += "\n";
+	final += SetupWindow::read_file("code/misc__define.txt");
+	final += "\n";
 	SetupWindow::write_file("output/Autonomous.c", final);
 }
