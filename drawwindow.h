@@ -3,6 +3,10 @@
 
 #include <QMainWindow>
 
+#include <QGraphicsScene>
+#include <QGraphicsView>
+#include <QGraphicsRectItem>
+
 #include "action.h"
 #include "actionlist.h"
 
@@ -25,10 +29,20 @@ public:
 private slots:
     void on_pushButton_setup_clicked();
 
+	void on_pushButton_generateProgram_clicked();
+
 private:
 	Ui::DrawWindow *ui;
-    setupwindow *setupWindow;
+    SetupWindow *setupWindow;
 	ActionList *list_history;
+
+	QString canned_declares;
+	QString canned_definitions;
+
+	QGraphicsScene field;
+
+	void resizeEvent(QResizeEvent* event);
+	void showEvent(QShowEvent* event);
 };
 
 #endif // DRAWWINDOW_H
