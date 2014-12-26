@@ -6,7 +6,8 @@ QStringList SetupWindow::functions = QStringList();
 
 SetupWindow::SetupWindow(QWidget *parent) :
 	QDialog(parent),
-	ui(new Ui::SetupWindow)
+	ui(new Ui::SetupWindow),
+	action_widget_num(0)
 {
 	ui->setupUi(this);
 	QFontDatabase::addApplicationFont(":/fonts/DroidSansMono.ttf");
@@ -51,6 +52,13 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	read_buffer = read_file("code/functions.txt");
 	SetupWindow::functions = read_buffer.split("\n");
 
+	add_action_widget();
+	QObject::connect(	action_widget[0],	&ActionWidget::info_added,
+						this,				&SetupWindow::create_action_widget);
+	QObject::connect(	action_widget[0],	&ActionWidget::info_cleared,
+						this,				&SetupWindow::remove_action_widget);
+
+
 	ui->textEdit_pragmas->installEventFilter(this);
 	ui->textEdit_includes->installEventFilter(this);
 	ui->textEdit_move->installEventFilter(this);
@@ -63,6 +71,36 @@ SetupWindow::SetupWindow(QWidget *parent) :
 SetupWindow::~SetupWindow()
 {
 	delete ui;
+}
+
+void SetupWindow::create_action_widget()
+{
+	add_action_widget();
+}
+
+void SetupWindow::remove_action_widget(int index_accept)
+{
+	delete_action_widget(index_accept);
+}
+
+void SetupWindow::add_action_widget()
+{
+	action_widget_num++;
+	QWidget* actual_this = this;
+	action_widget.push_back(new ActionWidget(actual_this, action_widget_num));
+	int index = action_widget_num - 1;
+	ui->verticalLayout->insertWidget(index, action_widget[index]);
+	action_widget[index]->textEdit_define->installEventFilter(this);
+}
+
+void SetupWindow::delete_action_widget(int index)
+{
+	ui->verticalLayout->removeWidget(action_widget[index]);
+	delete action_widget[index];
+	std::vector<ActionWidget*>::iterator it = action_widget.begin();
+	it += index;
+	action_widget.erase(it);
+	action_widget_num--;
 }
 
 void SetupWindow::on_pushButton_save_clicked()

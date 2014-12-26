@@ -17,14 +17,18 @@ class ActionWidget : public QWidget
 	friend class SetupWindow;
 
 public:
-	ActionWidget(QWidget *parent = 0);
+	ActionWidget(QWidget *parent = 0, int index_assign = 0);
 	~ActionWidget();
 
 signals:
+	void info_added();
+	void info_cleared(int index_emit);
 
 public slots:
+	void text_changed();
 
 private:
+	int index;
 	QGridLayout* layout;
 	QLabel* label_name;
 	QLabel* label_declare;

@@ -17,6 +17,8 @@
 #include <QFontMetrics>
 #include <QTextCursor>
 
+class ActionWidget;
+
 namespace Ui {
 class SetupWindow;
 }
@@ -36,6 +38,10 @@ public:
 	static QStringList keywords;
 	static QStringList functions;
 
+public slots:
+	void create_action_widget();
+	void remove_action_widget(int index_accept);
+
 private slots:
 	void on_pushButton_save_clicked();
 	void on_pushButton_clear_clicked();
@@ -54,6 +60,9 @@ private:
 	QString misc_init;
 	QString misc_declare;
 	QString misc_define;
+
+	void add_action_widget();
+	void delete_action_widget(int index);
 
 	bool eventFilter(QObject* object, QEvent* event);
 };

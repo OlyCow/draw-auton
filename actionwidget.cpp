@@ -1,7 +1,8 @@
 #include "actionwidget.h"
 
-ActionWidget::ActionWidget(QWidget *parent) :
+ActionWidget::ActionWidget(QWidget *parent, int index_assign) :
 	QWidget(parent),
+	index(index_assign),
 	layout(new QGridLayout(this)),
 	label_name(new QLabel("Action Name:", this)),
 	label_declare(new QLabel("Declaration/\nCall:", this)),
@@ -29,6 +30,8 @@ ActionWidget::ActionWidget(QWidget *parent) :
 	layout->addWidget(label_declare, 1, 0);
 	layout->addWidget(lineEdit_declare, 1, 1);
 	layout->addWidget(textEdit_define, 2, 0, 1, 2);
+
+	QObject::connect(this->lineEdit_name, &QLineEdit::textChanged, this, &ActionWidget::text_changed);
 }
 
 ActionWidget::~ActionWidget()
@@ -39,4 +42,13 @@ ActionWidget::~ActionWidget()
 	delete lineEdit_name;
 	delete lineEdit_declare;
 	delete textEdit_define;
+}
+
+void ActionWidget::text_changed()
+{
+	if (lineEdit_name->text().size() == 0) {
+		emit info_cleared(index);
+	} else if (lineEdit_name->text().size() == 1) {
+		emit info_added();
+	}
 }
