@@ -2,6 +2,7 @@
 #define ACTION_H
 
 #include <QString>
+#include <QPointF>
 
 class Action
 {
@@ -12,6 +13,7 @@ public:
 			QString input_declaration,
 			QString input_definition);
 
+	void setStart(QPointF input)		{start = input;}
 	void setName(QString input)			{name = input;}
 	void setCall(QString input)			{call = input;}
 	void setParam(QString input)		{param = input;}
@@ -20,6 +22,7 @@ public:
 
 	QString getCall();
 
+	QPointF getStart()			{return start;}
 	QString getName()			{return name;}
 	QString getParam()			{return param;}
 	QString getDeclaration()	{return declaration;}
@@ -33,6 +36,8 @@ protected:
 	QString param;
 	QString declaration;
 	QString definition;
+
+	QPointF start;
 };
 
 #endif // ACTION_H
