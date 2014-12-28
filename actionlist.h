@@ -15,6 +15,8 @@ public:
 	void deleteAction(int pos);
 	void clearAll();
 
+	int getSize()	{return base_list.size();}
+
 	int getPos()	{return current_pos;}
 
 	QString getCalls();

@@ -13,6 +13,7 @@
 #include <QGraphicsLineItem>
 
 #include "action.h"
+#include "actionmove.h"
 #include "actionlist.h"
 
 #include "graphicsviewedit.h"

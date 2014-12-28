@@ -124,7 +124,11 @@ void DrawWindow::add_move(QPointF start)
 {
 	isDragging = true;
 	QPointF rounded = ui->graphicsView->mapToScene(start.toPoint());
-	startPoint = rounded;
+	if (list_history->getSize() == 0) {
+		startPoint = rounded;
+	} else {
+		startPoint = endPoint; // TODO: is this safe?
+	}
 	endPoint = rounded;
 	currentLine = field.addLine(	startPoint.x(),
 									startPoint.y(),
@@ -154,4 +158,5 @@ void DrawWindow::end_move(QPointF end)
 								endPoint.y()	);
 	}
 	isDragging = false;
+	list_history->addAction(ActionMove(MOVE_FORWARD, startPoint, endPoint));
 }

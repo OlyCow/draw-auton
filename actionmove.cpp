@@ -1,13 +1,19 @@
 #include "actionmove.h"
 
-ActionMove::ActionMove()
+ActionMove::ActionMove(MoveDirection direction, QPointF startPoint, QPointF endPoint) :
+	end(endPoint)
 {
-
-}
-
-ActionMove::~ActionMove()
-{
-
+	start = startPoint;
+	switch (direction) {
+		case MOVE_FORWARD :
+			name = "MoveForward";
+			break;
+		case MOVE_BACKWARD :
+			name = "MoveBackward";
+			break;
+	}
+	param = find_dist();
+	update_call();
 }
 
 float ActionMove::find_dist()
