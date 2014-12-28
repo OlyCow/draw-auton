@@ -12,7 +12,7 @@ ActionMove::ActionMove(MoveDirection direction, QPointF startPoint, QPointF endP
 			name = "MoveBackward";
 			break;
 	}
-	param = find_dist();
+	param = QString::number(find_dist());
 	update_call();
 }
 

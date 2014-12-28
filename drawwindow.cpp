@@ -107,7 +107,8 @@ void DrawWindow::on_pushButton_generateProgram_clicked()
 	final += SetupWindow::read_file("code/misc_declare.txt");
 	final += "\ntask main()\n{\n";
 	final += SetupWindow::read_file("code/misc_init.txt");
-	final += "\n\t waitForStart();\n";
+	final += "\n\twaitForStart();\n\n";
+	final += list_history->getCalls();
 	final += "}\n\n";
 	final += SetupWindow::read_file("code/definition_move.txt");
 	final += "\n";
@@ -158,5 +159,9 @@ void DrawWindow::end_move(QPointF end)
 								endPoint.y()	);
 	}
 	isDragging = false;
-	list_history->addAction(ActionMove(MOVE_FORWARD, startPoint, endPoint));
+	MoveDirection direction = MOVE_FORWARD;
+	if (ui->toolButton_reverse->isChecked()) {
+		direction = MOVE_BACKWARD;
+	}
+	list_history->addAction(ActionMove(direction, startPoint, endPoint));
 }

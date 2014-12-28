@@ -44,6 +44,7 @@ QString ActionList::getCalls()
 {
 	QString output;
 	for (unsigned int i=0; i<base_list.size(); i++) {
+		output += "\t";
 		output += (base_list[i]).getCall();
 	}
 	return output;
