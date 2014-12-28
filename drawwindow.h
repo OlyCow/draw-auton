@@ -12,6 +12,10 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsLineItem>
 
+#include <QTextStream>
+#include <QFile>
+#include <QFileDialog>
+
 #include "action.h"
 #include "actionmove.h"
 #include "actionturn.h"

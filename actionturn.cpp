@@ -11,6 +11,6 @@ ActionTurn::ActionTurn(TurnDirection direction, QPointF startPoint, float degree
 			name = "TurnRight";
 			break;
 	}
-	param = degrees;
+	param = QString::number(degrees);
 	update_call();
 }

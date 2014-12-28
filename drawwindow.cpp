@@ -73,12 +73,14 @@ DrawWindow::DrawWindow(QWidget *parent) :
 void DrawWindow::resizeEvent(QResizeEvent* event)
 {
 	ui->graphicsView->fitInView(field.itemsBoundingRect(), Qt::KeepAspectRatio);
+	ui->graphicsView->centerOn(field.itemsBoundingRect().center());
 	QMainWindow::resizeEvent(event);
 }
 
 void DrawWindow::showEvent(QShowEvent* event)
 {
 	ui->graphicsView->fitInView(field.itemsBoundingRect(), Qt::KeepAspectRatio);
+	ui->graphicsView->centerOn(field.itemsBoundingRect().center());
 	QMainWindow::showEvent(event);
 }
 
@@ -96,29 +98,35 @@ void DrawWindow::on_pushButton_setup_clicked()
 
 void DrawWindow::on_pushButton_generateProgram_clicked()
 {
-	QString final;
-	final += SetupWindow::read_file("code/controller_config.txt");
-	final += "\n";
-	final += "#include \"JoystickDriver.c\"\n\n";
-	final += SetupWindow::read_file("code/additional_includes.txt");
-	final += "\n";
-	final += canned_declares;
-	final += "\n";
-	final += SetupWindow::read_file("code/misc_declare.txt");
-	final += "\ntask main()\n{\n";
-	final += SetupWindow::read_file("code/misc_init.txt");
-	final += "\n\twaitForStart();\n\n";
-	final += list_history->getCalls();
-	final += "}\n\n";
-	final += SetupWindow::read_file("code/definition_move.txt");
-	final += "\n";
-	final += SetupWindow::read_file("code/definition_turn.txt");
-	final += "\n";
-	final += canned_definitions;
-	final += "\n";
-	final += SetupWindow::read_file("code/misc__define.txt");
-	final += "\n";
-	SetupWindow::write_file("output/Autonomous.c", final);
+	QString output_filename = QFileDialog::getSaveFileName(	this,
+															"Choose location...",
+															"Auton.c",
+															"RobotC programs (*.c)");
+	QFile output_program(output_filename);
+	output_program.open(QIODevice::ReadWrite | QIODevice::Text);
+	QTextStream output_stream(&output_program);
+	output_stream <<  SetupWindow::read_file("code/controller_config.txt");
+	output_stream << "\n";
+	output_stream << "#include \"JoystickDriver.c\"\n\n";
+	output_stream << SetupWindow::read_file("code/additional_includes.txt");
+	output_stream << "\n";
+	output_stream << canned_declares;
+	output_stream << "\n";
+	output_stream << SetupWindow::read_file("code/misc_declare.txt");
+	output_stream << "\ntask main()\n{\n";
+	output_stream << SetupWindow::read_file("code/misc_init.txt");
+	output_stream << "\n\twaitForStart();\n\n";
+	output_stream << list_history->getCalls();
+	output_stream << "}\n\n";
+	output_stream << SetupWindow::read_file("code/definition_move.txt");
+	output_stream << "\n";
+	output_stream << SetupWindow::read_file("code/definition_turn.txt");
+	output_stream << "\n";
+	output_stream << canned_definitions;
+	output_stream << "\n";
+	output_stream << SetupWindow::read_file("code/misc__define.txt");
+	output_stream << "\n";
+	output_stream.flush();
 }
 
 void DrawWindow::add_move(QPointF start)
@@ -172,7 +180,7 @@ void DrawWindow::end_move(QPointF end)
 		float angle_A = atan2(vect_A.y(), vect_A.x());
 		float angle_B = atan2(vect_B.y(), vect_B.x());
 		float angle =  angle_A - angle_B;
-		angle = angle * 180.0 / 3.1416;
+		angle = angle * 180.0 / 3.14159;
 		if (angle > 180) {
 			angle -= 360;
 		}
@@ -182,6 +190,7 @@ void DrawWindow::end_move(QPointF end)
 		TurnDirection direction = TURN_LEFT;
 		if (angle < 0) {
 			direction = TURN_RIGHT;
+			angle *= -1;
 		}
 		ActionTurn* turn = new ActionTurn(direction, startPoint, angle);
 		list_history->addAction(turn);
