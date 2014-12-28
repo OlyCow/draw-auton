@@ -6,31 +6,40 @@ QStringList SetupWindow::functions = QStringList();
 
 SetupWindow::SetupWindow(QWidget *parent) :
 	QDialog(parent),
-	ui(new Ui::SetupWindow)
+	ui(new Ui::SetupWindow),
+	action_widget_num(0)
 {
 	ui->setupUi(this);
 	QFontDatabase::addApplicationFont(":/fonts/DroidSansMono.ttf");
 
-	controller_config = read_file("code/controller_config.txt");
-	ui->textEdit_pragmas->setHtml(format_code(controller_config));
+	code_edits.push_back(ui->textEdit_pragmas);
+	code_edits.push_back(ui->textEdit_includes);
+	code_edits.push_back(ui->textEdit_move);
+	code_edits.push_back(ui->textEdit_turn);
+	code_edits.push_back(ui->textEdit_init);
+	code_edits.push_back(ui->textEdit_misc_declare);
+	code_edits.push_back(ui->textEdit_misc_define);
 
-	additional_includes = read_file("code/additional_includes.txt");
-	ui->textEdit_includes->setHtml(format_code(additional_includes));
+	code_vars.push_back(&controller_config);
+	code_vars.push_back(&additional_includes);
+	code_vars.push_back(&definition_move);
+	code_vars.push_back(&definition_turn);
+	code_vars.push_back(&misc_init);
+	code_vars.push_back(&misc_declare);
+	code_vars.push_back(&misc_define);
 
-	definition_move = read_file("code/definition_move.txt");
-	ui->textEdit_move->setHtml(format_code(definition_move));
+	code_urls.push_back("code/controller_config.txt");
+	code_urls.push_back("code/additional_includes.txt");
+	code_urls.push_back("code/definition_move.txt");
+	code_urls.push_back("code/definition_turn.txt");
+	code_urls.push_back("code/misc_init.txt");
+	code_urls.push_back("code/misc_declare.txt");
+	code_urls.push_back("code/misc_define.txt");
 
-	definition_turn = read_file("code/definition_turn.txt");
-	ui->textEdit_turn->setHtml(format_code(definition_turn));
-
-	misc_init = read_file("code/misc_init.txt");
-	ui->textEdit_init->setHtml(format_code(misc_init));
-
-	misc_declare = read_file("code/misc_declare.txt");
-	ui->textEdit_misc_declare->setHtml(format_code(misc_declare));
-
-	misc_define = read_file("code/misc_define.txt");
-	ui->textEdit_misc_define->setHtml(format_code(misc_define));
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		*(code_vars[i]) = read_file(code_urls[i]);
+		code_edits[i]->setHtml(format_code(*(code_vars[i])));
+	}
 
 	QFont monospace_font;
 	monospace_font.setFamily("Droid Sans Mono");
@@ -39,10 +48,9 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	monospace_font.setPointSize(10);
 	QFontMetrics monospace_metrics(monospace_font);
 	int tab_width = 4 * monospace_metrics.width(' ');
-	ui->textEdit_pragmas->setTabStopWidth(tab_width);
-	ui->textEdit_includes->setTabStopWidth(tab_width);
-	ui->textEdit_move->setTabStopWidth(tab_width);
-	ui->textEdit_turn->setTabStopWidth(tab_width);
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		code_edits[i]->setTabStopWidth(tab_width);
+	}
 
 	QString read_buffer;
 	read_buffer = read_file("code/keywords.txt");
@@ -51,15 +59,15 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	read_buffer = read_file("code/functions.txt");
 	SetupWindow::functions = read_buffer.split("\n");
 
-	ui->textEdit_pragmas->installEventFilter(this);
-	ui->textEdit_includes->installEventFilter(this);
-	ui->textEdit_move->installEventFilter(this);
-	ui->textEdit_turn->installEventFilter(this);
-	ui->textEdit_init->installEventFilter(this);
-	ui->textEdit_misc_declare->installEventFilter(this);
-	ui->textEdit_misc_define->installEventFilter(this);
+	add_action_widget();
+	QObject::connect(	action_widget[0],	&ActionWidget::info_added,
+						this,				&SetupWindow::create_action_widget);
+	QObject::connect(	action_widget[0],	&ActionWidget::info_cleared,
+						this,				&SetupWindow::remove_action_widget);
 
-	create_new_action();
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		code_edits[i]->installEventFilter(this);
+	}
 }
 
 SetupWindow::~SetupWindow()
@@ -67,55 +75,63 @@ SetupWindow::~SetupWindow()
 	delete ui;
 }
 
+void SetupWindow::create_action_widget()
+{
+	add_action_widget();
+}
+
+void SetupWindow::remove_action_widget(int index_accept)
+{
+	delete_action_widget(index_accept);
+}
+
+void SetupWindow::add_action_widget()
+{
+	action_widget_num++;
+	QWidget* actual_this = this;
+	action_widget.push_back(new ActionWidget(actual_this, action_widget_num));
+	int index = action_widget_num - 1;
+	ui->verticalLayout->insertWidget(index, action_widget[index]);
+	action_widget[index]->textEdit_define->installEventFilter(this);
+}
+
+void SetupWindow::delete_action_widget(int index)
+{
+	ui->verticalLayout->removeWidget(action_widget[index]);
+	delete action_widget[index];
+	std::vector<ActionWidget*>::iterator it = action_widget.begin();
+	it += index;
+	action_widget.erase(it);
+	action_widget_num--;
+}
+
 void SetupWindow::on_pushButton_save_clicked()
 {
-	controller_config = ui->textEdit_pragmas->toPlainText();
-	write_file("code/controller_config.txt", controller_config);
-
-	additional_includes = ui->textEdit_includes->toPlainText();
-	write_file("code/additional_includes.txt", controller_config);
-
-	definition_move = ui->textEdit_move->toPlainText();
-	write_file("code/definition_move.txt", definition_move);
-
-	definition_turn = ui->textEdit_turn->toPlainText();
-	write_file("code/definition_turn.txt", definition_turn);
-
-	misc_init = ui->textEdit_init->toPlainText();
-	write_file("code/misc_init.txt", misc_init);
-
-	misc_declare = ui->textEdit_misc_declare->toPlainText();
-	write_file("code/misc_declare.txt", misc_declare);
-
-	misc_define = ui->textEdit_misc_define->toPlainText();
-	write_file("code/misc_define.txt", misc_define);
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		*(code_vars[i]) = code_edits[i]->toPlainText();
+		write_file(code_urls[i], *(code_vars[i]));
+	}
 }
 
 void SetupWindow::on_pushButton_clear_clicked()
 {
-	ui->textEdit_pragmas->setPlainText(controller_config);
-	ui->textEdit_includes->setPlainText(additional_includes);
-	ui->textEdit_move->setPlainText(definition_move);
-	ui->textEdit_turn->setPlainText(definition_turn);
-	ui->textEdit_init->setPlainText(misc_init);
-	ui->textEdit_misc_declare->setPlainText(misc_declare);
-	ui->textEdit_misc_define->setPlainText(misc_define);
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		code_edits[i]->setHtml(format_code(*(code_vars[i])));
+	}
 }
 
 void SetupWindow::on_pushButton_empty_clicked()
 {
-	ui->textEdit_pragmas->setPlainText("");
-	ui->textEdit_includes->setPlainText("");
-	ui->textEdit_move->setPlainText("");
-	ui->textEdit_turn->setPlainText("");
-	ui->textEdit_init->setPlainText("");
-	ui->textEdit_misc_declare->setPlainText("");
-	ui->textEdit_misc_define->setPlainText("");
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		code_edits[i]->setPlainText("");
+	}
 }
 
 void SetupWindow::on_pushButton_close_clicked()
 {
-	// remember to clear data
+	for (unsigned int i=0; i<code_edits.size(); i++) {
+		code_edits[i]->setHtml(format_code(*(code_vars[i])));
+	}
 	this->close();
 }
 
@@ -127,27 +143,52 @@ QString SetupWindow::format_code(QString input)
 		QString current_line = raw_list.at(i);
 		current_line.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
 		current_line.replace(" ", "&nbsp;");
-		if (raw_list.at(i).startsWith("#")) {
-			current_line = "<font color=\"Maroon\">" + current_line + "</font>";
-		}
-		if (raw_list.at(i).startsWith("//")) {
-			current_line = "<font color=\"Green\">" + current_line + "</font>";
-		}
+		current_line.replace("\\", "<font color=\"Gray\">\\</font>");
 		output += current_line;
 		output += "<br />";
 	}
 	output.chop(6); // last "<br />
+	QRegularExpression find_line_comment("\/{2,}+.*");
+	QRegularExpressionMatch line_comment_match = find_line_comment.match(output);
+	for (int i=0; i<line_comment_match.capturedTexts().size(); i++) {
+		QString original = line_comment_match.captured(i);
+		QString replaced = "<font color=\"Green\">"+original+"</font>";
+		output.replace(original, replaced);
+	}
+	QRegularExpression find_pragma("#+.*");
+	QRegularExpressionMatch pragma_match = find_pragma.match(output);
+	for (int i=0; i<pragma_match.capturedTexts().size(); i++) {
+		QString original = pragma_match.captured(i);
+		QString replaced = "<font color=\"Maroon\">"+original+"</font>";
+		output.replace(original, replaced);
+	}
+	QRegularExpression find_block_comment("\/\\*.*?\\*\/");
+	find_block_comment.setPatternOptions(QRegularExpression::MultilineOption);
+	QRegularExpressionMatch block_comment_match = find_block_comment.match(output);
+	for (int i=0; i<block_comment_match.capturedTexts().size(); i++) {
+		QString original = block_comment_match.captured(i);
+		QString replaced = "<font color=\"Green\">"+original+"</font>";
+		output.replace(original, replaced);
+	}
 	for (int i=0; i<keywords.size(); i++) {
 		QString current = keywords[i];
-		output.replace("&nbsp;"+current, "<font color=\"Blue\">&nbsp;"+current+"</font>");
-		output.replace("<br />"+current, "<br /><font color=\"Blue\">"+current+"</font>");
-		output.replace(current+"&nbsp;", "<font color=\"Blue\">"+current+"&nbsp;</font>"); // TODO: THIS SUCKS
+		QRegularExpression find_keyword("\\b("+current+")\\b");
+		QRegularExpressionMatch match = find_keyword.match(current);
+		for (int j=0; j<match.capturedTexts().size(); j++) {
+			QString original = match.captured(j);
+			QString replaced = "<font color=\"Blue\">"+original+"</font>";
+			output.replace(original, replaced);
+		}
 	}
 	for (int i=0; i<functions.size(); i++) {
 		QString current = functions[i];
-		output.replace("&nbsp;"+current, "<font color=\"DarkBlue\">&nbsp;"+current+"</font>");
-		output.replace("<br />"+current, "<br /><font color=\"DarkBlue\">"+current+"</font>");
-		output.replace(current+"&nbsp;", "<font color=\"DarkBlue\">"+current+"&nbsp;</font>"); // TODO: THIS SUCKS
+		QRegularExpression find_function("\\b("+current+")\\b");
+		QRegularExpressionMatch match = find_function.match(current);
+		for (int j=0; j<match.capturedTexts().size(); j++) {
+			QString original = match.captured(j);
+			QString replaced = "<font color=\"DarkBlue\">"+original+"</font>";
+			output.replace(original, replaced);
+		}
 	}
 	return output;
 }
@@ -170,41 +211,6 @@ void SetupWindow::write_file(QString path, QString input)
 	write_buffer << input;
 	file.flush();
 	file.close();
-}
-
-void SetupWindow::create_new_action()
-{
-	QWidget* blank_widget = new QWidget();
-	QGridLayout* blank_action = new QGridLayout(blank_widget);
-	blank_action->layout()->setMargin(0);
-
-	QLabel* label_name = new QLabel("Action Name:");
-	QLabel* label_declare = new QLabel("Declaration/\nCall:");
-
-	QLineEdit* lineEdit_name = new QLineEdit();
-	lineEdit_name->setStyleSheet("font: bold 10pt");
-	lineEdit_name->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
-	lineEdit_name->setClearButtonEnabled(true);
-
-	QLineEdit* lineEdit_declare = new QLineEdit();
-	lineEdit_declare->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
-	lineEdit_declare->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
-	lineEdit_declare->setClearButtonEnabled(true);
-
-	QTextEdit* textEdit_define = new QTextEdit();
-	textEdit_define->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
-	textEdit_define->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
-	textEdit_define->setLineWrapMode(QTextEdit::NoWrap);
-	textEdit_define->setAcceptRichText(false);
-
-	blank_action->addWidget(label_name, 0, 0);
-	blank_action->addWidget(lineEdit_name, 0, 1);
-	blank_action->addWidget(label_declare, 1, 0);
-	blank_action->addWidget(lineEdit_declare, 1, 1);
-	blank_action->addWidget(textEdit_define, 2, 0, 1, 2);
-
-	int insert_pos = 0;
-	ui->verticalLayout->insertWidget(insert_pos, blank_widget);
 }
 
 bool SetupWindow::eventFilter(QObject *object, QEvent *event)

@@ -5,7 +5,8 @@ DrawWindow::DrawWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::DrawWindow),
     setupWindow(new SetupWindow),
-	list_history(new ActionList)
+	list_history(new ActionList),
+	isDragging(false)
 {
 	ui->setupUi(this);
 
@@ -60,54 +61,139 @@ DrawWindow::DrawWindow(QWidget *parent) :
 
 	field.setSceneRect(-5, -5, 149, 149);
 	ui->graphicsView->setScene(&field);
+
+	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_pressed,
+						this,				&DrawWindow::add_move);
+	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_moved,
+						this,				&DrawWindow::update_move);
+	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_released,
+						this,				&DrawWindow::end_move);
 }
 
 void DrawWindow::resizeEvent(QResizeEvent* event)
 {
 	ui->graphicsView->fitInView(field.itemsBoundingRect(), Qt::KeepAspectRatio);
+	ui->graphicsView->centerOn(field.itemsBoundingRect().center());
 	QMainWindow::resizeEvent(event);
 }
 
 void DrawWindow::showEvent(QShowEvent* event)
 {
 	ui->graphicsView->fitInView(field.itemsBoundingRect(), Qt::KeepAspectRatio);
+	ui->graphicsView->centerOn(field.itemsBoundingRect().center());
 	QMainWindow::showEvent(event);
 }
 
 DrawWindow::~DrawWindow()
 {
 	delete ui;
-    delete setupWindow;
+	delete setupWindow;
 	delete list_history;
 }
 
 void DrawWindow::on_pushButton_setup_clicked()
 {
-    setupWindow->show();
+	setupWindow->show();
 }
 
 void DrawWindow::on_pushButton_generateProgram_clicked()
 {
-	QString final;
-	final += SetupWindow::read_file("code/controller_config.txt");
-	final += "\n";
-	final += "#include \"JoystickDriver.c\"\n\n";
-	final += SetupWindow::read_file("code/additional_includes.txt");
-	final += "\n";
-	final += canned_declares;
-	final += "\n";
-	final += SetupWindow::read_file("code/misc_declare.txt");
-	final += "\ntask main()\n{\n";
-	final += SetupWindow::read_file("code/misc_init.txt");
-	final += "\n\t waitForStart();\n";
-	final += "}\n\n";
-	final += SetupWindow::read_file("code/definition_move.txt");
-	final += "\n";
-	final += SetupWindow::read_file("code/definition_turn.txt");
-	final += "\n";
-	final += canned_definitions;
-	final += "\n";
-	final += SetupWindow::read_file("code/misc__define.txt");
-	final += "\n";
-	SetupWindow::write_file("output/Autonomous.c", final);
+	QString output_filename = QFileDialog::getSaveFileName(	this,
+															"Choose location...",
+															"Auton.c",
+															"RobotC programs (*.c)");
+	QFile output_program(output_filename);
+	output_program.open(QIODevice::ReadWrite | QIODevice::Text);
+	QTextStream output_stream(&output_program);
+	output_stream <<  SetupWindow::read_file("code/controller_config.txt");
+	output_stream << "\n";
+	output_stream << "#include \"JoystickDriver.c\"\n\n";
+	output_stream << SetupWindow::read_file("code/additional_includes.txt");
+	output_stream << "\n";
+	output_stream << canned_declares;
+	output_stream << "\n";
+	output_stream << SetupWindow::read_file("code/misc_declare.txt");
+	output_stream << "\ntask main()\n{\n";
+	output_stream << SetupWindow::read_file("code/misc_init.txt");
+	output_stream << "\n\twaitForStart();\n\n";
+	output_stream << list_history->getCalls();
+	output_stream << "}\n\n";
+	output_stream << SetupWindow::read_file("code/definition_move.txt");
+	output_stream << "\n";
+	output_stream << SetupWindow::read_file("code/definition_turn.txt");
+	output_stream << "\n";
+	output_stream << canned_definitions;
+	output_stream << "\n";
+	output_stream << SetupWindow::read_file("code/misc__define.txt");
+	output_stream << "\n";
+	output_stream.flush();
+}
+
+void DrawWindow::add_move(QPointF start)
+{
+	isDragging = true;
+	QPointF rounded = ui->graphicsView->mapToScene(start.toPoint());
+	if (list_history->getSize() == 0) {
+		startPoint = rounded;
+	} else {
+		startPoint = endPoint; // TODO: is this safe?
+	}
+	endPoint = rounded;
+	currentLine = field.addLine(	startPoint.x(),
+									startPoint.y(),
+									endPoint.x(),
+									endPoint.y()	);
+	currentLine->setPen(QPen(QBrush(Qt::black), 3));
+}
+
+void DrawWindow::update_move(QPointF end)
+{
+	if (isDragging) {
+		endPoint = ui->graphicsView->mapToScene(end.toPoint());
+		currentLine->setLine(	startPoint.x(),
+								startPoint.y(),
+								endPoint.x(),
+								endPoint.y()	);
+	}
+}
+
+void DrawWindow::end_move(QPointF end)
+{
+	if (isDragging) {
+		endPoint = ui->graphicsView->mapToScene(end.toPoint());
+		currentLine->setLine(	startPoint.x(),
+								startPoint.y(),
+								endPoint.x(),
+								endPoint.y()	);
+	}
+	isDragging = false;
+	MoveDirection direction = MOVE_FORWARD;
+	if (ui->toolButton_reverse->isChecked()) {
+		direction = MOVE_BACKWARD;
+	}
+	ActionMove* new_move = new ActionMove(direction, startPoint, endPoint);
+	if (list_history->getSize() > 0) {
+		Action* last_action_buf = list_history->getAction(list_history->getSize()-1);
+		ActionMove* last_action = dynamic_cast<ActionMove*>(last_action_buf);
+		QPointF vect_A(last_action->getStart() - last_action->getEnd());
+		QPointF vect_B(endPoint - startPoint);
+		float angle_A = atan2(vect_A.y(), vect_A.x());
+		float angle_B = atan2(vect_B.y(), vect_B.x());
+		float angle =  angle_A - angle_B;
+		angle = angle * 180.0 / 3.14159;
+		if (angle > 180) {
+			angle -= 360;
+		}
+		if (angle < -180) {
+			angle += 360;
+		}
+		TurnDirection direction = TURN_LEFT;
+		if (angle < 0) {
+			direction = TURN_RIGHT;
+			angle *= -1;
+		}
+		ActionTurn* turn = new ActionTurn(direction, startPoint, angle);
+		list_history->addAction(turn);
+	}
+	list_history->addAction(new_move);
 }

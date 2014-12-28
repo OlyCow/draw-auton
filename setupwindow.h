@@ -3,14 +3,9 @@
 
 #include <QDialog>
 
-#include <vector>
+#include "actionwidget.h"
 
-#include <QWidget>
-#include <QVBoxLayout>
-#include <QGridLayout>
-#include <QLabel>
-#include <QLineEdit>
-#include <QTextEdit>
+#include <vector>
 
 #include <QEvent>
 #include <QString>
@@ -21,6 +16,11 @@
 #include <QFontDatabase>
 #include <QFontMetrics>
 #include <QTextCursor>
+
+#include <QRegularExpression>
+#include <QRegularExpressionMatch>
+
+class ActionWidget;
 
 namespace Ui {
 class SetupWindow;
@@ -41,6 +41,10 @@ public:
 	static QStringList keywords;
 	static QStringList functions;
 
+public slots:
+	void create_action_widget();
+	void remove_action_widget(int index_accept);
+
 private slots:
 	void on_pushButton_save_clicked();
 	void on_pushButton_clear_clicked();
@@ -50,6 +54,11 @@ private slots:
 private:
 	Ui::SetupWindow *ui;
     std::vector<QWidget> custom_action;
+	std::vector<ActionWidget*> action_widget;
+	std::vector<QTextEdit*> code_edits;
+	std::vector<QString*> code_vars;
+	std::vector<QString> code_urls;
+	int action_widget_num;
 	QString controller_config;
 	QString additional_includes;
 	QString definition_move;
@@ -58,7 +67,8 @@ private:
 	QString misc_declare;
 	QString misc_define;
 
-    void create_new_action();
+	void add_action_widget();
+	void delete_action_widget(int index);
 
 	bool eventFilter(QObject* object, QEvent* event);
 };

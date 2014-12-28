@@ -403,75 +403,10 @@
             <x>0</x>
             <y>0</y>
             <width>433</width>
-            <height>448</height>
+            <height>309</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
-           <item>
-            <layout class="QGridLayout" name="gridLayout_custom">
-             <item row="2" column="0" colspan="2">
-              <widget class="QTextEdit" name="textEdit_custom_define">
-               <property name="focusPolicy">
-                <enum>Qt::ClickFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">font: 10pt &quot;Droid Sans Mono&quot;;</string>
-               </property>
-               <property name="lineWrapMode">
-                <enum>QTextEdit::NoWrap</enum>
-               </property>
-               <property name="acceptRichText">
-                <bool>false</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="1">
-              <widget class="QLineEdit" name="lineEdit_custom_name">
-               <property name="font">
-                <font>
-                 <pointsize>10</pointsize>
-                 <weight>75</weight>
-                 <bold>true</bold>
-                </font>
-               </property>
-               <property name="focusPolicy">
-                <enum>Qt::ClickFocus</enum>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="0">
-              <widget class="QLabel" name="label_custom_declare">
-               <property name="text">
-                <string>Declaration/
-Call:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="0" column="0">
-              <widget class="QLabel" name="label_custom_name">
-               <property name="text">
-                <string>Action Name:</string>
-               </property>
-              </widget>
-             </item>
-             <item row="1" column="1">
-              <widget class="QLineEdit" name="lineEdit_custom_declare">
-               <property name="focusPolicy">
-                <enum>Qt::ClickFocus</enum>
-               </property>
-               <property name="styleSheet">
-                <string notr="true">font: 10pt &quot;Droid Sans Mono&quot;;</string>
-               </property>
-               <property name="clearButtonEnabled">
-                <bool>true</bool>
-               </property>
-              </widget>
-             </item>
-            </layout>
-           </item>
            <item>
             <widget class="Line" name="line_custom">
              <property name="orientation">

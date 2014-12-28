@@ -1,4 +1,5 @@
 # Temporary ignores
+*.app
 *.png
 *.ttf
 code/

@@ -131,7 +131,7 @@
             </property>
             <property name="icon">
              <iconset resource="icons.qrc">
-              <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
+              <normaloff>:/icons/arrow-up.png</normaloff>:/icons/arrow-up.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -143,6 +143,9 @@
              <bool>true</bool>
             </property>
             <property name="checked">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
              <bool>true</bool>
             </property>
             <property name="toolButtonStyle">
@@ -175,7 +178,7 @@
             </property>
             <property name="icon">
              <iconset resource="icons.qrc">
-              <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
+              <normaloff>:/icons/arrow-down.png</normaloff>:/icons/arrow-down.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -184,6 +187,9 @@
              </size>
             </property>
             <property name="checkable">
+             <bool>true</bool>
+            </property>
+            <property name="autoExclusive">
              <bool>true</bool>
             </property>
             <property name="toolButtonStyle">
@@ -245,12 +251,59 @@
             </property>
            </spacer>
           </item>
+          <item>
+           <widget class="QToolButton" name="toolButton_add_2">
+            <property name="sizePolicy">
+             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
+              <horstretch>0</horstretch>
+              <verstretch>0</verstretch>
+             </sizepolicy>
+            </property>
+            <property name="minimumSize">
+             <size>
+              <width>50</width>
+              <height>0</height>
+             </size>
+            </property>
+            <property name="cursor">
+             <cursorShape>PointingHandCursor</cursorShape>
+            </property>
+            <property name="toolTip">
+             <string>Opens Setup dialog to add a new action.</string>
+            </property>
+            <property name="text">
+             <string>Add</string>
+            </property>
+            <property name="icon">
+             <iconset resource="icons.qrc">
+              <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
+            </property>
+            <property name="iconSize">
+             <size>
+              <width>24</width>
+              <height>24</height>
+             </size>
+            </property>
+            <property name="shortcut">
+             <string>Shift+A</string>
+            </property>
+            <property name="toolButtonStyle">
+             <enum>Qt::ToolButtonTextUnderIcon</enum>
+            </property>
+           </widget>
+          </item>
          </layout>
         </widget>
        </widget>
       </item>
       <item>
-       <widget class="QGraphicsView" name="graphicsView">
+       <widget class="GraphicsViewEdit" name="graphicsView">
+        <property name="cursor" stdset="0">
+         <cursorShape>CrossCursor</cursorShape>
+        </property>
+        <property name="mouseTracking">
+         <bool>true</bool>
+        </property>
         <property name="focusPolicy">
          <enum>Qt::NoFocus</enum>
         </property>
@@ -262,6 +315,9 @@
         </property>
         <property name="horizontalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
+        </property>
+        <property name="renderHints">
+         <set>QPainter::Antialiasing|QPainter::TextAntialiasing</set>
         </property>
        </widget>
       </item>
@@ -569,6 +625,13 @@ Diagram</string>
   </widget>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>GraphicsViewEdit</class>
+   <extends>QGraphicsView</extends>
+   <header>graphicsviewedit.h</header>
+  </customwidget>
+ </customwidgets>
  <tabstops>
   <tabstop>pushButton_setup</tabstop>
   <tabstop>toolButton_drive</tabstop>

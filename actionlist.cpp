@@ -6,15 +6,15 @@ ActionList::ActionList() :
 {
 }
 
-void ActionList::addAction(Action input)
+void ActionList::addAction(Action* input)
 {
 	base_list.push_back(input);
 	current_pos = base_list.size() - 1; // because array index (untested)
 }
 
-void ActionList::addAction(Action input, int pos)
+void ActionList::addAction(Action* input, int pos)
 {
-	std::vector<Action>::iterator pointer = base_list.begin();
+	std::vector<Action*>::iterator pointer = base_list.begin();
 	pointer += pos;
 	base_list.insert(pointer, input);
 	current_pos = pos;
@@ -28,7 +28,7 @@ void ActionList::deleteAction()
 
 void ActionList::deleteAction(int pos)
 {
-	std::vector<Action>::iterator pointer = base_list.begin();
+	std::vector<Action*>::iterator pointer = base_list.begin();
 	pointer += pos;
 	base_list.erase(pointer);
 	current_pos = pos - 1;
@@ -44,7 +44,8 @@ QString ActionList::getCalls()
 {
 	QString output;
 	for (unsigned int i=0; i<base_list.size(); i++) {
-		output += (base_list[i]).getCall();
+		output += "\t";
+		output += (base_list[i])->getCall();
 	}
 	return output;
 }
