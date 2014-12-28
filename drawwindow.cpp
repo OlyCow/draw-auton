@@ -5,7 +5,8 @@ DrawWindow::DrawWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::DrawWindow),
     setupWindow(new SetupWindow),
-	list_history(new ActionList)
+	list_history(new ActionList),
+	isDragging(false)
 {
 	ui->setupUi(this);
 
@@ -60,6 +61,13 @@ DrawWindow::DrawWindow(QWidget *parent) :
 
 	field.setSceneRect(-5, -5, 149, 149);
 	ui->graphicsView->setScene(&field);
+
+	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_pressed,
+						this,				&DrawWindow::add_move);
+	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_moved,
+						this,				&DrawWindow::update_move);
+	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_released,
+						this,				&DrawWindow::end_move);
 }
 
 void DrawWindow::resizeEvent(QResizeEvent* event)
@@ -77,13 +85,13 @@ void DrawWindow::showEvent(QShowEvent* event)
 DrawWindow::~DrawWindow()
 {
 	delete ui;
-    delete setupWindow;
+	delete setupWindow;
 	delete list_history;
 }
 
 void DrawWindow::on_pushButton_setup_clicked()
 {
-    setupWindow->show();
+	setupWindow->show();
 }
 
 void DrawWindow::on_pushButton_generateProgram_clicked()
@@ -110,4 +118,40 @@ void DrawWindow::on_pushButton_generateProgram_clicked()
 	final += SetupWindow::read_file("code/misc__define.txt");
 	final += "\n";
 	SetupWindow::write_file("output/Autonomous.c", final);
+}
+
+void DrawWindow::add_move(QPointF start)
+{
+	isDragging = true;
+	QPointF rounded = ui->graphicsView->mapToScene(start.toPoint());
+	startPoint = rounded;
+	endPoint = rounded;
+	currentLine = field.addLine(	startPoint.x(),
+									startPoint.y(),
+									endPoint.x(),
+									endPoint.y()	);
+	currentLine->setPen(QPen(QBrush(Qt::black), 3));
+}
+
+void DrawWindow::update_move(QPointF end)
+{
+	if (isDragging) {
+		endPoint = ui->graphicsView->mapToScene(end.toPoint());
+		currentLine->setLine(	startPoint.x(),
+								startPoint.y(),
+								endPoint.x(),
+								endPoint.y()	);
+	}
+}
+
+void DrawWindow::end_move(QPointF end)
+{
+	if (isDragging) {
+		endPoint = ui->graphicsView->mapToScene(end.toPoint());
+		currentLine->setLine(	startPoint.x(),
+								startPoint.y(),
+								endPoint.x(),
+								endPoint.y()	);
+	}
+	isDragging = false;
 }
