@@ -143,6 +143,7 @@ QString SetupWindow::format_code(QString input)
 		QString current_line = raw_list.at(i);
 		current_line.replace("\t", "&nbsp;&nbsp;&nbsp;&nbsp;");
 		current_line.replace(" ", "&nbsp;");
+		current_line.replace("\\", "<font color=\"Gray\">\\</font>");
 		output += current_line;
 		output += "<br />";
 	}

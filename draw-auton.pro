@@ -21,7 +21,10 @@ SOURCES += main.cpp\
     helpwindow.cpp \
     actionwidget.cpp \
     actioncustom.cpp \
-    actionmove.cpp
+    actionmove.cpp \
+    actiondefine.cpp \
+    actiontool.cpp \
+    graphicsviewedit.cpp
 
 HEADERS  += drawwindow.h \
     actionlist.h \
@@ -31,7 +34,10 @@ HEADERS  += drawwindow.h \
     helpwindow.h \
     actionwidget.h \
     actioncustom.h \
-    actionmove.h
+    actionmove.h \
+    actiondefine.h \
+    actiontool.h \
+    graphicsviewedit.h
 
 FORMS    += drawwindow.ui \
     setupwindow.ui \
