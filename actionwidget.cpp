@@ -13,15 +13,15 @@ ActionWidget::ActionWidget(QWidget *parent, int index_assign) :
 	layout->layout()->setMargin(0);
 
 	lineEdit_name->setStyleSheet("font: bold 10pt");
-	lineEdit_name->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
+	lineEdit_name->setFocusPolicy(Qt::ClickFocus);
 	lineEdit_name->setClearButtonEnabled(true);
 
 	lineEdit_declare->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
-	lineEdit_declare->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
+	lineEdit_declare->setFocusPolicy(Qt::ClickFocus);
 	lineEdit_declare->setClearButtonEnabled(true);
 
 	textEdit_define->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
-	textEdit_define->setFocusPolicy(Qt::FocusPolicy::ClickFocus);
+	textEdit_define->setFocusPolicy(Qt::ClickFocus);
 	textEdit_define->setLineWrapMode(QTextEdit::NoWrap);
 	textEdit_define->setAcceptRichText(false);
 
