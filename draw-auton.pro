@@ -24,7 +24,8 @@ SOURCES += main.cpp\
     actionmove.cpp \
     actiondefine.cpp \
     actiontool.cpp \
-    graphicsviewedit.cpp
+    graphicsviewedit.cpp \
+    actionturn.cpp
 
 HEADERS  += drawwindow.h \
     actionlist.h \
@@ -37,7 +38,8 @@ HEADERS  += drawwindow.h \
     actionmove.h \
     actiondefine.h \
     actiontool.h \
-    graphicsviewedit.h
+    graphicsviewedit.h \
+    actionturn.h
 
 FORMS    += drawwindow.ui \
     setupwindow.ui \

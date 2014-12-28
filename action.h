@@ -9,6 +9,7 @@ class Action
 public:
 	Action(	QString input_name,
 			QString input_param);
+	virtual ~Action();
 
 	void update_call();
 

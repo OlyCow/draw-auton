@@ -14,6 +14,7 @@
 
 #include "action.h"
 #include "actionmove.h"
+#include "actionturn.h"
 #include "actionlist.h"
 
 #include "graphicsviewedit.h"

@@ -7,6 +7,10 @@ Action::Action() :
 {
 }
 
+Action::~Action()
+{
+}
+
 Action::Action(QString input_name,
 				QString input_param) :
 	name(input_name),

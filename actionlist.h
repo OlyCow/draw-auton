@@ -9,8 +9,8 @@ class ActionList
 public:
 	ActionList();
 
-	void addAction(Action input);
-	void addAction(Action input, int pos);
+	void addAction(Action* input);
+	void addAction(Action* input, int pos);
 	void deleteAction();
 	void deleteAction(int pos);
 	void clearAll();
@@ -19,10 +19,12 @@ public:
 
 	int getPos()	{return current_pos;}
 
+	Action* getAction(int index)	{return base_list[index];}
+
 	QString getCalls();
 
 private:
-	std::vector<Action> base_list;
+	std::vector<Action*> base_list;
 	int current_pos;
 };
 

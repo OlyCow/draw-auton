@@ -163,5 +163,28 @@ void DrawWindow::end_move(QPointF end)
 	if (ui->toolButton_reverse->isChecked()) {
 		direction = MOVE_BACKWARD;
 	}
-	list_history->addAction(ActionMove(direction, startPoint, endPoint));
+	ActionMove* new_move = new ActionMove(direction, startPoint, endPoint);
+	if (list_history->getSize() > 0) {
+		Action* last_action_buf = list_history->getAction(list_history->getSize()-1);
+		ActionMove* last_action = dynamic_cast<ActionMove*>(last_action_buf);
+		QPointF vect_A(last_action->getStart() - last_action->getEnd());
+		QPointF vect_B(endPoint - startPoint);
+		float angle_A = atan2(vect_A.y(), vect_A.x());
+		float angle_B = atan2(vect_B.y(), vect_B.x());
+		float angle =  angle_A - angle_B;
+		angle = angle * 180.0 / 3.1416;
+		if (angle > 180) {
+			angle -= 360;
+		}
+		if (angle < -180) {
+			angle += 360;
+		}
+		TurnDirection direction = TURN_LEFT;
+		if (angle < 0) {
+			direction = TURN_RIGHT;
+		}
+		ActionTurn* turn = new ActionTurn(direction, startPoint, angle);
+		list_history->addAction(turn);
+	}
+	list_history->addAction(new_move);
 }
