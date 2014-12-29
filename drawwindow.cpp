@@ -80,6 +80,12 @@ DrawWindow::DrawWindow(QWidget *parent) :
 
 DrawWindow::~DrawWindow()
 {
+	on_pushButton_clear_clicked();
+
+	delete currentLine;
+	delete circleHome;
+	delete circleCurrent;
+
 	delete ui;
 	delete setupWindow;
 	delete helpWindow;
@@ -116,6 +122,12 @@ void DrawWindow::add_move(QPointF start)
 	}
 	if (list_history->getSize() == 0) {
 		startPoint = rounded;
+		circleHome = field.addEllipse(	startPoint.x()-4,
+										startPoint.y()-4,
+										8,
+										8					);
+		circleHome->setPen(QPen(QBrush(QColor("orangered")), 2));
+		circleHome->setBrush(QBrush(Qt::yellow));
 	} else {
 		startPoint = endPoint; // TODO: is this safe?
 	}
@@ -308,6 +320,8 @@ void DrawWindow::on_pushButton_undo_clicked()
 		if (list_history->getSize() == 0) {
 			currentLine = nullptr;
 			endPoint = QPointF(0, 0);
+			field.removeItem(circleHome);
+			circleHome = nullptr;
 		} else {
 			list_history->deleteAction();
 			currentLine = list_lines.back();

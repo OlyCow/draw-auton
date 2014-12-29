@@ -16,6 +16,7 @@
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
 #include <QGraphicsLineItem>
+#include <QGraphicsEllipseItem>
 
 #include <QImage>
 #include <QPainter>
@@ -85,6 +86,8 @@ private:
 	QPointF startPoint;
 	QPointF endPoint;
 	QGraphicsLineItem* currentLine;
+	QGraphicsEllipseItem* circleHome;
+	QGraphicsEllipseItem* circleCurrent;
 
 	void resizeEvent(QResizeEvent* event);
 	void showEvent(QShowEvent* event);
