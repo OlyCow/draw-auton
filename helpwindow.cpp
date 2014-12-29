@@ -12,3 +12,8 @@ HelpWindow::~HelpWindow()
 {
 	delete ui;
 }
+
+void HelpWindow::on_pushButton_close_clicked()
+{
+	this->close();
+}
