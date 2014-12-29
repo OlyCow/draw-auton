@@ -8,7 +8,8 @@ DrawWindow::DrawWindow(QWidget *parent) :
 	aboutWindow(new AboutWindow(this)),
 	helpWindow(new HelpWindow(this)),
 	list_history(new ActionList),
-	isDragging(false)
+	isDragging(false),
+	isSnapping(false)
 {
 	ui->setupUi(this);
 
@@ -64,6 +65,8 @@ DrawWindow::DrawWindow(QWidget *parent) :
 	field.setSceneRect(-5, -5, 149, 149);
 	ui->graphicsView->setScene(&field);
 
+	installEventFilter(this);
+
 	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_pressed,
 						this,				&DrawWindow::add_move);
 	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_moved,
@@ -100,6 +103,17 @@ void DrawWindow::add_move(QPointF start)
 {
 	isDragging = true;
 	QPointF rounded = ui->graphicsView->mapToScene(start.toPoint());
+	if (isSnapping) {
+		int round_x = 0;
+		int round_y = 0;
+		round_x = static_cast<int>(rounded.x());
+		round_y = static_cast<int>(rounded.y());
+		round_x /= 3;
+		round_y /= 3;
+		round_x *= 3;
+		round_y *= 3;
+		rounded = QPointF(round_x, round_y);
+	}
 	if (list_history->getSize() == 0) {
 		startPoint = rounded;
 	} else {
@@ -110,13 +124,27 @@ void DrawWindow::add_move(QPointF start)
 									startPoint.y(),
 									endPoint.x(),
 									endPoint.y()	);
-	currentLine->setPen(QPen(QBrush(Qt::black), 3));
+	currentLine->setPen(QPen(QBrush(Qt::black), 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+	if (ui->toolButton_reverse->isChecked()) {
+		currentLine->setPen(QPen(QBrush(Qt::black), 3, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+	}
 }
 
 void DrawWindow::update_move(QPointF end)
 {
 	if (isDragging) {
 		endPoint = ui->graphicsView->mapToScene(end.toPoint());
+		if (isSnapping) {
+			int round_x = 0;
+			int round_y = 0;
+			round_x = static_cast<int>(endPoint.x());
+			round_y = static_cast<int>(endPoint.y());
+			round_x /= 3;
+			round_y /= 3;
+			round_x *= 3;
+			round_y *= 3;
+			endPoint = QPointF(round_x, round_y);
+		}
 		currentLine->setLine(	startPoint.x(),
 								startPoint.y(),
 								endPoint.x(),
@@ -128,6 +156,17 @@ void DrawWindow::end_move(QPointF end)
 {
 	if (isDragging) {
 		endPoint = ui->graphicsView->mapToScene(end.toPoint());
+		if (isSnapping) {
+			int round_x = 0;
+			int round_y = 0;
+			round_x = static_cast<int>(endPoint.x());
+			round_y = static_cast<int>(endPoint.y());
+			round_x /= 3;
+			round_y /= 3;
+			round_x *= 3;
+			round_y *= 3;
+			endPoint = QPointF(round_x, round_y);
+		}
 		currentLine->setLine(	startPoint.x(),
 								startPoint.y(),
 								endPoint.x(),
@@ -168,6 +207,15 @@ void DrawWindow::end_move(QPointF end)
 	}
 	list_history->addAction(new_move);
 	list_lines.push_back(currentLine);
+}
+
+void DrawWindow::start_snap()
+{
+	isSnapping = true;
+}
+void DrawWindow::end_snap()
+{
+	isSnapping = false;
 }
 
 void DrawWindow::on_pushButton_setup_clicked()
@@ -276,4 +324,21 @@ void DrawWindow::on_pushButton_clear_clicked()
 	while (list_history->getSize() > 0) {
 		ui->pushButton_undo->click();
 	}
+}
+
+bool DrawWindow::eventFilter(QObject* object, QEvent* event)
+{
+	if (event->type() == QEvent::KeyPress) {
+		QKeyEvent* converted = dynamic_cast<QKeyEvent*>(event);
+		if (converted->key() == Qt::Key_Shift) {
+			start_snap();
+		}
+	}
+	if (event->type() == QEvent::KeyRelease) {
+		QKeyEvent* converted = dynamic_cast<QKeyEvent*>(event);
+		if (converted->key() == Qt::Key_Shift) {
+			end_snap();
+		}
+	}
+	return false;
 }

@@ -9,6 +9,9 @@
 
 #include <QPointF>
 
+#include <QEvent>
+#include <QKeyEvent>
+
 #include <QGraphicsScene>
 #include <QGraphicsView>
 #include <QGraphicsRectItem>
@@ -50,6 +53,9 @@ public slots:
 	void update_move(QPointF end);
 	void end_move(QPointF end);
 
+	void start_snap();
+	void end_snap();
+
 private slots:
 	void on_pushButton_setup_clicked();
 
@@ -75,12 +81,15 @@ private:
 
 	QGraphicsScene field;
 	bool isDragging;
+	bool isSnapping;
 	QPointF startPoint;
 	QPointF endPoint;
 	QGraphicsLineItem* currentLine;
 
 	void resizeEvent(QResizeEvent* event);
 	void showEvent(QShowEvent* event);
+
+	bool eventFilter(QObject* object, QEvent* event);
 };
 
 #endif // DRAWWINDOW_H
