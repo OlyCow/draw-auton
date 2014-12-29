@@ -84,14 +84,12 @@ DrawWindow::~DrawWindow()
 void DrawWindow::resizeEvent(QResizeEvent* event)
 {
 	ui->graphicsView->fitInView(field.itemsBoundingRect(), Qt::KeepAspectRatio);
-	ui->graphicsView->centerOn(field.itemsBoundingRect().center());
 	QMainWindow::resizeEvent(event);
 }
 
 void DrawWindow::showEvent(QShowEvent* event)
 {
 	ui->graphicsView->fitInView(field.itemsBoundingRect(), Qt::KeepAspectRatio);
-	ui->graphicsView->centerOn(field.itemsBoundingRect().center());
 	QMainWindow::showEvent(event);
 }
 
@@ -168,7 +166,7 @@ void DrawWindow::on_pushButton_exportDiagram_clicked()
 															"Choose location...",
 															"Auton Diagram.png",
 															"PNG images (*.png)");
-	QImage output_image(ui->graphicsView->sceneRect().size().toSize()*8, QImage::Format_ARGB32);
+	QImage output_image(field.itemsBoundingRect().size().toSize(), QImage::Format_ARGB32);
 	output_image.fill(Qt::transparent);
 	QPainter output_painter(&output_image);
 	output_painter.setRenderHint(QPainter::Antialiasing);
