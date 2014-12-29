@@ -96,6 +96,80 @@ void DrawWindow::showEvent(QShowEvent* event)
 	QMainWindow::showEvent(event);
 }
 
+void DrawWindow::add_move(QPointF start)
+{
+	isDragging = true;
+	QPointF rounded = ui->graphicsView->mapToScene(start.toPoint());
+	if (list_history->getSize() == 0) {
+		startPoint = rounded;
+	} else {
+		startPoint = endPoint; // TODO: is this safe?
+	}
+	endPoint = rounded;
+	currentLine = field.addLine(	startPoint.x(),
+									startPoint.y(),
+									endPoint.x(),
+									endPoint.y()	);
+	currentLine->setPen(QPen(QBrush(Qt::black), 3));
+}
+
+void DrawWindow::update_move(QPointF end)
+{
+	if (isDragging) {
+		endPoint = ui->graphicsView->mapToScene(end.toPoint());
+		currentLine->setLine(	startPoint.x(),
+								startPoint.y(),
+								endPoint.x(),
+								endPoint.y()	);
+	}
+}
+
+void DrawWindow::end_move(QPointF end)
+{
+	if (isDragging) {
+		endPoint = ui->graphicsView->mapToScene(end.toPoint());
+		currentLine->setLine(	startPoint.x(),
+								startPoint.y(),
+								endPoint.x(),
+								endPoint.y()	);
+	}
+	isDragging = false;
+	MoveDirection direction = MOVE_FORWARD;
+	if (ui->toolButton_reverse->isChecked()) {
+		direction = MOVE_BACKWARD;
+	}
+	ActionMove* new_move = new ActionMove(direction, startPoint, endPoint);
+	if (list_history->getSize() > 0) {
+		Action* last_action_buf = list_history->getAction(list_history->getSize()-1);
+		ActionMove* last_action = dynamic_cast<ActionMove*>(last_action_buf);
+		QPointF vect_A(last_action->getStart() - last_action->getEnd());
+		QPointF vect_B(endPoint - startPoint);
+		float angle_A = atan2(vect_A.y(), vect_A.x());
+		float angle_B = atan2(vect_B.y(), vect_B.x());
+		float angle =  angle_A - angle_B;
+		angle = angle * 180.0 / 3.14159;
+		if (angle > 180) {
+			angle -= 360;
+		}
+		if (angle < -180) {
+			angle += 360;
+		}
+		if (ui->toolButton_reverse->isChecked()) {
+			angle += 180;
+			angle = fmod(angle, 180);
+		}
+		TurnDirection direction = TURN_LEFT;
+		if (angle < 0) {
+			direction = TURN_RIGHT;
+			angle *= -1;
+		}
+		ActionTurn* turn = new ActionTurn(direction, startPoint, angle);
+		list_history->addAction(turn);
+	}
+	list_history->addAction(new_move);
+	list_lines.push_back(currentLine);
+}
+
 void DrawWindow::on_pushButton_setup_clicked()
 {
 	setupWindow->show();
@@ -175,80 +249,6 @@ void DrawWindow::on_pushButton_exportDiagram_clicked()
 	output_painter.setRenderHint(QPainter::Antialiasing);
 	ui->graphicsView->render(&output_painter);
 	output_image.save(output_filename, "png", 0);
-}
-
-void DrawWindow::add_move(QPointF start)
-{
-	isDragging = true;
-	QPointF rounded = ui->graphicsView->mapToScene(start.toPoint());
-	if (list_history->getSize() == 0) {
-		startPoint = rounded;
-	} else {
-		startPoint = endPoint; // TODO: is this safe?
-	}
-	endPoint = rounded;
-	currentLine = field.addLine(	startPoint.x(),
-									startPoint.y(),
-									endPoint.x(),
-									endPoint.y()	);
-	currentLine->setPen(QPen(QBrush(Qt::black), 3));
-}
-
-void DrawWindow::update_move(QPointF end)
-{
-	if (isDragging) {
-		endPoint = ui->graphicsView->mapToScene(end.toPoint());
-		currentLine->setLine(	startPoint.x(),
-								startPoint.y(),
-								endPoint.x(),
-								endPoint.y()	);
-	}
-}
-
-void DrawWindow::end_move(QPointF end)
-{
-	if (isDragging) {
-		endPoint = ui->graphicsView->mapToScene(end.toPoint());
-		currentLine->setLine(	startPoint.x(),
-								startPoint.y(),
-								endPoint.x(),
-								endPoint.y()	);
-	}
-	isDragging = false;
-	MoveDirection direction = MOVE_FORWARD;
-	if (ui->toolButton_reverse->isChecked()) {
-		direction = MOVE_BACKWARD;
-	}
-	ActionMove* new_move = new ActionMove(direction, startPoint, endPoint);
-	if (list_history->getSize() > 0) {
-		Action* last_action_buf = list_history->getAction(list_history->getSize()-1);
-		ActionMove* last_action = dynamic_cast<ActionMove*>(last_action_buf);
-		QPointF vect_A(last_action->getStart() - last_action->getEnd());
-		QPointF vect_B(endPoint - startPoint);
-		float angle_A = atan2(vect_A.y(), vect_A.x());
-		float angle_B = atan2(vect_B.y(), vect_B.x());
-		float angle =  angle_A - angle_B;
-		angle = angle * 180.0 / 3.14159;
-		if (angle > 180) {
-			angle -= 360;
-		}
-		if (angle < -180) {
-			angle += 360;
-		}
-		if (ui->toolButton_reverse->isChecked()) {
-			angle += 180;
-			angle = fmod(angle, 180);
-		}
-		TurnDirection direction = TURN_LEFT;
-		if (angle < 0) {
-			direction = TURN_RIGHT;
-			angle *= -1;
-		}
-		ActionTurn* turn = new ActionTurn(direction, startPoint, angle);
-		list_history->addAction(turn);
-	}
-	list_history->addAction(new_move);
-	list_lines.push_back(currentLine);
 }
 
 void DrawWindow::on_pushButton_undo_clicked()
