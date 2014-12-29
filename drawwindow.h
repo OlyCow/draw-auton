@@ -12,6 +12,9 @@
 #include <QGraphicsRectItem>
 #include <QGraphicsLineItem>
 
+#include <QImage>
+#include <QPainter>
+
 #include <QTextStream>
 #include <QFile>
 #include <QFileDialog>
@@ -49,6 +52,8 @@ private slots:
 	void on_pushButton_setup_clicked();
 
 	void on_pushButton_generateProgram_clicked();
+
+	void on_pushButton_exportDiagram_clicked();
 
 private:
 	Ui::DrawWindow *ui;

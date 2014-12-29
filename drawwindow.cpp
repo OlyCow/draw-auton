@@ -222,3 +222,17 @@ void DrawWindow::end_move(QPointF end)
 	}
 	list_history->addAction(new_move);
 }
+
+void DrawWindow::on_pushButton_exportDiagram_clicked()
+{
+	QString output_filename = QFileDialog::getSaveFileName(	this,
+															"Choose location...",
+															"Auton Diagram.png",
+															"PNG images (*.png)");
+	QImage output_image(ui->graphicsView->sceneRect().size().toSize()*8, QImage::Format_ARGB32);
+	output_image.fill(Qt::transparent);
+	QPainter output_painter(&output_image);
+	output_painter.setRenderHint(QPainter::Antialiasing);
+	ui->graphicsView->render(&output_painter);
+	output_image.save(output_filename, "png", 0);
+}

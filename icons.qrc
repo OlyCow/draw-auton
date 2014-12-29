@@ -11,5 +11,6 @@
         <file>icons/arrow-down.png</file>
         <file>icons/arrow-up.png</file>
         <file>icons/excerpt.png</file>
+        <file>icons/download.png</file>
     </qresource>
 </RCC>

@@ -252,7 +252,7 @@
            </spacer>
           </item>
           <item>
-           <widget class="QToolButton" name="toolButton_add_2">
+           <widget class="QToolButton" name="toolButton_import">
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -269,14 +269,14 @@
              <cursorShape>PointingHandCursor</cursorShape>
             </property>
             <property name="toolTip">
-             <string>Opens Setup dialog to add a new action.</string>
+             <string>Import a path file.</string>
             </property>
             <property name="text">
-             <string>Add</string>
+             <string>Import</string>
             </property>
             <property name="icon">
              <iconset resource="icons.qrc">
-              <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
+              <normaloff>:/icons/download.png</normaloff>:/icons/download.png</iconset>
             </property>
             <property name="iconSize">
              <size>
@@ -285,7 +285,7 @@
              </size>
             </property>
             <property name="shortcut">
-             <string>Shift+A</string>
+             <string>Ctrl+I</string>
             </property>
             <property name="toolButtonStyle">
              <enum>Qt::ToolButtonTextUnderIcon</enum>
