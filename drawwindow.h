@@ -5,9 +5,11 @@
 
 #include <QMainWindow>
 
+#include <cmath>
 #include <vector>
 
 #include <QPointF>
+#include <QSize>
 
 #include <QEvent>
 #include <QKeyEvent>

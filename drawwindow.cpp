@@ -114,8 +114,8 @@ void DrawWindow::add_move(QPointF start)
 		int round_y = 0;
 		round_x = static_cast<int>(rounded.x());
 		round_y = static_cast<int>(rounded.y());
-		round_x /= 3;
-		round_y /= 3;
+		round_x = round(round_x/3.0);
+		round_y = round(round_y/3.0);
 		round_x *= 3;
 		round_y *= 3;
 		rounded = QPointF(round_x, round_y);
@@ -151,8 +151,8 @@ void DrawWindow::update_move(QPointF end)
 			int round_y = 0;
 			round_x = static_cast<int>(endPoint.x());
 			round_y = static_cast<int>(endPoint.y());
-			round_x /= 3;
-			round_y /= 3;
+			round_x = round(round_x/3.0);
+			round_y = round(round_y/3.0);
 			round_x *= 3;
 			round_y *= 3;
 			endPoint = QPointF(round_x, round_y);
@@ -173,8 +173,8 @@ void DrawWindow::end_move(QPointF end)
 			int round_y = 0;
 			round_x = static_cast<int>(endPoint.x());
 			round_y = static_cast<int>(endPoint.y());
-			round_x /= 3;
-			round_y /= 3;
+			round_x = round(round_x/3.0);
+			round_y = round(round_y/3.0);
 			round_x *= 3;
 			round_y *= 3;
 			endPoint = QPointF(round_x, round_y);
@@ -303,11 +303,15 @@ void DrawWindow::on_pushButton_exportDiagram_clicked()
 															"Choose location...",
 															"Auton Diagram.png",
 															"PNG images (*.png)");
-	QImage output_image(field.itemsBoundingRect().size().toSize(), QImage::Format_ARGB32);
+	QSize output_size = field.itemsBoundingRect().size().toSize()*8;
+	QImage output_image(output_size, QImage::Format_ARGB32);
 	output_image.fill(Qt::transparent);
 	QPainter output_painter(&output_image);
 	output_painter.setRenderHint(QPainter::Antialiasing);
-	ui->graphicsView->render(&output_painter);
+	ui->graphicsView->render(	&output_painter,
+								QRect(),
+								QRect(ui->graphicsView->mapFromScene(-10, -10), ui->graphicsView->mapFromScene(154, 154)),
+								Qt::KeepAspectRatio);
 	output_image.save(output_filename, "png", 0);
 }
 

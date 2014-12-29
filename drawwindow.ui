@@ -199,6 +199,9 @@
           </item>
           <item>
            <widget class="QToolButton" name="toolButton_add">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -253,6 +256,9 @@
           </item>
           <item>
            <widget class="QToolButton" name="toolButton_import">
+            <property name="enabled">
+             <bool>false</bool>
+            </property>
             <property name="sizePolicy">
              <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
               <horstretch>0</horstretch>
@@ -674,8 +680,10 @@ Diagram</string>
   <tabstop>toolButton_drive</tabstop>
   <tabstop>toolButton_reverse</tabstop>
   <tabstop>toolButton_add</tabstop>
+  <tabstop>toolButton_import</tabstop>
   <tabstop>pushButton_generateProgram</tabstop>
   <tabstop>pushButton_exportDiagram</tabstop>
+  <tabstop>pushButton_undo</tabstop>
   <tabstop>pushButton_clear</tabstop>
   <tabstop>pushButton_help</tabstop>
   <tabstop>pushButton_about</tabstop>
