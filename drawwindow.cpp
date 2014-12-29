@@ -102,31 +102,52 @@ void DrawWindow::on_pushButton_generateProgram_clicked()
 															"Choose location...",
 															"Auton.c",
 															"RobotC programs (*.c)");
+	QProgressDialog* write_progress = new QProgressDialog(	"Writing program...",
+															QString(),
+															0,
+															15,
+															this);
+	write_progress->setMinimumDuration(500);
 	QFile output_program(output_filename);
 	output_program.open(QIODevice::ReadWrite | QIODevice::Text);
 	QTextStream output_stream(&output_program);
+	write_progress->setValue(1);
 	output_stream <<  SetupWindow::read_file("code/controller_config.txt");
+	write_progress->setValue(2);
 	output_stream << "\n";
 	output_stream << "#include \"JoystickDriver.c\"\n\n";
+	write_progress->setValue(3);
 	output_stream << SetupWindow::read_file("code/additional_includes.txt");
+	write_progress->setValue(4);
 	output_stream << "\n";
 	output_stream << canned_declares;
 	output_stream << "\n";
+	write_progress->setValue(5);
 	output_stream << SetupWindow::read_file("code/misc_declare.txt");
+	write_progress->setValue(6);
 	output_stream << "\ntask main()\n{\n";
+	write_progress->setValue(7);
 	output_stream << SetupWindow::read_file("code/misc_init.txt");
+	write_progress->setValue(8);
 	output_stream << "\n\twaitForStart();\n\n";
+	write_progress->setValue(9);
 	output_stream << list_history->getCalls();
 	output_stream << "}\n\n";
+	write_progress->setValue(10);
 	output_stream << SetupWindow::read_file("code/definition_move.txt");
 	output_stream << "\n";
+	write_progress->setValue(11);
 	output_stream << SetupWindow::read_file("code/definition_turn.txt");
+	write_progress->setValue(12);
 	output_stream << "\n";
 	output_stream << canned_definitions;
 	output_stream << "\n";
+	write_progress->setValue(13);
 	output_stream << SetupWindow::read_file("code/misc__define.txt");
 	output_stream << "\n";
+	write_progress->setValue(14);
 	output_stream.flush();
+	write_progress->setValue(15);
 }
 
 void DrawWindow::add_move(QPointF start)

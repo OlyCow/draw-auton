@@ -15,6 +15,7 @@
 #include <QTextStream>
 #include <QFile>
 #include <QFileDialog>
+#include <QProgressDialog>
 
 #include "action.h"
 #include "actionmove.h"
