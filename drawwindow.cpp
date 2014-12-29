@@ -208,6 +208,10 @@ void DrawWindow::end_move(QPointF end)
 		if (angle < -180) {
 			angle += 360;
 		}
+		if (ui->toolButton_reverse->isChecked()) {
+			angle += 180;
+			angle = fmod(angle, 180);
+		}
 		TurnDirection direction = TURN_LEFT;
 		if (angle < 0) {
 			direction = TURN_RIGHT;
