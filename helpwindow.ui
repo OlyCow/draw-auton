@@ -82,7 +82,20 @@ font: 12pt;</string>
        <property name="verticalSpacing">
         <number>0</number>
        </property>
-       <item row="1" column="1">
+       <item row="5" column="1">
+        <spacer name="spacer_bottom">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <property name="sizeHint" stdset="0">
+          <size>
+           <width>20</width>
+           <height>40</height>
+          </size>
+         </property>
+        </spacer>
+       </item>
+       <item row="2" column="1">
         <widget class="QPushButton" name="pushButton_export_image">
          <property name="minimumSize">
           <size>
@@ -98,8 +111,8 @@ font: 12pt;</string>
          </property>
         </widget>
        </item>
-       <item row="0" column="1">
-        <widget class="QPushButton" name="pushButton_generate_program">
+       <item row="3" column="1">
+        <widget class="QPushButton" name="pushButton_keyboard_shortcuts">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -107,27 +120,14 @@ font: 12pt;</string>
           </size>
          </property>
          <property name="text">
-          <string>    How to generate a program</string>
+          <string>    A list of keyboard shortcuts</string>
          </property>
          <property name="flat">
           <bool>true</bool>
          </property>
         </widget>
        </item>
-       <item row="3" column="1">
-        <spacer name="spacer_bottom">
-         <property name="orientation">
-          <enum>Qt::Vertical</enum>
-         </property>
-         <property name="sizeHint" stdset="0">
-          <size>
-           <width>20</width>
-           <height>40</height>
-          </size>
-         </property>
-        </spacer>
-       </item>
-       <item row="0" column="0" rowspan="4">
+       <item row="1" column="0" rowspan="5">
         <spacer name="spacer_tab">
          <property name="orientation">
           <enum>Qt::Horizontal</enum>
@@ -143,8 +143,8 @@ font: 12pt;</string>
          </property>
         </spacer>
        </item>
-       <item row="2" column="1">
-        <widget class="QPushButton" name="pushButton_keyboard_shortcuts">
+       <item row="1" column="1">
+        <widget class="QPushButton" name="pushButton_generate_program">
          <property name="minimumSize">
           <size>
            <width>0</width>
@@ -152,7 +152,23 @@ font: 12pt;</string>
           </size>
          </property>
          <property name="text">
-          <string>    A list of keyboard shortcuts</string>
+          <string>    How to generate a program</string>
+         </property>
+         <property name="flat">
+          <bool>true</bool>
+         </property>
+        </widget>
+       </item>
+       <item row="0" column="1">
+        <widget class="QPushButton" name="pushButton_snap_to_grid">
+         <property name="minimumSize">
+          <size>
+           <width>0</width>
+           <height>45</height>
+          </size>
+         </property>
+         <property name="text">
+          <string>    How to snap nodes to a grid</string>
          </property>
          <property name="flat">
           <bool>true</bool>
@@ -220,6 +236,7 @@ font: 12pt;</string>
   </layout>
  </widget>
  <tabstops>
+  <tabstop>pushButton_snap_to_grid</tabstop>
   <tabstop>pushButton_generate_program</tabstop>
   <tabstop>pushButton_export_image</tabstop>
   <tabstop>pushButton_keyboard_shortcuts</tabstop>
