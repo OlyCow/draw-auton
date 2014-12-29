@@ -322,10 +322,10 @@ void DrawWindow::on_pushButton_undo_clicked()
 		field.removeItem(currentLine);
 		list_lines.pop_back();
 		if (list_history->getSize() == 0) {
-			currentLine = nullptr;
+			currentLine = NULL;
 			endPoint = QPointF(0, 0);
 			field.removeItem(circleHome);
-			circleHome = nullptr;
+			circleHome = NULL;
 		} else {
 			list_history->deleteAction();
 			currentLine = list_lines.back();
