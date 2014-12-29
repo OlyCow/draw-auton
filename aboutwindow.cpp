@@ -12,3 +12,8 @@ AboutWindow::~AboutWindow()
 {
 	delete ui;
 }
+
+void AboutWindow::on_pushButton_close_clicked()
+{
+	this->close();
+}

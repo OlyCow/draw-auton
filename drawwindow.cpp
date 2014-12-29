@@ -162,6 +162,20 @@ void DrawWindow::on_pushButton_generateProgram_clicked()
 	write_progress->setValue(15);
 }
 
+void DrawWindow::on_pushButton_exportDiagram_clicked()
+{
+	QString output_filename = QFileDialog::getSaveFileName(	this,
+															"Choose location...",
+															"Auton Diagram.png",
+															"PNG images (*.png)");
+	QImage output_image(ui->graphicsView->sceneRect().size().toSize()*8, QImage::Format_ARGB32);
+	output_image.fill(Qt::transparent);
+	QPainter output_painter(&output_image);
+	output_painter.setRenderHint(QPainter::Antialiasing);
+	ui->graphicsView->render(&output_painter);
+	output_image.save(output_filename, "png", 0);
+}
+
 void DrawWindow::add_move(QPointF start)
 {
 	isDragging = true;
@@ -233,18 +247,4 @@ void DrawWindow::end_move(QPointF end)
 		list_history->addAction(turn);
 	}
 	list_history->addAction(new_move);
-}
-
-void DrawWindow::on_pushButton_exportDiagram_clicked()
-{
-	QString output_filename = QFileDialog::getSaveFileName(	this,
-															"Choose location...",
-															"Auton Diagram.png",
-															"PNG images (*.png)");
-	QImage output_image(ui->graphicsView->sceneRect().size().toSize()*8, QImage::Format_ARGB32);
-	output_image.fill(Qt::transparent);
-	QPainter output_painter(&output_image);
-	output_painter.setRenderHint(QPainter::Antialiasing);
-	ui->graphicsView->render(&output_painter);
-	output_image.save(output_filename, "png", 0);
 }
