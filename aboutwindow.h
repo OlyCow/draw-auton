@@ -3,6 +3,12 @@
 
 #include <QDialog>
 
+#include <QEvent>
+#include <QKeyEvent>
+
+#include <QLabel>
+#include <QString>
+
 namespace Ui {
 class AboutWindow;
 }
@@ -20,6 +26,11 @@ private slots:
 
 private:
 	Ui::AboutWindow *ui;
+	int current_pos;
+
+	static int keys[10];
+
+	bool eventFilter(QObject* object, QEvent* event);
 };
 
 #endif // ABOUTWINDOW_H
