@@ -51,13 +51,17 @@ public slots:
 private slots:
 	void on_pushButton_setup_clicked();
 
-	void on_pushButton_generateProgram_clicked();
+	void on_pushButton_help_clicked();
+	void on_pushButton_about_clicked();
 
+	void on_pushButton_generateProgram_clicked();
 	void on_pushButton_exportDiagram_clicked();
 
 private:
 	Ui::DrawWindow *ui;
-	SetupWindow *setupWindow;
+	SetupWindow* setupWindow;
+	AboutWindow* aboutWindow;
+	HelpWindow* helpWindow;
 	ActionList *list_history;
 
 	QString canned_declares;

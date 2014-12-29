@@ -1,14 +1,14 @@
 #include "helpwindow.h"
 #include "ui_helpwindow.h"
 
-helpwindow::helpwindow(QWidget *parent) :
+HelpWindow::HelpWindow(QWidget *parent) :
     QDialog(parent),
-    ui(new Ui::helpwindow)
+	ui(new Ui::HelpWindow)
 {
 	ui->setupUi(this);
 }
 
-helpwindow::~helpwindow()
+HelpWindow::~HelpWindow()
 {
 	delete ui;
 }

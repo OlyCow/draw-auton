@@ -1,5 +1,5 @@
 <ui version="4.0">
- <class>aboutwindow</class>
+ <class>AboutWindow</class>
  <widget name="aboutwindow" class="QDialog">
   <property name="geometry">
    <rect>

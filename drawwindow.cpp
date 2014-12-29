@@ -4,7 +4,9 @@
 DrawWindow::DrawWindow(QWidget *parent) :
 	QMainWindow(parent),
 	ui(new Ui::DrawWindow),
-    setupWindow(new SetupWindow),
+	setupWindow(new SetupWindow(this)),
+	aboutWindow(new AboutWindow(this)),
+	helpWindow(new HelpWindow(this)),
 	list_history(new ActionList),
 	isDragging(false)
 {
@@ -70,6 +72,15 @@ DrawWindow::DrawWindow(QWidget *parent) :
 						this,				&DrawWindow::end_move);
 }
 
+DrawWindow::~DrawWindow()
+{
+	delete ui;
+	delete setupWindow;
+	delete helpWindow;
+	delete aboutWindow;
+	delete list_history;
+}
+
 void DrawWindow::resizeEvent(QResizeEvent* event)
 {
 	ui->graphicsView->fitInView(field.itemsBoundingRect(), Qt::KeepAspectRatio);
@@ -84,16 +95,17 @@ void DrawWindow::showEvent(QShowEvent* event)
 	QMainWindow::showEvent(event);
 }
 
-DrawWindow::~DrawWindow()
-{
-	delete ui;
-	delete setupWindow;
-	delete list_history;
-}
-
 void DrawWindow::on_pushButton_setup_clicked()
 {
 	setupWindow->show();
+}
+void DrawWindow::on_pushButton_help_clicked()
+{
+	helpWindow->show();
+}
+void DrawWindow::on_pushButton_about_clicked()
+{
+	aboutWindow->show();
 }
 
 void DrawWindow::on_pushButton_generateProgram_clicked()
