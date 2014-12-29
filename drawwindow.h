@@ -5,6 +5,8 @@
 
 #include <QMainWindow>
 
+#include <vector>
+
 #include <QPointF>
 
 #include <QGraphicsScene>
@@ -57,12 +59,16 @@ private slots:
 	void on_pushButton_generateProgram_clicked();
 	void on_pushButton_exportDiagram_clicked();
 
+	void on_pushButton_undo_clicked();
+	void on_pushButton_clear_clicked();
+
 private:
-	Ui::DrawWindow *ui;
+	Ui::DrawWindow* ui;
 	SetupWindow* setupWindow;
 	AboutWindow* aboutWindow;
 	HelpWindow* helpWindow;
-	ActionList *list_history;
+	ActionList* list_history;
+	std::vector<QGraphicsLineItem*> list_lines;
 
 	QString canned_declares;
 	QString canned_definitions;

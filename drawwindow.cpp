@@ -70,6 +70,9 @@ DrawWindow::DrawWindow(QWidget *parent) :
 						this,				&DrawWindow::update_move);
 	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_released,
 						this,				&DrawWindow::end_move);
+
+	QObject::connect(	ui->pushButton_clear,	&QPushButton::clicked,
+						this,					&DrawWindow::on_pushButton_clear_clicked); //TODO: get rid of this
 }
 
 DrawWindow::~DrawWindow()
@@ -245,4 +248,32 @@ void DrawWindow::end_move(QPointF end)
 		list_history->addAction(turn);
 	}
 	list_history->addAction(new_move);
+	list_lines.push_back(currentLine);
+}
+
+void DrawWindow::on_pushButton_undo_clicked()
+{
+	if (list_history->getSize() > 0) {
+		list_history->deleteAction();
+		field.removeItem(currentLine);
+		list_lines.pop_back();
+		if (list_history->getSize() == 0) {
+			currentLine = nullptr;
+			endPoint = QPointF(0, 0);
+		} else {
+			list_history->deleteAction();
+			currentLine = list_lines.back();
+			ActionMove* past =
+					dynamic_cast<ActionMove*>
+					(list_history->getAction(list_history->getSize()-1));
+			endPoint = past->getEnd();
+		}
+	}
+}
+
+void DrawWindow::on_pushButton_clear_clicked()
+{
+	while (list_history->getSize() > 0) {
+		ui->pushButton_undo->click();
+	}
 }
