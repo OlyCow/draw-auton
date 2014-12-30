@@ -9,7 +9,7 @@
 class ActionCustom : public Action
 {
 public:
-	ActionCustom();
+	ActionCustom(QWidget* parent);
 	~ActionCustom();
 
 private:
