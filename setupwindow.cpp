@@ -91,8 +91,8 @@ void SetupWindow::add_action_widget()
 	QWidget* actual_this = this;
 	action_widget.push_back(new ActionWidget(actual_this, action_widget_num));
 	int index = action_widget_num - 1;
-	ui->verticalLayout->insertWidget(index, action_widget[index]);
-	action_widget[index]->textEdit_define->installEventFilter(this);
+	ui->tabWidget_actions_custom->insertTab(index, action_widget[index], "New action...");
+//	action_widget[index]->textEdit_define->installEventFilter(this);
 }
 
 void SetupWindow::delete_action_widget(int index)
