@@ -1,13 +1,18 @@
 #ifndef ACTIONWIDGET_H
 #define ACTIONWIDGET_H
 
+#include "definitions.h"
+
 #include <QWidget>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QLabel>
 #include <QLineEdit>
 #include <QComboBox>
+#include <QPushButton>
 #include <QTextEdit>
+
+#include <QIcon>
 
 class ActionCustom;
 
@@ -18,18 +23,26 @@ class ActionWidget : public QWidget
 	friend class ActionCustom;
 
 public:
-	ActionWidget(QWidget *parent, int index);
+	ActionWidget(QWidget *parent = 0, int index = 0);
 	~ActionWidget();
+
+	void setIndex(int input)	{index = input;}
+
+	int getIndex()	{return index;}
 
 signals:
 	void info_added();
 	void info_cleared(int index);
+	void param_added();
+	void param_cleared(int index);
 
 public slots:
-	void text_changed();
+	void info_changed();
+	void param_changed();
 
 private:
 	int index;
+
 	QGridLayout* layout_main;
 	QWidget* widget_layout_call;
 	QHBoxLayout* layout_call;
@@ -43,6 +56,7 @@ private:
 	QLineEdit* lineEdit_declare;
 	QComboBox* comboBox_param;
 	QComboBox* comboBox_icon;
+	QPushButton* pushButton_set_icon;
 	QTextEdit* textEdit_define;
 };
 
