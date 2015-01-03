@@ -3,6 +3,8 @@
 
 #include "action.h"
 
+#include <QObject>
+
 #include <cmath>
 
 #include <QPointF>
@@ -14,6 +16,8 @@ enum MoveDirection {
 
 class ActionMove : public Action
 {
+	Q_OBJECT
+
 public:
 	ActionMove(MoveDirection direction, QPointF startPoint, QPointF endPoint);
 

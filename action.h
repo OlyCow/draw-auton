@@ -1,11 +1,15 @@
 #ifndef ACTION_H
 #define ACTION_H
 
+#include <QObject>
+
 #include <QString>
 #include <QPointF>
 
-class Action
+class Action : public QObject
 {
+	Q_OBJECT
+
 public:
 	Action(	QString input_name,
 			QString input_param);

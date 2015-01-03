@@ -3,6 +3,8 @@
 
 #include "action.h"
 
+#include <QObject>
+
 #include <QPointF>
 
 enum TurnDirection {
@@ -12,6 +14,8 @@ enum TurnDirection {
 
 class ActionTurn : public Action
 {
+	Q_OBJECT
+
 public:
 	ActionTurn(TurnDirection direction, QPointF startPoint, float degrees);
 };
