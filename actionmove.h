@@ -17,11 +17,7 @@ class ActionMove : public Action
 public:
 	ActionMove(MoveDirection direction, QPointF startPoint, QPointF endPoint);
 
-	QPointF getEnd()	{return end;}
-
-protected:
-	QPointF end;
-
+private:
 	float find_dist();
 };
 

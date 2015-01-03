@@ -14,10 +14,12 @@ public:
 	void update_call();
 
 	void setStart(QPointF input)		{start = input;}
+	void setEnd(QPointF input)			{end = input;}
 	void setName(QString input)			{name = input;}
 	void setParam(QString input)		{param = input;}
 
 	QPointF getStart()			{return start;}
+	QPointF getEnd()			{return end;}
 	QString getName()			{return name;}
 	QString getParam()			{return param;}
 	QString getCall()			{return call;}
@@ -30,6 +32,7 @@ protected:
 	QString call;
 
 	QPointF start;
+	QPointF end;
 };
 
 #endif // ACTION_H

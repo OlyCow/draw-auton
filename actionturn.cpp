@@ -3,6 +3,7 @@
 ActionTurn::ActionTurn(TurnDirection direction, QPointF startPoint, float degrees)
 {
 	start = startPoint;
+	end = startPoint;
 	switch (direction) {
 		case TURN_LEFT :
 			name = "TurnLeft";
