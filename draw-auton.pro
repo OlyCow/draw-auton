@@ -39,7 +39,8 @@ HEADERS  += drawwindow.h \
     actiondefine.h \
     actiontool.h \
     graphicsviewedit.h \
-    actionturn.h
+    actionturn.h \
+    definitions.h
 
 FORMS    += drawwindow.ui \
     setupwindow.ui \
