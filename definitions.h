@@ -6,6 +6,11 @@
 #include <QString>
 
 namespace definitions {
+
+extern const std::vector<QString> path_code_blocks;
+extern const QString path_keywords;
+extern const QString path_functions;
+
 enum IconPos {
 	ICON_APERTURE = 0,
 	ICON_ARROW_DOWN,
@@ -83,79 +88,7 @@ enum IconPos {
 	ICON_NUM
 };
 
-const std::vector<QString> icon = {	":/icons/aperture.png",
-									":/icons/arrow-down.png",
-									":/icons/arrow-left.png",
-									":/icons/arrow-right.png",
-									":/icons/arrow-up.png",
-									":/icons/audio.png",
-									":/icons/bookmark.png",
-									":/icons/burn.png",
-									":/icons/calculator.png",
-									":/icons/camera.png",
-									":/icons/caret-down.png",
-									":/icons/caret-left.png",
-									":/icons/caret-right.png",
-									":/icons/caret-up.png",
-									":/icons/caret-up-down.png",
-									":/icons/checkbox.png",
-									":/icons/chevron-down.png",
-									":/icons/chevron-left.png",
-									":/icons/chevron-right.png",
-									":/icons/chevron-up.png",
-									":/icons/clock.png",
-									":/icons/code.png",
-									":/icons/comment.png",
-									":/icons/compass.png",
-									":/icons/contrast.png",
-									":/icons/document.png",
-									":/icons/dollar.png",
-									":/icons/download.png",
-									":/icons/eject.png",
-									":/icons/envelope.png",
-									":/icons/excerpt.png",
-									":/icons/eye.png",
-									":/icons/file.png",
-									":/icons/flag.png",
-									":/icons/flash.png",
-									":/icons/gear.png",
-									":/icons/home.png",
-									":/icons/image.png",
-									":/icons/infinity.png",
-									":/icons/info.png",
-									":/icons/key.png",
-									":/icons/lightning.png",
-									":/icons/list.png",
-									":/icons/lock-lock.png",
-									":/icons/lock-unlock.png",
-									":/icons/login.png",
-									":/icons/logout.png",
-									":/icons/loop.png",
-									":/icons/marker.png",
-									":/icons/microphone.png",
-									":/icons/moon.png",
-									":/icons/move.png",
-									":/icons/music.png",
-									":/icons/pencil.png",
-									":/icons/plus.png",
-									":/icons/pulse.png",
-									":/icons/randomize.png",
-									":/icons/record.png",
-									":/icons/reload.png",
-									":/icons/resize-height.png",
-									":/icons/resize-width.png",
-									":/icons/script.png",
-									":/icons/search.png",
-									":/icons/shield.png",
-									":/icons/tag.png",
-									":/icons/target.png",
-									":/icons/thumbs-down.png",
-									":/icons/thumbs-up.png",
-									":/icons/timer.png",
-									":/icons/transfer.png",
-									":/icons/trash.png",
-									":/icons/undo.png",
-									":/icons/wrench.png"		};
+extern const std::vector<QString> icon;
 }
 
 #endif // DEFINITIONS_H

@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     actiondefine.cpp \
     actiontool.cpp \
     graphicsviewedit.cpp \
-    actionturn.cpp
+    actionturn.cpp \
+    definitions.cpp
 
 HEADERS  += drawwindow.h \
     actionlist.h \
