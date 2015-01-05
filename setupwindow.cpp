@@ -7,12 +7,20 @@ QStringList SetupWindow::functions = QStringList();
 SetupWindow::SetupWindow(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::SetupWindow),
-	new_tab_widget(NULL)
+	new_tab_widget(NULL),
+	dir_data(QCoreApplication::applicationDirPath())
 {
 	ui->setupUi(this);
 	QFontDatabase::addApplicationFont(":/fonts/DroidSansMono.ttf");
 
-	dir_exe = QCoreApplication::applicationDirPath();
+	dir_data = QCoreApplication::applicationDirPath() + "data/";
+	if (!dir_data.exists()) {
+		dir_data = QCoreApplication::applicationDirPath();
+		dir_data.mkdir("data/");
+		dir_data.cd("data/");
+		qDebug() << "yay";
+	}
+	path_dir = dir_data.absolutePath();
 
 	code_edits.push_back(ui->textEdit_pragmas);
 	code_edits.push_back(ui->textEdit_includes);
@@ -32,7 +40,7 @@ SetupWindow::SetupWindow(QWidget *parent) :
 
 	for (unsigned int i=0; i<code_edits.size(); i++) {
 		*(code_vars[i]) = \
-				read_file(dir_exe + definitions::path_code_blocks[i]);
+				read_file(path_dir + definitions::path_code_blocks[i]);
 		code_edits[i]->setHtml(format_code(*(code_vars[i])));
 	}
 
@@ -48,10 +56,10 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	}
 
 	QString read_buffer;
-	read_buffer = read_file(dir_exe + definitions::path_keywords);
+	read_buffer = read_file(path_dir + definitions::path_keywords);
 	SetupWindow::keywords = read_buffer.split("\n");
 
-	read_buffer = read_file(dir_exe + definitions::path_functions);
+	read_buffer = read_file(path_dir + definitions::path_functions);
 	SetupWindow::functions = read_buffer.split("\n");
 
 	for (unsigned int i=0; i<code_edits.size(); i++) {
@@ -116,7 +124,7 @@ void SetupWindow::on_pushButton_save_clicked()
 {
 	for (unsigned int i=0; i<code_edits.size(); i++) {
 		*(code_vars[i]) = code_edits[i]->toPlainText();
-		write_file(	dir_exe + definitions::path_code_blocks[i],
+		write_file(	path_dir + definitions::path_code_blocks[i],
 					*(code_vars[i])	);
 	}
 }

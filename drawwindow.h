@@ -25,6 +25,7 @@
 #include <QPainter>
 
 #include <QTextStream>
+#include <QDir>
 #include <QFile>
 #include <QFileDialog>
 #include <QProgressDialog>

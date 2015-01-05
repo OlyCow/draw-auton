@@ -1,6 +1,8 @@
 #ifndef SETUPWINDOW_H
 #define SETUPWINDOW_H
 
+#include <QDebug>
+
 #include <QDialog>
 
 #include <vector>
@@ -9,6 +11,7 @@
 #include <QString>
 #include <QStringList>
 #include <QTextStream>
+#include <QDir>
 #include <QFile>
 #include <QFont>
 #include <QFontDatabase>
@@ -64,7 +67,8 @@ private:
 
 	std::vector<QTextEdit*> code_edits;
 
-	QString dir_exe;
+	QDir dir_data;
+	QString path_dir;
 
 	std::vector<QString*> code_vars;
 	QString controller_config;
