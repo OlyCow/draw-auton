@@ -129,6 +129,7 @@ void ActionWidget::info_changed()
 
 	if (do_add) {
 		emit info_added();
+		emit info_updated(this);
 	} else if (do_clear) {
 		emit info_cleared(index);
 	}

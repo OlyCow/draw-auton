@@ -1,16 +1,16 @@
 #include "definitions.h"
 
 const std::vector<QString> definitions::path_code_blocks = {
-		"code/pragma_configs.txt",
-		"code/extra_includes.txt",
-		"code/move_define.txt",
-		"code/turn_define.txt",
-		"code/init.txt",
-		"code/misc_declare.txt",
-		"code/misc_define.txt"		};
+		"pragma_configs.txt",
+		"extra_includes.txt",
+		"move_define.txt",
+		"turn_define.txt",
+		"init.txt",
+		"misc_declare.txt",
+		"misc_define.txt"		};
 
-const QString definitions::path_keywords	= "code/keywords.txt";
-const QString definitions::path_functions	= "code/functions.txt";
+const QString definitions::path_keywords	= "keywords.txt";
+const QString definitions::path_functions	= "functions.txt";
 
 const std::vector<QString> definitions::icon = {
 		":/icons/aperture.png",

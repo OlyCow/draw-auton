@@ -40,9 +40,8 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	for (unsigned int i=0; i<code_edits.size(); i++) {
 		QFile check_exist = path_dir + definitions::path_code_blocks[i];
 		if (!check_exist.exists()) {
-			check_exist.open(QFile::WriteOnly);
+			check_exist.open(QFile::WriteOnly | QFile::Text);
 			QTextStream buf(&check_exist);
-			buf << "\n";
 			buf.flush();
 			check_exist.close();
 		}
@@ -107,7 +106,7 @@ ActionWidget* SetupWindow::create_action_widget()
 	if (tab_widget->count() > 0) {
 		QObject::disconnect(	new_tab_widget,	&ActionWidget::info_added,
 								this,			&SetupWindow::create_action_widget);
-		QObject::connect(		new_tab_widget,	&ActionWidget::info_added,
+		QObject::connect(		new_tab_widget,	&ActionWidget::info_updated,
 								this,			&SetupWindow::update_custom_action);
 	}
 	QObject::connect(	new_action,	&ActionWidget::info_added,
@@ -131,7 +130,12 @@ void SetupWindow::remove_action_widget(int index)
 
 void SetupWindow::update_custom_action(ActionWidget *widget)
 {
-
+	QString tab_name = widget->lineEdit_name->text();
+	if (tab_name.length() == 0) {
+		tab_name = "...";
+	}
+	ui->tabWidget_actions_custom->setTabText(	ui->tabWidget_actions_custom->currentIndex(),
+												tab_name);
 }
 
 void SetupWindow::on_pushButton_save_clicked()

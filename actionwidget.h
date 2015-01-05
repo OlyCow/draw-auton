@@ -14,12 +14,14 @@
 #include <QIcon>
 
 class ActionDefine;
+class SetupWindow;
 
 class ActionWidget : public QWidget
 {
 	Q_OBJECT
 
 	friend class ActionDefine;
+	friend class SetupWindow;
 
 public:
 	ActionWidget(QWidget *parent = 0, int index = 0);
@@ -32,6 +34,7 @@ public:
 signals:
 	void info_added();
 	void info_cleared(int index);
+	void info_updated(ActionWidget*);
 	void param_added();
 	void param_cleared(int index);
 
