@@ -11,16 +11,15 @@
 #include <QComboBox>
 #include <QPushButton>
 #include <QTextEdit>
-
 #include <QIcon>
 
-class ActionCustom;
+class ActionDefine;
 
 class ActionWidget : public QWidget
 {
 	Q_OBJECT
 
-	friend class ActionCustom;
+	friend class ActionDefine;
 
 public:
 	ActionWidget(QWidget *parent = 0, int index = 0);

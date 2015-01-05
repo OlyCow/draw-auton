@@ -21,17 +21,8 @@ public:
 	ActionCustom(QPointF start_point);
 	~ActionCustom();
 
-	ActionWidget* getSetupWidget()	{return setup_widget;}
-
 private:
-	ActionWidget* setup_widget;
-
 	QString icon;
-	std::vector<QString> list_params;
-	std::vector<QString> list_icons;
-
-	void param_add();
-	void param_clear(int index);
 };
 
 #endif // ACTIONCUSTOM_H

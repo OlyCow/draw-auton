@@ -142,7 +142,21 @@ void ActionWidget::param_changed()
 		comboBox_param->removeItem(current_index);
 		comboBox_param->hidePopup();
 	} else {
-		emit param_added();
-		comboBox_param->addItem(comboBox_param->currentText());
+		bool isUnique = true;
+		int originalIndex = 0;
+		for (int i=0; i<comboBox_param->count(); i++) {
+			if (comboBox_param->itemText(i) == comboBox_param->lineEdit()->text()) {
+				isUnique = false;
+				originalIndex = i;
+				break;
+			}
+		}
+		if (isUnique) {
+			emit param_added();
+			comboBox_param->addItem(comboBox_param->currentText());
+		} else {
+			comboBox_param->lineEdit()->clear();
+			comboBox_param->setCurrentIndex(originalIndex);
+		}
 	}
 }
