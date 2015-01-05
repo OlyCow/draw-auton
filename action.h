@@ -6,6 +6,13 @@
 #include <QString>
 #include <QPointF>
 
+enum ActionType {
+	TYPE_UNKNOWN = -1,
+	TYPE_MOVE = 0,
+	TYPE_TURN,
+	TYPE_CUSTOM
+};
+
 class Action : public QObject
 {
 	Q_OBJECT
@@ -14,6 +21,8 @@ public:
 	Action(	QString input_name,
 			QString input_param);
 	virtual ~Action();
+
+	virtual ActionType isType()	{return TYPE_UNKNOWN;}
 
 	void update_call();
 

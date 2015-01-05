@@ -18,6 +18,8 @@ class ActionTurn : public Action
 
 public:
 	ActionTurn(TurnDirection direction, QPointF startPoint, float degrees);
+
+	ActionType isType()	{return TYPE_TURN;}
 };
 
 #endif // ACTIONTURN_H

@@ -18,7 +18,6 @@ SetupWindow::SetupWindow(QWidget *parent) :
 		dir_data = QCoreApplication::applicationDirPath();
 		dir_data.mkdir("data/");
 		dir_data.cd("data/");
-		qDebug() << "yay";
 	}
 	path_dir = dir_data.absolutePath();
 
@@ -39,6 +38,14 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	code_vars.push_back(&misc_define);
 
 	for (unsigned int i=0; i<code_edits.size(); i++) {
+		QFile check_exist = path_dir + definitions::path_code_blocks[i];
+		if (!check_exist.exists()) {
+			check_exist.open(QFile::WriteOnly);
+			QTextStream buf(&check_exist);
+			buf << "\n";
+			buf.flush();
+			check_exist.close();
+		}
 		*(code_vars[i]) = \
 				read_file(path_dir + definitions::path_code_blocks[i]);
 		code_edits[i]->setHtml(format_code(*(code_vars[i])));
@@ -100,6 +107,8 @@ ActionWidget* SetupWindow::create_action_widget()
 	if (tab_widget->count() > 0) {
 		QObject::disconnect(	new_tab_widget,	&ActionWidget::info_added,
 								this,			&SetupWindow::create_action_widget);
+		QObject::connect(		new_tab_widget,	&ActionWidget::info_added,
+								this,			&SetupWindow::update_custom_action);
 	}
 	QObject::connect(	new_action,	&ActionWidget::info_added,
 						this,		&SetupWindow::create_action_widget);
@@ -118,6 +127,11 @@ void SetupWindow::remove_action_widget(int index)
 		emit removed_custom_action(index);
 		ui->tabWidget_actions_custom->removeTab(index);
 	}
+}
+
+void SetupWindow::update_custom_action(ActionWidget *widget)
+{
+
 }
 
 void SetupWindow::on_pushButton_save_clicked()

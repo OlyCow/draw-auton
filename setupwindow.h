@@ -49,6 +49,7 @@ public:
 signals:
 	void added_custom_action(ActionWidget* widget);
 	void removed_custom_action(int index);
+	void update_custom_action(ActionWidget* widget);
 
 public slots:
 	ActionWidget* create_action_widget();

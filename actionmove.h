@@ -21,6 +21,8 @@ class ActionMove : public Action
 public:
 	ActionMove(MoveDirection direction, QPointF startPoint, QPointF endPoint);
 
+	ActionType isType()	{return TYPE_MOVE;}
+
 private:
 	float find_dist();
 };

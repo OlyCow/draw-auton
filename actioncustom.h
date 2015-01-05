@@ -21,6 +21,8 @@ public:
 	ActionCustom(QPointF start_point);
 	~ActionCustom();
 
+	ActionType isType()	{return TYPE_CUSTOM;}
+
 private:
 	QString icon;
 };
