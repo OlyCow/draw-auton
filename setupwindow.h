@@ -3,8 +3,6 @@
 
 #include <QDialog>
 
-#include "actionwidget.h"
-
 #include <vector>
 
 #include <QEvent>
@@ -20,7 +18,9 @@
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 
-class ActionWidget;
+#include <QHBoxLayout>
+
+#include "actionwidget.h"
 
 namespace Ui {
 class SetupWindow;
@@ -41,9 +41,13 @@ public:
 	static QStringList keywords;
 	static QStringList functions;
 
+signals:
+	void added_custom_action(ActionWidget* widget);
+	void removed_custom_action(int index);
+
 public slots:
-	void create_action_widget();
-	void remove_action_widget(int index_accept);
+	ActionWidget* create_action_widget();
+	void remove_action_widget(int index);
 
 private slots:
 	void on_pushButton_save_clicked();
@@ -53,12 +57,13 @@ private slots:
 
 private:
 	Ui::SetupWindow *ui;
-    std::vector<QWidget> custom_action;
-	std::vector<ActionWidget*> action_widget;
+	ActionWidget* new_tab_widget;
+	std::vector<ActionWidget*> list_custom_actions;
+
 	std::vector<QTextEdit*> code_edits;
+
 	std::vector<QString*> code_vars;
 	std::vector<QString> code_urls;
-	int action_widget_num;
 	QString controller_config;
 	QString additional_includes;
 	QString definition_move;
@@ -66,9 +71,6 @@ private:
 	QString misc_init;
 	QString misc_declare;
 	QString misc_define;
-
-	void add_action_widget();
-	void delete_action_widget(int index);
 
 	bool eventFilter(QObject* object, QEvent* event);
 };
