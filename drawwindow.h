@@ -3,6 +3,7 @@
 
 #include <QDebug>
 
+#include <QCoreApplication>
 #include <QMainWindow>
 
 #include <cmath>
@@ -27,6 +28,8 @@
 #include <QFile>
 #include <QFileDialog>
 #include <QProgressDialog>
+
+#include "definitions.h"
 
 #include "action.h"
 #include "actionmove.h"

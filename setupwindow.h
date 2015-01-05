@@ -20,6 +20,8 @@
 
 #include <QHBoxLayout>
 
+#include "definitions.h"
+
 #include "actionwidget.h"
 
 namespace Ui {
@@ -62,8 +64,9 @@ private:
 
 	std::vector<QTextEdit*> code_edits;
 
+	QString dir_exe;
+
 	std::vector<QString*> code_vars;
-	std::vector<QString> code_urls;
 	QString controller_config;
 	QString additional_includes;
 	QString definition_move;
