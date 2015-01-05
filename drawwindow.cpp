@@ -67,6 +67,11 @@ DrawWindow::DrawWindow(QWidget *parent) :
 
 	installEventFilter(this);
 
+	QObject::connect(	setupWindow,		&SetupWindow::added_custom_action,
+						this,				&DrawWindow::add_custom_action);
+	QObject::connect(	setupWindow,		&SetupWindow::removed_custom_action,
+						this,				&DrawWindow::remove_custom_action);
+
 	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_pressed,
 						this,				&DrawWindow::add_move);
 	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_moved,
@@ -228,6 +233,15 @@ void DrawWindow::start_snap()
 void DrawWindow::end_snap()
 {
 	isSnapping = false;
+}
+
+void DrawWindow::add_custom_action(ActionWidget *source)
+{
+
+}
+void DrawWindow::remove_custom_action(int index)
+{
+
 }
 
 void DrawWindow::on_pushButton_setup_clicked()
