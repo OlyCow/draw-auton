@@ -7,10 +7,19 @@ QStringList SetupWindow::functions = QStringList();
 SetupWindow::SetupWindow(QWidget *parent) :
 	QDialog(parent),
 	ui(new Ui::SetupWindow),
-	action_widget_num(0)
+	new_tab_widget(NULL),
+	dir_data(QCoreApplication::applicationDirPath())
 {
 	ui->setupUi(this);
 	QFontDatabase::addApplicationFont(":/fonts/DroidSansMono.ttf");
+
+	dir_data = QCoreApplication::applicationDirPath() + "data/";
+	if (!dir_data.exists()) {
+		dir_data = QCoreApplication::applicationDirPath();
+		dir_data.mkdir("data/");
+		dir_data.cd("data/");
+	}
+	path_dir = dir_data.absolutePath();
 
 	code_edits.push_back(ui->textEdit_pragmas);
 	code_edits.push_back(ui->textEdit_includes);
@@ -28,16 +37,16 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	code_vars.push_back(&misc_declare);
 	code_vars.push_back(&misc_define);
 
-	code_urls.push_back("code/controller_config.txt");
-	code_urls.push_back("code/additional_includes.txt");
-	code_urls.push_back("code/definition_move.txt");
-	code_urls.push_back("code/definition_turn.txt");
-	code_urls.push_back("code/misc_init.txt");
-	code_urls.push_back("code/misc_declare.txt");
-	code_urls.push_back("code/misc_define.txt");
-
 	for (unsigned int i=0; i<code_edits.size(); i++) {
-		*(code_vars[i]) = read_file(code_urls[i]);
+		QFile check_exist = path_dir + definitions::path_code_blocks[i];
+		if (!check_exist.exists()) {
+			check_exist.open(QFile::WriteOnly | QFile::Text);
+			QTextStream buf(&check_exist);
+			buf.flush();
+			check_exist.close();
+		}
+		*(code_vars[i]) = \
+				read_file(path_dir + definitions::path_code_blocks[i]);
 		code_edits[i]->setHtml(format_code(*(code_vars[i])));
 	}
 
@@ -53,64 +62,95 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	}
 
 	QString read_buffer;
-	read_buffer = read_file("code/keywords.txt");
+	read_buffer = read_file(path_dir + definitions::path_keywords);
 	SetupWindow::keywords = read_buffer.split("\n");
 
-	read_buffer = read_file("code/functions.txt");
+	read_buffer = read_file(path_dir + definitions::path_functions);
 	SetupWindow::functions = read_buffer.split("\n");
-
-	add_action_widget();
-	QObject::connect(	action_widget[0],	&ActionWidget::info_added,
-						this,				&SetupWindow::create_action_widget);
-	QObject::connect(	action_widget[0],	&ActionWidget::info_cleared,
-						this,				&SetupWindow::remove_action_widget);
 
 	for (unsigned int i=0; i<code_edits.size(); i++) {
 		code_edits[i]->installEventFilter(this);
 	}
+
+	create_action_widget();
+
+	QObject::connect(	ui->tabWidget_actions_custom,	&QTabWidget::tabCloseRequested,
+						this,							&SetupWindow::remove_action_widget);
 }
 
 SetupWindow::~SetupWindow()
 {
 	delete ui;
+	delete new_tab_widget;
 }
 
-void SetupWindow::create_action_widget()
+ActionWidget* SetupWindow::create_action_widget()
 {
-	add_action_widget();
+	QTabWidget* tab_widget = ui->tabWidget_actions_custom;
+
+	QScrollArea* container = new QScrollArea(tab_widget);
+	QHBoxLayout* container_layout = new QHBoxLayout(container);
+	container->setLayout(container_layout);
+	container->setMinimumHeight(270);
+	container->setFrameShape(QFrame::NoFrame);
+	container->setFrameShadow(QFrame::Plain);
+	container->setLineWidth(0);
+
+	ActionWidget* new_action = new ActionWidget(	tab_widget,
+													tab_widget->count());
+	list_custom_actions.push_back(new_action);
+	emit added_custom_action(new_action);
+	container->layout()->addWidget(new_action);
+	ui->tabWidget_actions_custom->addTab(container, "New");
+
+	if (tab_widget->count() > 0) {
+		QObject::disconnect(	new_tab_widget,	&ActionWidget::info_added,
+								this,			&SetupWindow::create_action_widget);
+		QObject::connect(		new_tab_widget,	&ActionWidget::info_updated,
+								this,			&SetupWindow::update_custom_action);
+	}
+	QObject::connect(	new_action,	&ActionWidget::info_added,
+						this,		&SetupWindow::create_action_widget);
+	QObject::connect(	new_action,	&ActionWidget::info_cleared,
+						this,		&SetupWindow::remove_action_widget);
+
+	new_tab_widget = new_action;
+	return new_action;
 }
 
-void SetupWindow::remove_action_widget(int index_accept)
+void SetupWindow::remove_action_widget(int index)
 {
-	delete_action_widget(index_accept);
+	QTabWidget* tab_widget = ui->tabWidget_actions_custom;
+	if (index+1 < tab_widget->count()) {
+		list_custom_actions.erase(list_custom_actions.begin() + index);
+		emit removed_custom_action(index);
+		ui->tabWidget_actions_custom->removeTab(index);
+	}
 }
 
-void SetupWindow::add_action_widget()
+void SetupWindow::update_custom_action(ActionWidget *widget)
 {
-	action_widget_num++;
-	QWidget* actual_this = this;
-	action_widget.push_back(new ActionWidget(actual_this, action_widget_num));
-	int index = action_widget_num - 1;
-	ui->verticalLayout->insertWidget(index, action_widget[index]);
-	action_widget[index]->textEdit_define->installEventFilter(this);
-}
-
-void SetupWindow::delete_action_widget(int index)
-{
-	ui->verticalLayout->removeWidget(action_widget[index]);
-	delete action_widget[index];
-	std::vector<ActionWidget*>::iterator it = action_widget.begin();
-	it += index;
-	action_widget.erase(it);
-	action_widget_num--;
+	QString tab_name = widget->lineEdit_name->text();
+	if (tab_name.length() == 0) {
+		tab_name = "...";
+	}
+	ui->tabWidget_actions_custom->setTabText(	ui->tabWidget_actions_custom->currentIndex(),
+												tab_name);
 }
 
 void SetupWindow::on_pushButton_save_clicked()
 {
 	for (unsigned int i=0; i<code_edits.size(); i++) {
 		*(code_vars[i]) = code_edits[i]->toPlainText();
-		write_file(code_urls[i], *(code_vars[i]));
+		write_file(	path_dir + definitions::path_code_blocks[i],
+					*(code_vars[i])	);
 	}
+}
+
+void SetupWindow::show_new_custom_tab()
+{
+	ui->tabWidget->setCurrentIndex(2);
+	ui->tabWidget_actions_custom->setCurrentIndex(ui->tabWidget_actions_custom->count());
 }
 
 void SetupWindow::on_pushButton_clear_clicked()

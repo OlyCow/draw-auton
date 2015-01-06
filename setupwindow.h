@@ -1,9 +1,9 @@
 #ifndef SETUPWINDOW_H
 #define SETUPWINDOW_H
 
-#include <QDialog>
+#include <QDebug>
 
-#include "actionwidget.h"
+#include <QDialog>
 
 #include <vector>
 
@@ -11,6 +11,7 @@
 #include <QString>
 #include <QStringList>
 #include <QTextStream>
+#include <QDir>
 #include <QFile>
 #include <QFont>
 #include <QFontDatabase>
@@ -20,7 +21,11 @@
 #include <QRegularExpression>
 #include <QRegularExpressionMatch>
 
-class ActionWidget;
+#include <QHBoxLayout>
+
+#include "definitions.h"
+
+#include "actionwidget.h"
 
 namespace Ui {
 class SetupWindow;
@@ -41,9 +46,16 @@ public:
 	static QStringList keywords;
 	static QStringList functions;
 
+signals:
+	void added_custom_action(ActionWidget* widget);
+	void removed_custom_action(int index);
+
 public slots:
-	void create_action_widget();
-	void remove_action_widget(int index_accept);
+	ActionWidget* create_action_widget();
+	void remove_action_widget(int index);
+	void update_custom_action(ActionWidget* widget);
+
+	void show_new_custom_tab();
 
 private slots:
 	void on_pushButton_save_clicked();
@@ -53,12 +65,15 @@ private slots:
 
 private:
 	Ui::SetupWindow *ui;
-    std::vector<QWidget> custom_action;
-	std::vector<ActionWidget*> action_widget;
+	ActionWidget* new_tab_widget;
+	std::vector<ActionWidget*> list_custom_actions;
+
 	std::vector<QTextEdit*> code_edits;
+
+	QDir dir_data;
+	QString path_dir;
+
 	std::vector<QString*> code_vars;
-	std::vector<QString> code_urls;
-	int action_widget_num;
 	QString controller_config;
 	QString additional_includes;
 	QString definition_move;
@@ -66,9 +81,6 @@ private:
 	QString misc_init;
 	QString misc_declare;
 	QString misc_define;
-
-	void add_action_widget();
-	void delete_action_widget(int index);
 
 	bool eventFilter(QObject* object, QEvent* event);
 };

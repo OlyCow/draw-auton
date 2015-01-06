@@ -12,5 +12,66 @@
         <file>icons/arrow-up.png</file>
         <file>icons/excerpt.png</file>
         <file>icons/download.png</file>
+        <file>icons/undo.png</file>
+        <file>icons/aperture.png</file>
+        <file>icons/arrow-left.png</file>
+        <file>icons/arrow-right.png</file>
+        <file>icons/audio.png</file>
+        <file>icons/bookmark.png</file>
+        <file>icons/burn.png</file>
+        <file>icons/calculator.png</file>
+        <file>icons/camera.png</file>
+        <file>icons/caret-down.png</file>
+        <file>icons/caret-left.png</file>
+        <file>icons/caret-right.png</file>
+        <file>icons/caret-up.png</file>
+        <file>icons/caret-up-down.png</file>
+        <file>icons/checkbox.png</file>
+        <file>icons/chevron-down.png</file>
+        <file>icons/chevron-left.png</file>
+        <file>icons/chevron-right.png</file>
+        <file>icons/chevron-up.png</file>
+        <file>icons/clock.png</file>
+        <file>icons/code.png</file>
+        <file>icons/comment.png</file>
+        <file>icons/compass.png</file>
+        <file>icons/contrast.png</file>
+        <file>icons/dollar.png</file>
+        <file>icons/eject.png</file>
+        <file>icons/envelope.png</file>
+        <file>icons/eye.png</file>
+        <file>icons/file.png</file>
+        <file>icons/flag.png</file>
+        <file>icons/flash.png</file>
+        <file>icons/gear.png</file>
+        <file>icons/home.png</file>
+        <file>icons/infinity.png</file>
+        <file>icons/key.png</file>
+        <file>icons/lightning.png</file>
+        <file>icons/list.png</file>
+        <file>icons/lock-lock.png</file>
+        <file>icons/lock-unlock.png</file>
+        <file>icons/login.png</file>
+        <file>icons/logout.png</file>
+        <file>icons/loop.png</file>
+        <file>icons/marker.png</file>
+        <file>icons/microphone.png</file>
+        <file>icons/moon.png</file>
+        <file>icons/move.png</file>
+        <file>icons/music.png</file>
+        <file>icons/pulse.png</file>
+        <file>icons/randomize.png</file>
+        <file>icons/record.png</file>
+        <file>icons/reload.png</file>
+        <file>icons/resize-height.png</file>
+        <file>icons/resize-width.png</file>
+        <file>icons/search.png</file>
+        <file>icons/shield.png</file>
+        <file>icons/tag.png</file>
+        <file>icons/target.png</file>
+        <file>icons/thumbs-down.png</file>
+        <file>icons/thumbs-up.png</file>
+        <file>icons/timer.png</file>
+        <file>icons/transfer.png</file>
     </qresource>
 </RCC>
