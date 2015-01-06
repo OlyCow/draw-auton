@@ -51,3 +51,5 @@ FORMS    += drawwindow.ui \
 RESOURCES += \
     icons.qrc \
     fonts.qrc
+
+QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
