@@ -374,3 +374,9 @@ bool DrawWindow::eventFilter(QObject* object, QEvent* event)
 	}
 	return false;
 }
+
+void DrawWindow::on_toolButton_add_clicked()
+{
+	setupWindow->show();
+	setupWindow->show_new_custom_tab();
+}

@@ -79,6 +79,8 @@ private slots:
 	void on_pushButton_undo_clicked();
 	void on_pushButton_clear_clicked();
 
+	void on_toolButton_add_clicked();
+
 private:
 	Ui::DrawWindow* ui;
 	SetupWindow* setupWindow;

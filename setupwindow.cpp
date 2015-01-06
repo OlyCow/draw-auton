@@ -147,6 +147,12 @@ void SetupWindow::on_pushButton_save_clicked()
 	}
 }
 
+void SetupWindow::show_new_custom_tab()
+{
+	ui->tabWidget->setCurrentIndex(2);
+	ui->tabWidget_actions_custom->setCurrentIndex(ui->tabWidget_actions_custom->count());
+}
+
 void SetupWindow::on_pushButton_clear_clicked()
 {
 	for (unsigned int i=0; i<code_edits.size(); i++) {

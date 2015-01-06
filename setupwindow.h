@@ -55,6 +55,8 @@ public slots:
 	void remove_action_widget(int index);
 	void update_custom_action(ActionWidget* widget);
 
+	void show_new_custom_tab();
+
 private slots:
 	void on_pushButton_save_clicked();
 	void on_pushButton_clear_clicked();
