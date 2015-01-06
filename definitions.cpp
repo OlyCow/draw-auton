@@ -1,13 +1,13 @@
 #include "definitions.h"
 
 const std::vector<QString> definitions::path_code_blocks = {
-		"pragma_configs.txt",
-		"extra_includes.txt",
-		"move_define.txt",
-		"turn_define.txt",
-		"init.txt",
-		"misc_declare.txt",
-		"misc_define.txt"		};
+		"/pragma_configs.txt",
+		"/extra_includes.txt",
+		"/move_define.txt",
+		"/turn_define.txt",
+		"/init.txt",
+		"/misc_declare.txt",
+		"/misc_define.txt"		};
 
 const QString definitions::path_keywords	= "keywords.txt";
 const QString definitions::path_functions	= "functions.txt";
