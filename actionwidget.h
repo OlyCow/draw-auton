@@ -3,6 +3,7 @@
 
 #include "definitions.h"
 
+#include <QObject>
 #include <QWidget>
 #include <QGridLayout>
 #include <QHBoxLayout>

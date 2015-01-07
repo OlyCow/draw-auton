@@ -53,3 +53,5 @@ RESOURCES += \
     fonts.qrc
 
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
+
+#CONFIG += c++11

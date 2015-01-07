@@ -1,21 +1,22 @@
 #include "actiontool.h"
 
-ActionTool::ActionTool(QString name, QString icon, QWidget* parent) :
-	toolButton(new QToolButton(parent))
+ActionTool::ActionTool(QString name, QString icon, ActionDefine* action, QWidget* parent) :
+	QToolButton(parent),
+	parent_action(action)
 {
-	toolButton->setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
-	toolButton->setMinimumWidth(50);
-	toolButton->setCursor(Qt::PointingHandCursor);
-	toolButton->setText(name);
-	toolButton->setIcon(QIcon(icon));
-	toolButton->setIconSize(QSize(24, 24));
-	toolButton->setCheckable(true);
-	toolButton->setAutoExclusive(true);
-	toolButton->setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
+	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
+	setMinimumWidth(50);
+	setCursor(Qt::PointingHandCursor);
+	setText(name);
+	setIcon(QIcon(icon));
+	setIconSize(QSize(24, 24));
+	setCheckable(true);
+	setAutoExclusive(true);
+	setToolButtonStyle(Qt::ToolButtonTextUnderIcon);
 }
 
 ActionTool::~ActionTool()
 {
-	delete toolButton;
+	delete parent_action;
 }
 
