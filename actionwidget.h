@@ -32,6 +32,9 @@ public:
 
 	int getIndex()	{return index;}
 
+	QString get_name()	{return lineEdit_name->text();}
+	int get_icon()		{return comboBox_icon->currentIndex();}
+
 signals:
 	void info_added();
 	void info_cleared(int index);

@@ -18,6 +18,9 @@ public:
 	ActionDefine();
 	~ActionDefine();
 
+	void set_tool(ActionTool* input)		{tool = input;}
+	void set_widget(ActionWidget* input)	{widget = input;}
+
 private slots:
 	void param_add();
 	void param_clear(int index);

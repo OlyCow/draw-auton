@@ -66,6 +66,7 @@ public slots:
 
 	void add_custom_action(ActionWidget* source);
 	void remove_custom_action(int index);
+	void update_custom_action(ActionWidget* source);
 
 private slots:
 	void on_pushButton_setup_clicked();

@@ -13,7 +13,6 @@ class ActionTool : QToolButton
 {
 	Q_OBJECT
 
-	friend class ActionDefine;
 	friend class DrawWindow;
 
 public:

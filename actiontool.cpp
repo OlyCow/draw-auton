@@ -17,6 +17,6 @@ ActionTool::ActionTool(QString name, QString icon, ActionDefine* action, QWidget
 
 ActionTool::~ActionTool()
 {
-	delete parent_action;
+	//delete parent_action;
+	// ^Should never need to delete its parent :)
 }
-
