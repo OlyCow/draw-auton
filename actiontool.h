@@ -9,7 +9,7 @@
 class ActionDefine;
 class DrawWindow;
 
-class ActionTool : QToolButton
+class ActionTool : public QToolButton
 {
 	Q_OBJECT
 
@@ -19,8 +19,10 @@ public:
 	ActionTool(QString name, QString icon, ActionDefine* action, QWidget* parent=NULL);
 	~ActionTool();
 
+	void setDefine(ActionDefine* input)	{define = input;}
+
 private:
-	ActionDefine* parent_action;
+	ActionDefine* define;
 };
 
 #endif // ACTIONTOOL_H

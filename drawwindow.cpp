@@ -253,7 +253,8 @@ void DrawWindow::remove_custom_action(int index)
 }
 void DrawWindow::update_custom_action(ActionWidget *source)
 {
-
+	source->getDefine()->set_tool_name(source->get_name());
+	source->getDefine()->set_tool_icon(source->get_icon());
 }
 
 void DrawWindow::on_pushButton_setup_clicked()
