@@ -11,14 +11,9 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = draw-auton
 TEMPLATE = app
 
-
 SOURCES += main.cpp\
-        drawwindow.cpp \
     actionlist.cpp \
     action.cpp \
-    setupwindow.cpp \
-    aboutwindow.cpp \
-    helpwindow.cpp \
     actionwidget.cpp \
     actioncustom.cpp \
     actionmove.cpp \
@@ -26,14 +21,15 @@ SOURCES += main.cpp\
     actiontool.cpp \
     graphicsviewedit.cpp \
     actionturn.cpp \
-    definitions.cpp
+    definitions.cpp \
+    gui/aboutwindow.cpp \
+    gui/helpwindow.cpp \
+    gui/drawwindow.cpp \
+    gui/setupwindow.cpp
 
-HEADERS  += drawwindow.h \
+HEADERS  += \
     actionlist.h \
     action.h \
-    setupwindow.h \
-    aboutwindow.h \
-    helpwindow.h \
     actionwidget.h \
     actioncustom.h \
     actionmove.h \
@@ -41,17 +37,26 @@ HEADERS  += drawwindow.h \
     actiontool.h \
     graphicsviewedit.h \
     actionturn.h \
-    definitions.h
+    definitions.h \
+    gui/aboutwindow.h \
+    gui/setupwindow.h \
+    gui/helpwindow.h \
+    gui/drawwindow.h
 
-FORMS    += drawwindow.ui \
-    setupwindow.ui \
-    aboutwindow.ui \
-    helpwindow.ui
+FORMS    += \
+    gui/aboutwindow.ui \
+    gui/drawwindow.ui \
+    gui/helpwindow.ui \
+    gui/setupwindow.ui
 
 RESOURCES += \
     icons.qrc \
     fonts.qrc
 
+INCLUDEPATH += \
+	$$PWD \
+	$$PWD/gui \
+
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
 
-#CONFIG += c++11
+CONFIG += c++11
