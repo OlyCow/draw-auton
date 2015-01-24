@@ -13,35 +13,35 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     actionlist.cpp \
-    action.cpp \
-    actionwidget.cpp \
-    actioncustom.cpp \
-    actionmove.cpp \
     actiondefine.cpp \
-    actiontool.cpp \
     graphicsviewedit.cpp \
-    actionturn.cpp \
     definitions.cpp \
     gui/aboutwindow.cpp \
     gui/helpwindow.cpp \
     gui/drawwindow.cpp \
-    gui/setupwindow.cpp
+    gui/setupwindow.cpp \
+    action/action.cpp \
+    action/actioncustom.cpp \
+    action/actionmove.cpp \
+    action/actiontool.cpp \
+    action/actionturn.cpp \
+    action/actionwidget.cpp
 
 HEADERS  += \
     actionlist.h \
-    action.h \
-    actionwidget.h \
-    actioncustom.h \
-    actionmove.h \
     actiondefine.h \
-    actiontool.h \
     graphicsviewedit.h \
-    actionturn.h \
     definitions.h \
     gui/aboutwindow.h \
     gui/setupwindow.h \
     gui/helpwindow.h \
-    gui/drawwindow.h
+    gui/drawwindow.h \
+    action/action.h \
+    action/actioncustom.h \
+    action/actionmove.h \
+    action/actiontool.h \
+    action/actionturn.h \
+    action/actionwidget.h
 
 FORMS    += \
     gui/aboutwindow.ui \
@@ -55,6 +55,7 @@ RESOURCES += \
 
 INCLUDEPATH += \
 	$$PWD \
+	$$PWD/action \
 	$$PWD/gui \
 
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
