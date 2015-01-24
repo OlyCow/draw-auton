@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     actiondefine.cpp \
     actiontool.cpp \
     graphicsviewedit.cpp \
-    actionturn.cpp
+    actionturn.cpp \
+    definitions.cpp
 
 HEADERS  += drawwindow.h \
     actionlist.h \
@@ -39,7 +40,8 @@ HEADERS  += drawwindow.h \
     actiondefine.h \
     actiontool.h \
     graphicsviewedit.h \
-    actionturn.h
+    actionturn.h \
+    definitions.h
 
 FORMS    += drawwindow.ui \
     setupwindow.ui \
@@ -49,3 +51,7 @@ FORMS    += drawwindow.ui \
 RESOURCES += \
     icons.qrc \
     fonts.qrc
+
+QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
+
+#CONFIG += c++11

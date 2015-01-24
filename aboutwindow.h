@@ -3,20 +3,34 @@
 
 #include <QDialog>
 
+#include <QEvent>
+#include <QKeyEvent>
+
+#include <QLabel>
+#include <QString>
+
 namespace Ui {
-class aboutwindow;
+class AboutWindow;
 }
 
-class aboutwindow : public QDialog
+class AboutWindow : public QDialog
 {
 	Q_OBJECT
 
 public:
-	explicit aboutwindow(QWidget *parent = 0);
-	~aboutwindow();
+	explicit AboutWindow(QWidget *parent = 0);
+	~AboutWindow();
+
+private slots:
+	void on_pushButton_close_clicked();
 
 private:
-	Ui::aboutwindow *ui;
+	Ui::AboutWindow *ui;
+	int current_pos;
+
+	static int keys[10];
+
+	bool eventFilter(QObject* object, QEvent* event);
 };
 
 #endif // ABOUTWINDOW_H

@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>600</width>
-    <height>360</height>
+    <width>640</width>
+    <height>450</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -18,8 +18,8 @@
   </property>
   <property name="minimumSize">
    <size>
-    <width>600</width>
-    <height>360</height>
+    <width>640</width>
+    <height>450</height>
    </size>
   </property>
   <property name="font">
@@ -92,8 +92,8 @@
           <rect>
            <x>0</x>
            <y>0</y>
-           <width>363</width>
-           <height>54</height>
+           <width>403</width>
+           <height>55</height>
           </rect>
          </property>
          <layout class="QHBoxLayout" name="horizontalLayout">
@@ -251,47 +251,6 @@
             </property>
            </spacer>
           </item>
-          <item>
-           <widget class="QToolButton" name="toolButton_add_2">
-            <property name="sizePolicy">
-             <sizepolicy hsizetype="Preferred" vsizetype="Expanding">
-              <horstretch>0</horstretch>
-              <verstretch>0</verstretch>
-             </sizepolicy>
-            </property>
-            <property name="minimumSize">
-             <size>
-              <width>50</width>
-              <height>0</height>
-             </size>
-            </property>
-            <property name="cursor">
-             <cursorShape>PointingHandCursor</cursorShape>
-            </property>
-            <property name="toolTip">
-             <string>Opens Setup dialog to add a new action.</string>
-            </property>
-            <property name="text">
-             <string>Add</string>
-            </property>
-            <property name="icon">
-             <iconset resource="icons.qrc">
-              <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
-            </property>
-            <property name="iconSize">
-             <size>
-              <width>24</width>
-              <height>24</height>
-             </size>
-            </property>
-            <property name="shortcut">
-             <string>Shift+A</string>
-            </property>
-            <property name="toolButtonStyle">
-             <enum>Qt::ToolButtonTextUnderIcon</enum>
-            </property>
-           </widget>
-          </item>
          </layout>
         </widget>
        </widget>
@@ -316,8 +275,22 @@
         <property name="horizontalScrollBarPolicy">
          <enum>Qt::ScrollBarAlwaysOff</enum>
         </property>
+        <property name="sceneRect">
+         <rectf>
+          <x>0.000000000000000</x>
+          <y>0.000000000000000</y>
+          <width>144.000000000000000</width>
+          <height>144.000000000000000</height>
+         </rectf>
+        </property>
         <property name="renderHints">
          <set>QPainter::Antialiasing|QPainter::TextAntialiasing</set>
+        </property>
+        <property name="resizeAnchor">
+         <enum>QGraphicsView::AnchorViewCenter</enum>
+        </property>
+        <property name="viewportUpdateMode">
+         <enum>QGraphicsView::FullViewportUpdate</enum>
         </property>
        </widget>
       </item>
@@ -498,6 +471,29 @@ Diagram</string>
        </spacer>
       </item>
       <item>
+       <widget class="QPushButton" name="pushButton_undo">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>36</height>
+         </size>
+        </property>
+        <property name="toolTip">
+         <string>Delete the most recently added action.</string>
+        </property>
+        <property name="text">
+         <string>Undo</string>
+        </property>
+        <property name="icon">
+         <iconset resource="icons.qrc">
+          <normaloff>:/icons/undo.png</normaloff>:/icons/undo.png</iconset>
+        </property>
+        <property name="shortcut">
+         <string>Ctrl+Z</string>
+        </property>
+       </widget>
+      </item>
+      <item>
        <widget class="QPushButton" name="pushButton_clear">
         <property name="minimumSize">
          <size>
@@ -639,6 +635,7 @@ Diagram</string>
   <tabstop>toolButton_add</tabstop>
   <tabstop>pushButton_generateProgram</tabstop>
   <tabstop>pushButton_exportDiagram</tabstop>
+  <tabstop>pushButton_undo</tabstop>
   <tabstop>pushButton_clear</tabstop>
   <tabstop>pushButton_help</tabstop>
   <tabstop>pushButton_about</tabstop>

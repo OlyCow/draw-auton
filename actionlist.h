@@ -1,7 +1,10 @@
 #ifndef ACTIONLIST_H
 #define ACTIONLIST_H
 
+#include "definitions.h"
+
 #include <vector>
+
 #include "action.h"
 
 class ActionList

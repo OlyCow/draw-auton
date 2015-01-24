@@ -3,6 +3,8 @@
 
 #include "action.h"
 
+#include <QObject>
+
 #include <cmath>
 
 #include <QPointF>
@@ -14,14 +16,14 @@ enum MoveDirection {
 
 class ActionMove : public Action
 {
+	Q_OBJECT
+
 public:
 	ActionMove(MoveDirection direction, QPointF startPoint, QPointF endPoint);
 
-	QPointF getEnd()	{return end;}
+	ActionType isType()	{return TYPE_MOVE;}
 
-protected:
-	QPointF end;
-
+private:
 	float find_dist();
 };
 

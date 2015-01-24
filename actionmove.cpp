@@ -1,9 +1,9 @@
 #include "actionmove.h"
 
-ActionMove::ActionMove(MoveDirection direction, QPointF startPoint, QPointF endPoint) :
-	end(endPoint)
+ActionMove::ActionMove(MoveDirection direction, QPointF startPoint, QPointF endPoint)
 {
 	start = startPoint;
+	end = endPoint;
 	switch (direction) {
 		case MOVE_FORWARD :
 			name = "MoveForward";

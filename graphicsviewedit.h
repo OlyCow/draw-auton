@@ -2,10 +2,13 @@
 #define GRAPHICSVIEWEDIT_H
 
 #include <QObject>
+
+#include <QPointF>
+
 #include <QGraphicsView>
 
 #include <QMouseEvent>
-#include <QPointF>
+#include <QKeyEvent>
 
 class GraphicsViewEdit : public QGraphicsView
 {
@@ -23,7 +26,6 @@ private slots:
 	void mousePressEvent(QMouseEvent* event);
 	void mouseMoveEvent(QMouseEvent* event);
 	void mouseReleaseEvent(QMouseEvent* event);
-
 };
 
 #endif // GRAPHICSVIEWEDIT_H
