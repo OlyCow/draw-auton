@@ -28,9 +28,11 @@ public:
 	ActionWidget(int index, ActionDefine* parentDefine, QWidget *parentWidget = NULL);
 	~ActionWidget();
 
-	void setIndex(int input)	{index = input;}
+	void setIndex(int input)			{index = input;}
+	void set_parent(ActionDefine* ptr)	{parent = ptr;}
 
 	int getIndex()				{return index;}
+	ActionDefine* get_parent()	{return parent;}
 
 	QString get_name()	{return lineEdit_name->text();}
 	int get_icon()		{return comboBox_icon->currentIndex();}

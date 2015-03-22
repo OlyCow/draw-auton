@@ -25,6 +25,7 @@
 
 #include "definitions.h"
 
+#include "actiondefine.h"
 #include "actionwidget.h"
 
 namespace Ui {
@@ -47,8 +48,8 @@ public:
 	static QStringList functions;
 
 signals:
-	void added_custom_action(ActionWidget* widget);
-	void removed_custom_action(int index);
+	void added_custom_define(ActionDefine* definition);
+	void removed_custom_define(ActionDefine* definition);
 
 public slots:
 	ActionWidget* create_action_widget();
@@ -66,7 +67,7 @@ private slots:
 private:
 	Ui::SetupWindow *ui;
 	ActionWidget* new_tab_widget;
-	std::vector<ActionWidget*> list_custom_actions;
+	std::vector<ActionWidget*> list_custom_widgets;
 
 	std::vector<QTextEdit*> code_edits;
 

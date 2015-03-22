@@ -36,6 +36,7 @@
 #include "actionmove.h"
 #include "actionturn.h"
 #include "actioncustom.h"
+#include "actiondefine.h"
 #include "actionlist.h"
 
 #include "graphicsviewedit.h"
@@ -64,9 +65,8 @@ public slots:
 	void start_snap();
 	void end_snap();
 
-	void add_custom_action(ActionWidget* source);
-	void remove_custom_action(int index);
-	void update_custom_action(ActionWidget* source);
+	void add_custom_action(ActionDefine* definition);
+	void remove_custom_action(ActionDefine* definition);
 
 private slots:
 	void on_pushButton_setup_clicked();
@@ -89,6 +89,7 @@ private:
 	HelpWindow* helpWindow;
 	ActionList* list_history;
 	std::vector<QGraphicsLineItem*> list_lines;
+	std::vector<ActionDefine*> list_defines;
 
 	QString canned_declares;
 	QString canned_definitions;

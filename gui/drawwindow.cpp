@@ -67,9 +67,9 @@ DrawWindow::DrawWindow(QWidget *parent) :
 
 	installEventFilter(this);
 
-	QObject::connect(	setupWindow,		&SetupWindow::added_custom_action,
+	QObject::connect(	setupWindow,		&SetupWindow::added_custom_define,
 						this,				&DrawWindow::add_custom_action);
-	QObject::connect(	setupWindow,		&SetupWindow::removed_custom_action,
+	QObject::connect(	setupWindow,		&SetupWindow::removed_custom_define,
 						this,				&DrawWindow::remove_custom_action);
 
 	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_pressed,
@@ -235,22 +235,13 @@ void DrawWindow::end_snap()
 	isSnapping = false;
 }
 
-void DrawWindow::add_custom_action(ActionWidget *source)
+void DrawWindow::add_custom_action(ActionDefine* definition)
 {
-	ActionTool* new_tool = new ActionTool(	source->get_name(),
-											definitions::icon[source->get_icon()],
-											this);
-	list_custom_actions.push_back(new_action);
+	list_defines.push_back(definition);
 }
-void DrawWindow::remove_custom_action(int index)
+void DrawWindow::remove_custom_action(ActionDefine* definition)
 {
-	list_custom_actions.erase(list_custom_actions.begin() + index);
-	// TODO: Delete saved data in files
-}
-void DrawWindow::update_custom_action(ActionWidget *source)
-{
-	source->getDefine()->set_tool_name(source->get_name());
-	source->getDefine()->set_tool_icon(source->get_icon());
+	;
 }
 
 void DrawWindow::on_pushButton_setup_clicked()

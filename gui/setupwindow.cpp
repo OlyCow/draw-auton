@@ -96,11 +96,13 @@ ActionWidget* SetupWindow::create_action_widget()
 	container->setFrameShadow(QFrame::Plain);
 	container->setLineWidth(0);
 
-	ActionWidget* new_action = new ActionWidget(	tab_widget,
-													tab_widget->count());
-	list_custom_actions.push_back(new_action);
-	emit added_custom_action(new_action);
-	container->layout()->addWidget(new_action);
+	ActionDefine* new_define = new ActionDefine();
+	ActionWidget* new_widget = new ActionWidget(	tab_widget->count(),
+													new_define,
+													tab_widget);
+	list_custom_widgets.push_back(new_widget);
+	emit added_custom_define(new_define);
+	container->layout()->addWidget(new_widget);
 	ui->tabWidget_actions_custom->addTab(container, "New");
 
 	if (tab_widget->count() > 0) {
@@ -109,21 +111,21 @@ ActionWidget* SetupWindow::create_action_widget()
 		QObject::connect(		new_tab_widget,	&ActionWidget::info_updated,
 								this,			&SetupWindow::update_custom_action);
 	}
-	QObject::connect(	new_action,	&ActionWidget::info_added,
+	QObject::connect(	new_widget,	&ActionWidget::info_added,
 						this,		&SetupWindow::create_action_widget);
-	QObject::connect(	new_action,	&ActionWidget::info_cleared,
+	QObject::connect(	new_widget,	&ActionWidget::info_cleared,
 						this,		&SetupWindow::remove_action_widget);
 
-	new_tab_widget = new_action;
-	return new_action;
+	new_tab_widget = new_widget;
+	return new_widget;
 }
 
 void SetupWindow::remove_action_widget(int index)
 {
 	QTabWidget* tab_widget = ui->tabWidget_actions_custom;
 	if (index+1 < tab_widget->count()) {
-		list_custom_actions.erase(list_custom_actions.begin() + index);
-		emit removed_custom_action(index);
+		emit removed_custom_define(list_custom_widgets[index]->get_parent());
+		list_custom_widgets.erase(list_custom_widgets.begin() + index);
 		ui->tabWidget_actions_custom->removeTab(index);
 	}
 }

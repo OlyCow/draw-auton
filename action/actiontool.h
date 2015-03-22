@@ -16,9 +16,9 @@ public:
 	ActionTool(QString name, QString icon, ActionDefine* parentDefine, QWidget* parentWidget = NULL);
 	~ActionTool();
 
-	void setParent(ActionDefine* ptr)	{parent = ptr;}
+	void set_parent(ActionDefine* ptr)	{parent = ptr;}
 
-	ActionDefine* getParent()			{return parent;}
+	ActionDefine* get_parent()			{return parent;}
 
 private:
 	ActionDefine* parent;
