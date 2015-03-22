@@ -3,7 +3,7 @@
 
 #include "definitions.h"
 #include "action.h"
-#include "actionwidget.h"
+#include "actiondefine.h"
 
 #include <QObject>
 #include <QWidget>
@@ -18,13 +18,15 @@ class ActionCustom : public Action
 	Q_OBJECT
 
 public:
-	ActionCustom(QPointF start_point);
+	ActionCustom(ActionDefine* definition, QPointF start_point);
 	~ActionCustom();
 
 	ActionType isType()	{return TYPE_CUSTOM;}
 
+	ActionDefine* getDefine() {return actionDefine;}
+
 private:
-	QString icon;
+	ActionDefine* actionDefine;
 };
 
 #endif // ACTIONCUSTOM_H

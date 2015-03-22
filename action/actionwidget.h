@@ -25,14 +25,12 @@ class ActionWidget : public QWidget
 	friend class SetupWindow;
 
 public:
-	ActionWidget(QWidget *parent = 0, int index = 0);
+	ActionWidget(int index, ActionDefine* parentDefine, QWidget *parentWidget = NULL);
 	~ActionWidget();
 
-	void setIndex(int input)			{index = input;}
-	void setDefine(ActionDefine* input)	{define = input;}
+	void setIndex(int input)	{index = input;}
 
 	int getIndex()				{return index;}
-	ActionDefine* getDefine()	{return define;}
 
 	QString get_name()	{return lineEdit_name->text();}
 	int get_icon()		{return comboBox_icon->currentIndex();}
@@ -50,7 +48,7 @@ public slots:
 
 private:
 	int index;
-	ActionDefine* define;
+	ActionDefine* parent;
 
 	QGridLayout* layout_main;
 	QWidget* widget_layout_call;

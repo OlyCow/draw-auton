@@ -35,8 +35,8 @@
 #include "action.h"
 #include "actionmove.h"
 #include "actionturn.h"
+#include "actioncustom.h"
 #include "actionlist.h"
-#include "actiondefine.h"
 
 #include "graphicsviewedit.h"
 
@@ -88,7 +88,6 @@ private:
 	AboutWindow* aboutWindow;
 	HelpWindow* helpWindow;
 	ActionList* list_history;
-	std::vector<ActionDefine*> list_custom_actions;
 	std::vector<QGraphicsLineItem*> list_lines;
 
 	QString canned_declares;

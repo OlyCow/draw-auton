@@ -237,13 +237,9 @@ void DrawWindow::end_snap()
 
 void DrawWindow::add_custom_action(ActionWidget *source)
 {
-	ActionDefine* new_action = new ActionDefine();
 	ActionTool* new_tool = new ActionTool(	source->get_name(),
 											definitions::icon[source->get_icon()],
-											new_action,
 											this);
-	new_action->set_tool(new_tool);
-	new_action->set_widget(source);
 	list_custom_actions.push_back(new_action);
 }
 void DrawWindow::remove_custom_action(int index)
@@ -259,15 +255,15 @@ void DrawWindow::update_custom_action(ActionWidget *source)
 
 void DrawWindow::on_pushButton_setup_clicked()
 {
-	setupWindow->show();
+	setupWindow->exec();
 }
 void DrawWindow::on_pushButton_help_clicked()
 {
-	helpWindow->show();
+	helpWindow->exec();
 }
 void DrawWindow::on_pushButton_about_clicked()
 {
-	aboutWindow->show();
+	aboutWindow->exec();
 }
 
 void DrawWindow::on_pushButton_generateProgram_clicked()

@@ -1,7 +1,8 @@
 #include "actionwidget.h"
 
-ActionWidget::ActionWidget(QWidget *parent, int index) :
-	QWidget(parent),
+ActionWidget::ActionWidget(int index, ActionDefine* parentDefine, QWidget *parentWidget) :
+	parent(parentDefine),
+	QWidget(parentWidget),
 	index(index),
 	layout_main(new QGridLayout(this)),
 	widget_layout_call(new QWidget(this)),
@@ -93,6 +94,7 @@ ActionWidget::ActionWidget(QWidget *parent, int index) :
 
 ActionWidget::~ActionWidget()
 {
+	// TODO: pointer to parent should NOT be deleted here?
 	delete layout_main;
 	delete layout_call;
 	delete label_name;

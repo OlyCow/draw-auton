@@ -13,7 +13,6 @@ TEMPLATE = app
 
 SOURCES += main.cpp\
     actionlist.cpp \
-    actiondefine.cpp \
     graphicsviewedit.cpp \
     definitions.cpp \
     gui/aboutwindow.cpp \
@@ -25,11 +24,11 @@ SOURCES += main.cpp\
     action/actionmove.cpp \
     action/actiontool.cpp \
     action/actionturn.cpp \
-    action/actionwidget.cpp
+    action/actionwidget.cpp \
+    action/actiondefine.cpp
 
 HEADERS  += \
     actionlist.h \
-    actiondefine.h \
     graphicsviewedit.h \
     definitions.h \
     gui/aboutwindow.h \
@@ -41,7 +40,8 @@ HEADERS  += \
     action/actionmove.h \
     action/actiontool.h \
     action/actionturn.h \
-    action/actionwidget.h
+    action/actionwidget.h \
+    action/actiondefine.h
 
 FORMS    += \
     gui/aboutwindow.ui \

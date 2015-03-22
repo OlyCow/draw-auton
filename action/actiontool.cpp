@@ -1,8 +1,8 @@
 #include "actiontool.h"
 
-ActionTool::ActionTool(QString name, QString icon, ActionDefine* action, QWidget* parent) :
-	QToolButton(parent),
-	define(action)
+ActionTool::ActionTool(QString name, QString icon, ActionDefine* parentDefine, QWidget* parentWidget) :
+	parent(parentDefine),
+	QToolButton(parentWidget)
 {
 	setSizePolicy(QSizePolicy::Preferred, QSizePolicy::Fixed);
 	setMinimumWidth(50);
@@ -17,5 +17,5 @@ ActionTool::ActionTool(QString name, QString icon, ActionDefine* action, QWidget
 
 ActionTool::~ActionTool()
 {
-
+	// TODO: pointer to parent should NOT be deleted here?
 }

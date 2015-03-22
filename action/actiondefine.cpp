@@ -1,8 +1,8 @@
 #include "actiondefine.h"
 
 ActionDefine::ActionDefine() :
-	tool(new ActionTool("","",0)),
-	widget(new ActionWidget())
+	tool(new ActionTool("","",this)),
+	widget(new ActionWidget(0, this))
 {
 	QObject::connect(	widget,	&ActionWidget::param_added,
 						this,	&ActionDefine::param_add);

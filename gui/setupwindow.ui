@@ -14,7 +14,7 @@
    <string>Draw Auton - Setup</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icons.qrc">
+   <iconset resource="../icons.qrc">
     <normaloff>:/icons/pencil.png</normaloff>:/icons/pencil.png</iconset>
   </property>
   <property name="sizeGripEnabled">
@@ -36,7 +36,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>0</number>
+      <number>2</number>
      </property>
      <widget class="QWidget" name="tab_config">
       <attribute name="title">
@@ -83,8 +83,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>570</width>
-            <height>458</height>
+            <width>572</width>
+            <height>457</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_scrollArea0">
@@ -191,8 +191,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>154</width>
-            <height>256</height>
+            <width>572</width>
+            <height>457</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_scrollArea1">
@@ -402,8 +402,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>553</width>
-            <height>549</height>
+            <width>558</width>
+            <height>547</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">
@@ -413,9 +413,6 @@
               <number>-1</number>
              </property>
              <property name="tabsClosable">
-              <bool>true</bool>
-             </property>
-             <property name="movable">
               <bool>true</bool>
              </property>
             </widget>
@@ -693,7 +690,7 @@
   <tabstop>textEdit_pragmas</tabstop>
  </tabstops>
  <resources>
-  <include location="icons.qrc"/>
+  <include location="../icons.qrc"/>
  </resources>
  <connections/>
 </ui>
