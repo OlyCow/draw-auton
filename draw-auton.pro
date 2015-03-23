@@ -1,8 +1,6 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2014-12-23T19:16:05
-#
-#-------------------------------------------------
+# Project created by QtCreator: 2014-12-23 19:16:05
+
+
 
 QT       += core gui
 
@@ -10,6 +8,8 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 TARGET = draw-auton
 TEMPLATE = app
+
+CONFIG += c++11
 
 SOURCES += main.cpp\
     actionlist.cpp \
@@ -59,5 +59,3 @@ INCLUDEPATH += \
 	$$PWD/gui \
 
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
-
-CONFIG += c++11
