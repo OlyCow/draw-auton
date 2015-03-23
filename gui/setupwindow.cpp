@@ -102,15 +102,18 @@ ActionWidget* SetupWindow::create_action_widget()
 													tab_widget);
 	new_define->set_widget(new_widget);
 	list_custom_widgets.push_back(new_widget);
-	emit added_custom_define(new_define);
 	container->layout()->addWidget(new_widget);
-	ui->tabWidget_actions_custom->addTab(container, "New Action");
-
-	if (tab_widget->count() > 0) {
+	tab_widget->addTab(container, "New Action");
+	
+	if (tab_widget->count() == 1) {
+		new_tab_widget = new_widget;
+	}
+	if (tab_widget->count() > 1) {
 		QObject::disconnect(	new_tab_widget,	&ActionWidget::info_added,
 								this,			&SetupWindow::create_action_widget);
-		QObject::connect(		new_tab_widget,	&ActionWidget::info_updated,
+		QObject::connect(		new_widget,		&ActionWidget::info_updated,
 								this,			&SetupWindow::update_custom_action);
+		emit added_custom_define(new_tab_widget->get_parent());	// Haven't switched the new_tab_widget yet.
 	}
 	QObject::connect(	new_widget,	&ActionWidget::info_added,
 						this,		&SetupWindow::create_action_widget);
@@ -135,7 +138,7 @@ void SetupWindow::update_custom_action(ActionWidget *widget)
 {
 	QString tab_name = widget->lineEdit_name->text();
 	if (tab_name.length() == 0) {
-		tab_name = "...";
+		tab_name = "[...]";
 	}
 	ui->tabWidget_actions_custom->setTabText(	ui->tabWidget_actions_custom->currentIndex(),
 												tab_name);
