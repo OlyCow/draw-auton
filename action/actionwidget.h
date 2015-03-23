@@ -1,6 +1,8 @@
 #ifndef ACTIONWIDGET_H
 #define ACTIONWIDGET_H
 
+#include <QDebug>
+
 #include <QObject>
 #include <QWidget>
 #include <QGridLayout>

@@ -100,6 +100,7 @@ ActionWidget* SetupWindow::create_action_widget()
 	ActionWidget* new_widget = new ActionWidget(	tab_widget->count(),
 													new_define,
 													tab_widget);
+	new_define->set_widget(new_widget);
 	list_custom_widgets.push_back(new_widget);
 	emit added_custom_define(new_define);
 	container->layout()->addWidget(new_widget);
