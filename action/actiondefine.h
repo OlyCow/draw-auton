@@ -1,6 +1,8 @@
 #ifndef ACTIONDEFINE_H
 #define ACTIONDEFINE_H
 
+#include <QDebug>
+
 #include <vector>
 
 #include <QObject>

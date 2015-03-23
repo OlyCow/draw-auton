@@ -53,5 +53,6 @@ void ActionDefine::update_data_from_widget()
 
 void ActionDefine::update_tool_with_data()
 {
-
+	tool->setText(*name);
+	tool->setIcon(QIcon(definitions::icon[icon]));
 }

@@ -240,6 +240,10 @@ void DrawWindow::end_snap()
 void DrawWindow::add_custom_define(ActionDefine* definition)
 {
 	list_defines.push_back(definition);
+	ActionTool* new_tool = new ActionTool("New Action", 0, definition, ui->scrollArea_actions);
+	definition->set_tool(new_tool);
+	int tool_number = list_defines.size()+2;
+	ui->layout_tools->insertWidget(tool_number-1, definition->get_tool());
 	definition->update_data_from_widget();
 }
 void DrawWindow::update_custom_define(ActionDefine *definition)

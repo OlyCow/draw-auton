@@ -34,9 +34,9 @@ public:
 	ActionDefine* get_parent()	{ return parent; }
 
 	int get_icon()			{ return comboBox_icon->currentIndex(); }
-	QString* get_name()		{ return &(lineEdit_name->text()); }
-	QString* get_declare()	{ return &(lineEdit_declare->text()); }
-	QString* get_define()	{ return &(textEdit_define->toPlainText()); }
+	QString* get_name()		{ return new QString(lineEdit_name->text()); }
+	QString* get_declare()	{ return new QString(lineEdit_declare->text()); }
+	QString* get_define()	{ return new QString(textEdit_define->toPlainText()); }
 
 signals:
 	void info_added();
