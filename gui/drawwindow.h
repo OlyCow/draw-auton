@@ -3,14 +3,15 @@
 
 #include <QDebug>
 
-#include <QCoreApplication>
-#include <QMainWindow>
-
 #include <cmath>
 #include <vector>
 
 #include <QPointF>
 #include <QSize>
+
+#include <QTextStream>
+#include <QDir>
+#include <QFile>
 
 #include <QEvent>
 #include <QKeyEvent>
@@ -24,11 +25,11 @@
 #include <QImage>
 #include <QPainter>
 
-#include <QTextStream>
-#include <QDir>
-#include <QFile>
+#include <QCoreApplication>
+
 #include <QFileDialog>
 #include <QProgressDialog>
+#include <QMainWindow>
 
 #include "definitions.h"
 
@@ -65,8 +66,9 @@ public slots:
 	void start_snap();
 	void end_snap();
 
-	void add_custom_action(ActionDefine* definition);
-	void remove_custom_action(ActionDefine* definition);
+	void add_custom_define(ActionDefine* definition);
+	void update_custom_define(ActionDefine* definition);
+	void remove_custom_define(ActionDefine* definition);
 
 private slots:
 	void on_pushButton_setup_clicked();

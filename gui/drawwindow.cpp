@@ -68,9 +68,11 @@ DrawWindow::DrawWindow(QWidget *parent) :
 	installEventFilter(this);
 
 	QObject::connect(	setupWindow,		&SetupWindow::added_custom_define,
-						this,				&DrawWindow::add_custom_action);
+						this,				&DrawWindow::add_custom_define);
+	QObject::connect(	setupWindow,		&SetupWindow::updated_custom_define,
+						this,				&DrawWindow::update_custom_define);
 	QObject::connect(	setupWindow,		&SetupWindow::removed_custom_define,
-						this,				&DrawWindow::remove_custom_action);
+						this,				&DrawWindow::remove_custom_define);
 
 	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_pressed,
 						this,				&DrawWindow::add_move);
@@ -235,13 +237,26 @@ void DrawWindow::end_snap()
 	isSnapping = false;
 }
 
-void DrawWindow::add_custom_action(ActionDefine* definition)
+void DrawWindow::add_custom_define(ActionDefine* definition)
 {
 	list_defines.push_back(definition);
+	definition->update_data_from_widget();
 }
-void DrawWindow::remove_custom_action(ActionDefine* definition)
+void DrawWindow::update_custom_define(ActionDefine *definition)
 {
-	;
+	definition->update_data_from_widget();
+}
+void DrawWindow::remove_custom_define(ActionDefine* definition)
+{
+	int define_list_size = list_defines.size();
+	int index_selected = define_list_size-1;
+	for (int i=0; i<define_list_size; i++) {
+		if (list_defines[i] == definition) {
+			index_selected = i;
+			break;
+		}
+	}
+	list_defines.erase(list_defines.begin()+index_selected);
 }
 
 void DrawWindow::on_pushButton_setup_clicked()

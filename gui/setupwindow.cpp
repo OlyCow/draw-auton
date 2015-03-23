@@ -103,7 +103,7 @@ ActionWidget* SetupWindow::create_action_widget()
 	list_custom_widgets.push_back(new_widget);
 	emit added_custom_define(new_define);
 	container->layout()->addWidget(new_widget);
-	ui->tabWidget_actions_custom->addTab(container, "New");
+	ui->tabWidget_actions_custom->addTab(container, "New Action");
 
 	if (tab_widget->count() > 0) {
 		QObject::disconnect(	new_tab_widget,	&ActionWidget::info_added,
@@ -138,6 +138,7 @@ void SetupWindow::update_custom_action(ActionWidget *widget)
 	}
 	ui->tabWidget_actions_custom->setTabText(	ui->tabWidget_actions_custom->currentIndex(),
 												tab_name);
+	emit updated_custom_define(widget->get_parent());
 }
 
 void SetupWindow::on_pushButton_save_clicked()
@@ -152,7 +153,7 @@ void SetupWindow::on_pushButton_save_clicked()
 void SetupWindow::show_new_custom_tab()
 {
 	ui->tabWidget->setCurrentIndex(2);
-	ui->tabWidget_actions_custom->setCurrentIndex(ui->tabWidget_actions_custom->count());
+	ui->tabWidget_actions_custom->setCurrentIndex(ui->tabWidget_actions_custom->count()-1);
 }
 
 void SetupWindow::on_pushButton_clear_clicked()

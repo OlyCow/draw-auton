@@ -3,8 +3,6 @@
 
 #include <QDebug>
 
-#include <QDialog>
-
 #include <vector>
 
 #include <QEvent>
@@ -22,6 +20,8 @@
 #include <QRegularExpressionMatch>
 
 #include <QHBoxLayout>
+
+#include <QDialog>
 
 #include "definitions.h"
 
@@ -49,6 +49,7 @@ public:
 
 signals:
 	void added_custom_define(ActionDefine* definition);
+	void updated_custom_define(ActionDefine* definition);
 	void removed_custom_define(ActionDefine* definition);
 
 public slots:

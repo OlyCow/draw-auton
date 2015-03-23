@@ -44,7 +44,11 @@ void ActionDefine::set_tool(ActionTool *input)
 
 void ActionDefine::update_data_from_widget()
 {
-
+	icon = widget->get_icon();
+	name = widget->get_name();
+	declare = widget->get_declare();
+	define = widget->get_define();
+	update_tool_with_data();
 }
 
 void ActionDefine::update_tool_with_data()
