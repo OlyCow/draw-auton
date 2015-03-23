@@ -6,6 +6,8 @@
 #include <QObject>
 #include <QToolButton>
 
+#include "definitions.h"
+
 class ActionDefine;
 
 class ActionTool : public QToolButton

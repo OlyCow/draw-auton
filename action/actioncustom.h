@@ -1,17 +1,16 @@
 #ifndef ACTIONCUSTOM_H
 #define ACTIONCUSTOM_H
 
-#include "definitions.h"
-#include "action.h"
-#include "actiondefine.h"
-
-#include <QObject>
-#include <QWidget>
-
 #include <vector>
 
 #include <QPointF>
 #include <QString>
+
+#include <QObject>
+
+#include "definitions.h"
+#include "action.h"
+#include "actiondefine.h"
 
 class ActionCustom : public Action
 {

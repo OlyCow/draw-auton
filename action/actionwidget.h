@@ -1,8 +1,6 @@
 #ifndef ACTIONWIDGET_H
 #define ACTIONWIDGET_H
 
-#include "definitions.h"
-
 #include <QObject>
 #include <QWidget>
 #include <QGridLayout>
@@ -14,6 +12,8 @@
 #include <QTextEdit>
 #include <QIcon>
 
+#include "definitions.h"
+
 class ActionDefine;
 class SetupWindow;
 
@@ -21,27 +21,23 @@ class ActionWidget : public QWidget
 {
 	Q_OBJECT
 
-	friend class ActionDefine;
 	friend class SetupWindow;
 
 public:
 	ActionWidget(int index, ActionDefine* parentDefine, QWidget *parentWidget = NULL);
 	~ActionWidget();
 
-	void setIndex(int input)			{index = input;}
-	void set_parent(ActionDefine* ptr)	{parent = ptr;}
+	void setIndex(int input)			{ index = input; }
+	void set_parent(ActionDefine* ptr)	{ parent = ptr; }
 
-	int getIndex()				{return index;}
-	ActionDefine* get_parent()	{return parent;}
-
-	QString get_name()	{return lineEdit_name->text();}
-	int get_icon()		{return comboBox_icon->currentIndex();}
+	int getIndex()						{ return index; }
+	ActionDefine* get_parent()			{ return parent; }
 
 signals:
 	void info_added();
 	void info_cleared(int index);
 	void info_updated(ActionWidget*);
-	void param_added();
+	void param_added(QString*);
 	void param_cleared(int index);
 
 public slots:

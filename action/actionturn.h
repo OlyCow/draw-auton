@@ -1,11 +1,11 @@
 #ifndef ACTIONTURN_H
 #define ACTIONTURN_H
 
-#include "action.h"
+#include <QPointF>
 
 #include <QObject>
 
-#include <QPointF>
+#include "action.h"
 
 enum TurnDirection {
 	TURN_LEFT = 0,

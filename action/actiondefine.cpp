@@ -1,37 +1,53 @@
 #include "actiondefine.h"
 
-ActionDefine::ActionDefine()
+ActionDefine::ActionDefine() :
+	icon(0),
+	name(new QString("")),
+	declare(new QString("")),
+	define(new QString(""))
 {
-	tool = new ActionTool("","",this);
 	widget = new ActionWidget(0, this);
 	QObject::connect(	widget,	&ActionWidget::param_added,
-						this,	&ActionDefine::param_add);
-	QObject::connect(	widget,	&ActionWidget::param_cleared,
-						this,	&ActionDefine::param_clear);
+						this,	&ActionDefine::add_param);
+	QObject::connect(	widget, &ActionWidget::param_cleared,
+						this,	&ActionDefine::remove_param);
+
+	tool = new ActionTool("","",this);
 }
 
 ActionDefine::~ActionDefine()
 {
-	delete tool;
 	delete widget;
+	delete tool;
+	delete define;
+	delete declare;
+	delete name;
 }
 
-void ActionDefine::set_tool_name(QString input)
+void ActionDefine::set_widget(ActionWidget *input)
 {
-	tool->setText(input);
-}
-void ActionDefine::set_tool_icon(int input_index)
-{
-	tool->setIcon(QIcon(definitions::icon[input_index]));
+	QObject::disconnect(	widget,	&ActionWidget::param_added,
+							this,	&ActionDefine::add_param);
+	QObject::disconnect(	widget, &ActionWidget::param_cleared,
+							this,	&ActionDefine::remove_param);
+	widget = input;
+	QObject::connect(	widget,	&ActionWidget::param_added,
+						this,	&ActionDefine::add_param);
+	QObject::connect(	widget, &ActionWidget::param_cleared,
+						this,	&ActionDefine::remove_param);
 }
 
-void ActionDefine::param_add()
+void ActionDefine::set_tool(ActionTool *input)
 {
-	list_params.push_back(widget->comboBox_param->currentText());
-	list_icons.push_back(definitions::icon[definitions::ICON_APERTURE]);
+	tool = input;
 }
-void ActionDefine::param_clear(int index)
+
+void ActionDefine::update_data_from_widget()
 {
-	list_params.erase(list_params.begin() + index);
-	list_icons.erase(list_icons.begin() + index);
+
+}
+
+void ActionDefine::update_tool_with_data()
+{
+
 }
