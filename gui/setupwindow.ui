@@ -36,7 +36,7 @@
    <item>
     <widget class="QTabWidget" name="tabWidget">
      <property name="currentIndex">
-      <number>2</number>
+      <number>0</number>
      </property>
      <widget class="QWidget" name="tab_config">
       <attribute name="title">
@@ -191,8 +191,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>572</width>
-            <height>457</height>
+            <width>154</width>
+            <height>254</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_scrollArea1">

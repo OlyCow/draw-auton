@@ -250,7 +250,6 @@ void DrawWindow::add_custom_define(ActionDefine* definition)
 void DrawWindow::update_custom_define(ActionDefine *definition)
 {
 	definition->update_data_from_widget();
-	add_custom_define(definition);
 }
 void DrawWindow::remove_custom_define(ActionDefine* definition)
 {
