@@ -26,14 +26,14 @@ class ActionWidget : public QWidget
 	friend class SetupWindow;
 
 public:
-	ActionWidget(int index, ActionDefine* parentDefine, QWidget *parentWidget = NULL);
+	ActionWidget(ActionDefine* parentDefine, QWidget *parentWidget = NULL);
 	~ActionWidget();
 
-	void setIndex(int input)			{ index = input; }
 	void set_parent(ActionDefine* ptr)	{ parent = ptr; }
+	ActionDefine* get_parent()			{ return parent; }
 
-	int getIndex()				{ return index; }
-	ActionDefine* get_parent()	{ return parent; }
+	void set_index(int input)	{ index = input; }
+	int get_index()				{ return index; }
 
 	int get_icon()			{ return comboBox_icon->currentIndex(); }
 	QString* get_name()		{ return new QString(lineEdit_name->text()); }
@@ -42,7 +42,7 @@ public:
 
 signals:
 	void info_added();
-	void info_cleared(int index);
+	void info_cleared(ActionWidget*);
 	void info_updated(ActionWidget*);
 	void param_added(QString*);
 	void param_cleared(int index);
@@ -52,8 +52,8 @@ public slots:
 	void param_changed();
 
 private:
-	int index;
 	ActionDefine* parent;
+	int index;
 
 	QGridLayout* layout_main;
 	QWidget* widget_layout_call;

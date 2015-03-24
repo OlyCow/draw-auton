@@ -75,7 +75,7 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	create_action_widget();
 
 	QObject::connect(	ui->tabWidget_actions_custom,	&QTabWidget::tabCloseRequested,
-						this,							&SetupWindow::remove_action_widget);
+						this,							&SetupWindow::remove_action_tab);
 }
 
 SetupWindow::~SetupWindow()
@@ -97,8 +97,7 @@ ActionWidget* SetupWindow::create_action_widget()
 	container->setLineWidth(0);
 
 	ActionDefine* new_define = new ActionDefine();
-	ActionWidget* new_widget = new ActionWidget(	tab_widget->count(),
-													new_define,
+	ActionWidget* new_widget = new ActionWidget(	new_define,
 													tab_widget);
 	new_define->set_widget(new_widget);
 	list_custom_widgets.push_back(new_widget);
@@ -108,6 +107,7 @@ ActionWidget* SetupWindow::create_action_widget()
 	if (tab_widget->count() == 1) {
 		new_tab_widget = new_widget;
 	}
+	new_tab_widget->set_index(tab_widget->currentIndex());
 	if (tab_widget->count() > 1) {
 		QObject::disconnect(	new_tab_widget,	&ActionWidget::info_added,
 								this,			&SetupWindow::create_action_widget);
@@ -124,13 +124,25 @@ ActionWidget* SetupWindow::create_action_widget()
 	return new_widget;
 }
 
-void SetupWindow::remove_action_widget(int index)
+void SetupWindow::remove_action_tab(int index)
+{
+	ui->tabWidget_actions_custom->findChildren<ActionWidget*>();
+	remove_action_widget(list_custom_widgets[index]);
+}
+void SetupWindow::remove_action_widget(ActionWidget* widget)
 {
 	QTabWidget* tab_widget = ui->tabWidget_actions_custom;
-	if (index+1 < tab_widget->count()) {
-		emit removed_custom_define(list_custom_widgets[index]->get_parent());
-		list_custom_widgets.erase(list_custom_widgets.begin() + index);
-		ui->tabWidget_actions_custom->removeTab(index);
+	if (tab_widget->count() > 1) {
+		int list_size = list_custom_widgets.size();
+		for (int i=0; i<list_size; i++) {
+			ActionWidget* widget_compare = list_custom_widgets[i];
+			if (widget_compare == widget) {
+				emit removed_custom_define(widget_compare->get_parent());
+				list_custom_widgets.erase(list_custom_widgets.begin() + i);
+				tab_widget->removeTab(widget_compare->get_index());
+				break;
+			}
+		}
 	}
 }
 

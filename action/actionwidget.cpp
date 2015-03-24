@@ -1,9 +1,9 @@
 #include "actionwidget.h"
 
-ActionWidget::ActionWidget(int index, ActionDefine* parentDefine, QWidget *parentWidget) :
+ActionWidget::ActionWidget(ActionDefine* parentDefine, QWidget *parentWidget) :
 	parent(parentDefine),
+	index(0),
 	QWidget(parentWidget),
-	index(index),
 	layout_main(new QGridLayout(this)),
 	widget_layout_call(new QWidget(this)),
 	layout_call(new QHBoxLayout(this)),
@@ -133,7 +133,7 @@ void ActionWidget::info_changed()
 		emit info_added();
 		emit info_updated(this);
 	} else if (do_clear) {
-		emit info_cleared(index);
+		emit info_cleared(this);
 	}
 }
 

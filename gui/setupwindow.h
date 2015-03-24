@@ -54,7 +54,8 @@ signals:
 
 public slots:
 	ActionWidget* create_action_widget();
-	void remove_action_widget(int index);
+	void remove_action_tab(int index);
+	void remove_action_widget(ActionWidget* widget);
 	void update_custom_action(ActionWidget* widget);
 
 	void show_new_custom_tab();

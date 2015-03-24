@@ -6,7 +6,7 @@ ActionDefine::ActionDefine() :
 	declare(new QString("")),
 	define(new QString(""))
 {
-	widget = new ActionWidget(0, this);
+	widget = new ActionWidget(this);
 	QObject::connect(	widget,	&ActionWidget::param_added,
 						this,	&ActionDefine::add_param);
 	QObject::connect(	widget, &ActionWidget::param_cleared,
