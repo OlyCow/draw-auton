@@ -111,14 +111,14 @@ ActionWidget* SetupWindow::create_action_widget()
 	if (tab_widget->count() > 1) {
 		QObject::disconnect(	new_tab_widget,	&ActionWidget::info_added,
 								this,			&SetupWindow::create_action_widget);
-		QObject::connect(		new_widget,		&ActionWidget::info_updated,
+		QObject::connect(		new_tab_widget,	&ActionWidget::info_updated,
 								this,			&SetupWindow::update_custom_action);
+		QObject::connect(		new_tab_widget,	&ActionWidget::info_cleared,
+								this,			&SetupWindow::remove_action_widget);
 		emit added_custom_define(new_tab_widget->get_parent());	// Haven't switched the new_tab_widget yet.
 	}
 	QObject::connect(	new_widget,	&ActionWidget::info_added,
 						this,		&SetupWindow::create_action_widget);
-	QObject::connect(	new_widget,	&ActionWidget::info_cleared,
-						this,		&SetupWindow::remove_action_widget);
 
 	new_tab_widget = new_widget;
 	return new_widget;

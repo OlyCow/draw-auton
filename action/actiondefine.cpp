@@ -55,6 +55,4 @@ void ActionDefine::update_tool_with_data()
 {
 	tool->setText(*name);
 	tool->setIcon(QIcon(definitions::icon[icon]));
-	qDebug() << *(name);
-	qDebug() << icon;
 }

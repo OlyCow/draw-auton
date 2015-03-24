@@ -114,7 +114,7 @@ ActionWidget::~ActionWidget()
 void ActionWidget::info_changed()
 {
 	bool do_add = false;
-	bool do_clear = false;
+	bool do_clear = true;
 
 	int total_size = 0;
 	total_size += lineEdit_name->text().size();
@@ -124,9 +124,9 @@ void ActionWidget::info_changed()
 
 	do_add = do_add || (total_size > 0);
 	do_add = do_add || (comboBox_icon->currentIndex() != 0);
-	do_add = do_add || (comboBox_param->currentIndex() != 0);
+	do_add = do_add || (comboBox_param->currentIndex() > 0);
 
-	do_clear = do_clear && (total_size > 0);
+	do_clear = do_clear && (total_size == 0);
 	do_clear = do_clear && (comboBox_param->count() == 0);
 
 	if (do_add) {
