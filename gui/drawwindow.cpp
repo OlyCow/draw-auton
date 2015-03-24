@@ -262,6 +262,8 @@ void DrawWindow::remove_custom_define(ActionDefine* definition)
 		}
 	}
 	list_defines.erase(list_defines.begin()+index_selected);
+	ui->layout_tools->removeWidget(definition->get_tool());
+	delete definition;
 }
 
 void DrawWindow::on_pushButton_setup_clicked()

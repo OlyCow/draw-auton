@@ -5,6 +5,7 @@
 
 #include <QObject>
 #include <QWidget>
+#include <QScrollArea>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -55,6 +56,8 @@ private:
 	ActionDefine* parent;
 	int index;
 
+	QHBoxLayout* layout_scroll;
+	QScrollArea* scrollArea;
 	QGridLayout* layout_main;
 	QWidget* widget_layout_call;
 	QHBoxLayout* layout_call;

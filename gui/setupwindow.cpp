@@ -88,21 +88,10 @@ ActionWidget* SetupWindow::create_action_widget()
 {
 	QTabWidget* tab_widget = ui->tabWidget_actions_custom;
 
-	QScrollArea* container = new QScrollArea(tab_widget);
-	QHBoxLayout* container_layout = new QHBoxLayout(container);
-	container->setLayout(container_layout);
-	container->setMinimumHeight(270);
-	container->setFrameShape(QFrame::NoFrame);
-	container->setFrameShadow(QFrame::Plain);
-	container->setLineWidth(0);
-
 	ActionDefine* new_define = new ActionDefine();
-	ActionWidget* new_widget = new ActionWidget(	new_define,
-													tab_widget);
+	ActionWidget* new_widget = new ActionWidget(new_define);
 	new_define->set_widget(new_widget);
-	list_custom_widgets.push_back(new_widget);
-	container->layout()->addWidget(new_widget);
-	tab_widget->addTab(container, "New Action");
+	tab_widget->addTab(new_widget, "New Action");
 	
 	if (tab_widget->count() == 1) {
 		new_tab_widget = new_widget;
@@ -126,20 +115,19 @@ ActionWidget* SetupWindow::create_action_widget()
 
 void SetupWindow::remove_action_tab(int index)
 {
-	ui->tabWidget_actions_custom->findChildren<ActionWidget*>();
-	remove_action_widget(list_custom_widgets[index]);
+	ActionWidget* widget_removed = qobject_cast<ActionWidget*>(ui->tabWidget_actions_custom->widget(index));
+	remove_action_widget(widget_removed);
 }
 void SetupWindow::remove_action_widget(ActionWidget* widget)
 {
 	QTabWidget* tab_widget = ui->tabWidget_actions_custom;
-	if (tab_widget->count() > 1) {
-		int list_size = list_custom_widgets.size();
-		for (int i=0; i<list_size; i++) {
-			ActionWidget* widget_compare = list_custom_widgets[i];
+	int tab_num = tab_widget->count();
+	if (tab_num > 1) {
+		for (int i=0; i<tab_num; i++) {
+			ActionWidget* widget_compare = qobject_cast<ActionWidget*>(tab_widget->widget(i));
 			if (widget_compare == widget) {
-				emit removed_custom_define(widget_compare->get_parent());
-				list_custom_widgets.erase(list_custom_widgets.begin() + i);
-				tab_widget->removeTab(widget_compare->get_index());
+				tab_widget->removeTab(i);
+				emit removed_custom_define(widget->get_parent());
 				break;
 			}
 		}

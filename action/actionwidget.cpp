@@ -4,9 +4,11 @@ ActionWidget::ActionWidget(ActionDefine* parentDefine, QWidget *parentWidget) :
 	parent(parentDefine),
 	index(0),
 	QWidget(parentWidget),
-	layout_main(new QGridLayout(this)),
+	layout_scroll(new QHBoxLayout(this)),
+	scrollArea(new QScrollArea(this)),
+	layout_main(new QGridLayout()),
 	widget_layout_call(new QWidget(this)),
-	layout_call(new QHBoxLayout(this)),
+	layout_call(new QHBoxLayout()),
 	label_name(new QLabel("Display Name:", this)),
 	label_declare(new QLabel("Declaration:", this)),
 	label_icon(new QLabel("Icon:", this)),
@@ -20,7 +22,16 @@ ActionWidget::ActionWidget(ActionDefine* parentDefine, QWidget *parentWidget) :
 	pushButton_set_icon(new QPushButton("", this)),
 	textEdit_define(new QTextEdit(this))
 {
-	layout_main->layout()->setMargin(0);
+	layout_scroll->addWidget(scrollArea);
+	layout_scroll->setMargin(0);
+
+	scrollArea->setLayout(layout_main);
+	scrollArea->setMinimumHeight(270);
+	scrollArea->setFrameShape(QFrame::NoFrame);
+	scrollArea->setFrameShadow(QFrame::Plain);
+	scrollArea->setLineWidth(0);
+
+	layout_main->layout()->setMargin(4);
 	layout_call->layout()->setMargin(0);
 
 	lineEdit_name->setStyleSheet("font: bold 10pt");
@@ -95,7 +106,6 @@ ActionWidget::ActionWidget(ActionDefine* parentDefine, QWidget *parentWidget) :
 ActionWidget::~ActionWidget()
 {
 	// TODO: pointer to parent should NOT be deleted here?
-	delete layout_main;
 	delete layout_call;
 	delete label_name;
 	delete label_declare;
@@ -109,6 +119,9 @@ ActionWidget::~ActionWidget()
 	delete comboBox_icon;
 	delete pushButton_set_icon;
 	delete textEdit_define;
+	delete layout_main;
+	delete scrollArea;
+	delete layout_scroll;
 }
 
 void ActionWidget::info_changed()

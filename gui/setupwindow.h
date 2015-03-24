@@ -69,7 +69,6 @@ private slots:
 private:
 	Ui::SetupWindow *ui;
 	ActionWidget* new_tab_widget;
-	std::vector<ActionWidget*> list_custom_widgets;
 
 	std::vector<QTextEdit*> code_edits;
 
