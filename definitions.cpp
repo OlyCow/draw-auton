@@ -9,8 +9,8 @@ const std::vector<QString> definitions::path_code_blocks = {
 		"/misc_declare.txt",
 		"/misc_define.txt"		};
 
-const QString definitions::path_keywords	= "keywords.txt";
-const QString definitions::path_functions	= "functions.txt";
+const QString definitions::path_keywords	= "/keywords.txt";
+const QString definitions::path_functions	= "/functions.txt";
 
 const std::vector<QString> definitions::icon = {
 		":/icons/aperture.png",

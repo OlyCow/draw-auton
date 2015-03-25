@@ -89,9 +89,9 @@ DrawWindow::~DrawWindow()
 {
 	on_pushButton_clear_clicked();
 
-	delete currentLine;
-	delete circleHome;
-	delete circleCurrent;
+//	delete currentLine;
+//	delete circleHome;
+//	delete circleCurrent;
 
 	delete ui;
 	delete setupWindow;
