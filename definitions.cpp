@@ -11,6 +11,7 @@ const std::vector<QString> definitions::path_code_blocks = {
 
 const QString definitions::path_keywords	= "/keywords.txt";
 const QString definitions::path_functions	= "/functions.txt";
+const QString definitions::path_actions_key	= "/custom_actions-KEY.txt";
 
 const std::vector<QString> definitions::icon = {
 		":/icons/aperture.png",
