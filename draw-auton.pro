@@ -1,8 +1,6 @@
-#-------------------------------------------------
-#
-# Project created by QtCreator 2014-12-23T19:16:05
-#
-#-------------------------------------------------
+# Project created by QtCreator: 2014-12-23 19:16:05
+
+
 
 QT       += core gui
 
@@ -11,9 +9,10 @@ greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 TARGET = draw-auton
 TEMPLATE = app
 
+CONFIG += c++11
+
 SOURCES += main.cpp\
     actionlist.cpp \
-    actiondefine.cpp \
     graphicsviewedit.cpp \
     definitions.cpp \
     gui/aboutwindow.cpp \
@@ -25,11 +24,11 @@ SOURCES += main.cpp\
     action/actionmove.cpp \
     action/actiontool.cpp \
     action/actionturn.cpp \
-    action/actionwidget.cpp
+    action/actionwidget.cpp \
+    action/actiondefine.cpp
 
 HEADERS  += \
     actionlist.h \
-    actiondefine.h \
     graphicsviewedit.h \
     definitions.h \
     gui/aboutwindow.h \
@@ -41,7 +40,8 @@ HEADERS  += \
     action/actionmove.h \
     action/actiontool.h \
     action/actionturn.h \
-    action/actionwidget.h
+    action/actionwidget.h \
+    action/actiondefine.h
 
 FORMS    += \
     gui/aboutwindow.ui \
@@ -59,5 +59,3 @@ INCLUDEPATH += \
 	$$PWD/gui \
 
 QMAKE_MACOSX_DEPLOYMENT_TARGET = 10.6
-
-CONFIG += c++11

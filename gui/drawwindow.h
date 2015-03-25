@@ -3,14 +3,15 @@
 
 #include <QDebug>
 
-#include <QCoreApplication>
-#include <QMainWindow>
-
 #include <cmath>
 #include <vector>
 
 #include <QPointF>
 #include <QSize>
+
+#include <QTextStream>
+#include <QDir>
+#include <QFile>
 
 #include <QEvent>
 #include <QKeyEvent>
@@ -24,19 +25,20 @@
 #include <QImage>
 #include <QPainter>
 
-#include <QTextStream>
-#include <QDir>
-#include <QFile>
+#include <QCoreApplication>
+
 #include <QFileDialog>
 #include <QProgressDialog>
+#include <QMainWindow>
 
 #include "definitions.h"
 
 #include "action.h"
 #include "actionmove.h"
 #include "actionturn.h"
-#include "actionlist.h"
+#include "actioncustom.h"
 #include "actiondefine.h"
+#include "actionlist.h"
 
 #include "graphicsviewedit.h"
 
@@ -64,9 +66,9 @@ public slots:
 	void start_snap();
 	void end_snap();
 
-	void add_custom_action(ActionWidget* source);
-	void remove_custom_action(int index);
-	void update_custom_action(ActionWidget* source);
+	void add_custom_define(ActionDefine* definition);
+	void update_custom_define(ActionDefine* definition);
+	void remove_custom_define(ActionDefine* definition);
 
 private slots:
 	void on_pushButton_setup_clicked();
@@ -88,8 +90,8 @@ private:
 	AboutWindow* aboutWindow;
 	HelpWindow* helpWindow;
 	ActionList* list_history;
-	std::vector<ActionDefine*> list_custom_actions;
 	std::vector<QGraphicsLineItem*> list_lines;
+	std::vector<ActionDefine*> list_defines;
 
 	QString canned_declares;
 	QString canned_definitions;

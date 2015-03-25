@@ -75,7 +75,7 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	create_action_widget();
 
 	QObject::connect(	ui->tabWidget_actions_custom,	&QTabWidget::tabCloseRequested,
-						this,							&SetupWindow::remove_action_widget);
+						this,							&SetupWindow::remove_action_tab);
 }
 
 SetupWindow::~SetupWindow()
@@ -88,43 +88,49 @@ ActionWidget* SetupWindow::create_action_widget()
 {
 	QTabWidget* tab_widget = ui->tabWidget_actions_custom;
 
-	QScrollArea* container = new QScrollArea(tab_widget);
-	QHBoxLayout* container_layout = new QHBoxLayout(container);
-	container->setLayout(container_layout);
-	container->setMinimumHeight(270);
-	container->setFrameShape(QFrame::NoFrame);
-	container->setFrameShadow(QFrame::Plain);
-	container->setLineWidth(0);
-
-	ActionWidget* new_action = new ActionWidget(	tab_widget,
-													tab_widget->count());
-	list_custom_actions.push_back(new_action);
-	emit added_custom_action(new_action);
-	container->layout()->addWidget(new_action);
-	ui->tabWidget_actions_custom->addTab(container, "New");
-
-	if (tab_widget->count() > 0) {
+	ActionDefine* new_define = new ActionDefine();
+	ActionWidget* new_widget = new ActionWidget(new_define);
+	new_define->set_widget(new_widget);
+	tab_widget->addTab(new_widget, "New Action");
+	
+	if (tab_widget->count() == 1) {
+		new_tab_widget = new_widget;
+	}
+	new_tab_widget->set_index(tab_widget->currentIndex());
+	if (tab_widget->count() > 1) {
 		QObject::disconnect(	new_tab_widget,	&ActionWidget::info_added,
 								this,			&SetupWindow::create_action_widget);
 		QObject::connect(		new_tab_widget,	&ActionWidget::info_updated,
 								this,			&SetupWindow::update_custom_action);
+		QObject::connect(		new_tab_widget,	&ActionWidget::info_cleared,
+								this,			&SetupWindow::remove_action_widget);
+		emit added_custom_define(new_tab_widget->get_parent());	// Haven't switched the new_tab_widget yet.
 	}
-	QObject::connect(	new_action,	&ActionWidget::info_added,
+	QObject::connect(	new_widget,	&ActionWidget::info_added,
 						this,		&SetupWindow::create_action_widget);
-	QObject::connect(	new_action,	&ActionWidget::info_cleared,
-						this,		&SetupWindow::remove_action_widget);
 
-	new_tab_widget = new_action;
-	return new_action;
+	new_tab_widget = new_widget;
+	return new_widget;
 }
 
-void SetupWindow::remove_action_widget(int index)
+void SetupWindow::remove_action_tab(int index)
+{
+	ActionWidget* widget_removed = qobject_cast<ActionWidget*>(ui->tabWidget_actions_custom->widget(index));
+	remove_action_widget(widget_removed);
+}
+void SetupWindow::remove_action_widget(ActionWidget* widget)
 {
 	QTabWidget* tab_widget = ui->tabWidget_actions_custom;
-	if (index+1 < tab_widget->count()) {
-		list_custom_actions.erase(list_custom_actions.begin() + index);
-		emit removed_custom_action(index);
-		ui->tabWidget_actions_custom->removeTab(index);
+	int tab_num = tab_widget->count();
+	if (tab_num > 1) {
+		for (int i=0; i<tab_num; i++) {
+			ActionWidget* widget_compare = qobject_cast<ActionWidget*>(tab_widget->widget(i));
+			if (widget_compare == widget) {
+				tab_widget->removeTab(i);
+				emit removed_custom_define(widget->get_parent());
+				break;
+			}
+		}
 	}
 }
 
@@ -132,10 +138,11 @@ void SetupWindow::update_custom_action(ActionWidget *widget)
 {
 	QString tab_name = widget->lineEdit_name->text();
 	if (tab_name.length() == 0) {
-		tab_name = "...";
+		tab_name = "[...]";
 	}
 	ui->tabWidget_actions_custom->setTabText(	ui->tabWidget_actions_custom->currentIndex(),
 												tab_name);
+	emit updated_custom_define(widget->get_parent());
 }
 
 void SetupWindow::on_pushButton_save_clicked()
@@ -150,7 +157,7 @@ void SetupWindow::on_pushButton_save_clicked()
 void SetupWindow::show_new_custom_tab()
 {
 	ui->tabWidget->setCurrentIndex(2);
-	ui->tabWidget_actions_custom->setCurrentIndex(ui->tabWidget_actions_custom->count());
+	ui->tabWidget_actions_custom->setCurrentIndex(ui->tabWidget_actions_custom->count()-1);
 }
 
 void SetupWindow::on_pushButton_clear_clicked()

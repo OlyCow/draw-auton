@@ -1,13 +1,13 @@
 #include "actioncustom.h"
 
-
-
-ActionCustom::ActionCustom(QPointF start_point)
+ActionCustom::ActionCustom(ActionDefine* definition, QPointF start_point)
 {
+	actionDefine = definition;
 	start = start_point;
 	end = start_point;
 }
 
 ActionCustom::~ActionCustom()
 {
+	delete actionDefine;
 }

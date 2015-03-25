@@ -21,7 +21,7 @@ QMessageBox* HelpWindow::construct_message(QString message)
 											QMessageBox::Ok,
 											this						);
 	help->setWindowModality(Qt::NonModal);
-	help->show();
+	help->exec();
 	return help;
 }
 

@@ -1,13 +1,13 @@
 #ifndef ACTIONMOVE_H
 #define ACTIONMOVE_H
 
-#include "action.h"
-
-#include <QObject>
-
 #include <cmath>
 
 #include <QPointF>
+
+#include <QObject>
+
+#include "action.h"
 
 enum MoveDirection {
 	MOVE_FORWARD = 0,

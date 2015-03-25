@@ -1,10 +1,11 @@
 #ifndef ACTIONWIDGET_H
 #define ACTIONWIDGET_H
 
-#include "definitions.h"
+#include <QDebug>
 
 #include <QObject>
 #include <QWidget>
+#include <QScrollArea>
 #include <QGridLayout>
 #include <QHBoxLayout>
 #include <QLabel>
@@ -14,6 +15,8 @@
 #include <QTextEdit>
 #include <QIcon>
 
+#include "definitions.h"
+
 class ActionDefine;
 class SetupWindow;
 
@@ -21,27 +24,28 @@ class ActionWidget : public QWidget
 {
 	Q_OBJECT
 
-	friend class ActionDefine;
 	friend class SetupWindow;
 
 public:
-	ActionWidget(QWidget *parent = 0, int index = 0);
+	ActionWidget(ActionDefine* parentDefine, QWidget *parentWidget = NULL);
 	~ActionWidget();
 
-	void setIndex(int input)			{index = input;}
-	void setDefine(ActionDefine* input)	{define = input;}
+	void set_parent(ActionDefine* ptr)	{ parent = ptr; }
+	ActionDefine* get_parent()			{ return parent; }
 
-	int getIndex()				{return index;}
-	ActionDefine* getDefine()	{return define;}
+	void set_index(int input)	{ index = input; }
+	int get_index()				{ return index; }
 
-	QString get_name()	{return lineEdit_name->text();}
-	int get_icon()		{return comboBox_icon->currentIndex();}
+	int get_icon()			{ return comboBox_icon->currentIndex(); }
+	QString* get_name()		{ return new QString(lineEdit_name->text()); }
+	QString* get_declare()	{ return new QString(lineEdit_declare->text()); }
+	QString* get_define()	{ return new QString(textEdit_define->toPlainText()); }
 
 signals:
 	void info_added();
-	void info_cleared(int index);
+	void info_cleared(ActionWidget*);
 	void info_updated(ActionWidget*);
-	void param_added();
+	void param_added(QString*);
 	void param_cleared(int index);
 
 public slots:
@@ -49,9 +53,11 @@ public slots:
 	void param_changed();
 
 private:
+	ActionDefine* parent;
 	int index;
-	ActionDefine* define;
 
+	QHBoxLayout* layout_scroll;
+	QScrollArea* scrollArea;
 	QGridLayout* layout_main;
 	QWidget* widget_layout_call;
 	QHBoxLayout* layout_call;

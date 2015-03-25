@@ -1,11 +1,14 @@
 #include "actionwidget.h"
 
-ActionWidget::ActionWidget(QWidget *parent, int index) :
-	QWidget(parent),
-	index(index),
-	layout_main(new QGridLayout(this)),
+ActionWidget::ActionWidget(ActionDefine* parentDefine, QWidget *parentWidget) :
+	parent(parentDefine),
+	index(0),
+	QWidget(parentWidget),
+	layout_scroll(new QHBoxLayout(this)),
+	scrollArea(new QScrollArea(this)),
+	layout_main(new QGridLayout()),
 	widget_layout_call(new QWidget(this)),
-	layout_call(new QHBoxLayout(this)),
+	layout_call(new QHBoxLayout()),
 	label_name(new QLabel("Display Name:", this)),
 	label_declare(new QLabel("Declaration:", this)),
 	label_icon(new QLabel("Icon:", this)),
@@ -19,7 +22,16 @@ ActionWidget::ActionWidget(QWidget *parent, int index) :
 	pushButton_set_icon(new QPushButton("", this)),
 	textEdit_define(new QTextEdit(this))
 {
-	layout_main->layout()->setMargin(0);
+	layout_scroll->addWidget(scrollArea);
+	layout_scroll->setMargin(0);
+
+	scrollArea->setLayout(layout_main);
+	scrollArea->setMinimumHeight(270);
+	scrollArea->setFrameShape(QFrame::NoFrame);
+	scrollArea->setFrameShadow(QFrame::Plain);
+	scrollArea->setLineWidth(0);
+
+	layout_main->layout()->setMargin(4);
 	layout_call->layout()->setMargin(0);
 
 	lineEdit_name->setStyleSheet("font: bold 10pt");
@@ -93,7 +105,7 @@ ActionWidget::ActionWidget(QWidget *parent, int index) :
 
 ActionWidget::~ActionWidget()
 {
-	delete layout_main;
+	// TODO: pointer to parent should NOT be deleted here?
 	delete layout_call;
 	delete label_name;
 	delete label_declare;
@@ -107,12 +119,15 @@ ActionWidget::~ActionWidget()
 	delete comboBox_icon;
 	delete pushButton_set_icon;
 	delete textEdit_define;
+	delete layout_main;
+	delete scrollArea;
+	delete layout_scroll;
 }
 
 void ActionWidget::info_changed()
 {
 	bool do_add = false;
-	bool do_clear = false;
+	bool do_clear = true;
 
 	int total_size = 0;
 	total_size += lineEdit_name->text().size();
@@ -122,16 +137,16 @@ void ActionWidget::info_changed()
 
 	do_add = do_add || (total_size > 0);
 	do_add = do_add || (comboBox_icon->currentIndex() != 0);
-	do_add = do_add || (comboBox_param->currentIndex() != 0);
+	do_add = do_add || (comboBox_param->currentIndex() > 0);
 
-	do_clear = do_clear && (total_size > 0);
+	do_clear = do_clear && (total_size == 0);
 	do_clear = do_clear && (comboBox_param->count() == 0);
 
 	if (do_add) {
 		emit info_added();
 		emit info_updated(this);
 	} else if (do_clear) {
-		emit info_cleared(index);
+		emit info_cleared(this);
 	}
 }
 
@@ -153,7 +168,7 @@ void ActionWidget::param_changed()
 			}
 		}
 		if (isUnique) {
-			emit param_added();
+			emit param_added(&(comboBox_param->currentText()));
 			comboBox_param->addItem(comboBox_param->currentText());
 		} else {
 			comboBox_param->lineEdit()->clear();

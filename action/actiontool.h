@@ -6,23 +6,24 @@
 #include <QObject>
 #include <QToolButton>
 
+#include "definitions.h"
+
 class ActionDefine;
-class DrawWindow;
 
 class ActionTool : public QToolButton
 {
 	Q_OBJECT
 
-	friend class DrawWindow;
-
 public:
-	ActionTool(QString name, QString icon, ActionDefine* action, QWidget* parent=NULL);
+	ActionTool(QString name, QString icon, ActionDefine* parentDefine, QWidget* parentWidget = NULL);
 	~ActionTool();
 
-	void setDefine(ActionDefine* input)	{define = input;}
+	void set_parent(ActionDefine* ptr)	{parent = ptr;}
+
+	ActionDefine* get_parent()			{return parent;}
 
 private:
-	ActionDefine* define;
+	ActionDefine* parent;
 };
 
 #endif // ACTIONTOOL_H

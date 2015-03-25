@@ -31,7 +31,7 @@
    <string>Draw Auton - 'Oly Cow</string>
   </property>
   <property name="windowIcon">
-   <iconset resource="icons.qrc">
+   <iconset resource="../icons.qrc">
     <normaloff>:/icons/pencil.png</normaloff>:/icons/pencil.png</iconset>
   </property>
   <widget class="QWidget" name="layout_main">
@@ -93,10 +93,10 @@
            <x>0</x>
            <y>0</y>
            <width>403</width>
-           <height>55</height>
+           <height>54</height>
           </rect>
          </property>
-         <layout class="QHBoxLayout" name="horizontalLayout">
+         <layout class="QHBoxLayout" name="layout_tools">
           <property name="spacing">
            <number>8</number>
           </property>
@@ -130,7 +130,7 @@
              <string>Drive</string>
             </property>
             <property name="icon">
-             <iconset resource="icons.qrc">
+             <iconset resource="../icons.qrc">
               <normaloff>:/icons/arrow-up.png</normaloff>:/icons/arrow-up.png</iconset>
             </property>
             <property name="iconSize">
@@ -177,7 +177,7 @@
              <string>Rev.</string>
             </property>
             <property name="icon">
-             <iconset resource="icons.qrc">
+             <iconset resource="../icons.qrc">
               <normaloff>:/icons/arrow-down.png</normaloff>:/icons/arrow-down.png</iconset>
             </property>
             <property name="iconSize">
@@ -221,7 +221,7 @@
              <string>Add</string>
             </property>
             <property name="icon">
-             <iconset resource="icons.qrc">
+             <iconset resource="../icons.qrc">
               <normaloff>:/icons/plus.png</normaloff>:/icons/plus.png</iconset>
             </property>
             <property name="iconSize">
@@ -335,7 +335,7 @@
          <string>Setup</string>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset resource="../icons.qrc">
           <normaloff>:/icons/wrench.png</normaloff>:/icons/wrench.png</iconset>
         </property>
         <property name="shortcut">
@@ -397,7 +397,7 @@
 Program</string>
           </property>
           <property name="icon">
-           <iconset resource="icons.qrc">
+           <iconset resource="../icons.qrc">
             <normaloff>:/icons/script.png</normaloff>:/icons/script.png</iconset>
           </property>
           <property name="shortcut">
@@ -427,7 +427,7 @@ Program</string>
 Diagram</string>
           </property>
           <property name="icon">
-           <iconset resource="icons.qrc">
+           <iconset resource="../icons.qrc">
             <normaloff>:/icons/image.png</normaloff>:/icons/image.png</iconset>
           </property>
           <property name="shortcut">
@@ -485,7 +485,7 @@ Diagram</string>
          <string>Undo</string>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset resource="../icons.qrc">
           <normaloff>:/icons/undo.png</normaloff>:/icons/undo.png</iconset>
         </property>
         <property name="shortcut">
@@ -508,7 +508,7 @@ Diagram</string>
          <string>Clear Diagram</string>
         </property>
         <property name="icon">
-         <iconset resource="icons.qrc">
+         <iconset resource="../icons.qrc">
           <normaloff>:/icons/trash.png</normaloff>:/icons/trash.png</iconset>
         </property>
         <property name="shortcut">
@@ -569,7 +569,7 @@ Diagram</string>
            <string>Help</string>
           </property>
           <property name="icon">
-           <iconset resource="icons.qrc">
+           <iconset resource="../icons.qrc">
             <normaloff>:/icons/document.png</normaloff>:/icons/document.png</iconset>
           </property>
           <property name="shortcut">
@@ -592,7 +592,7 @@ Diagram</string>
            <string>About</string>
           </property>
           <property name="icon">
-           <iconset resource="icons.qrc">
+           <iconset resource="../icons.qrc">
             <normaloff>:/icons/info.png</normaloff>:/icons/info.png</iconset>
           </property>
          </widget>
@@ -641,7 +641,7 @@ Diagram</string>
   <tabstop>pushButton_about</tabstop>
  </tabstops>
  <resources>
-  <include location="icons.qrc"/>
+  <include location="../icons.qrc"/>
  </resources>
  <connections/>
 </ui>

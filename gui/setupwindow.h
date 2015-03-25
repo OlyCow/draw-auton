@@ -3,8 +3,6 @@
 
 #include <QDebug>
 
-#include <QDialog>
-
 #include <vector>
 
 #include <QEvent>
@@ -23,8 +21,11 @@
 
 #include <QHBoxLayout>
 
+#include <QDialog>
+
 #include "definitions.h"
 
+#include "actiondefine.h"
 #include "actionwidget.h"
 
 namespace Ui {
@@ -47,12 +48,14 @@ public:
 	static QStringList functions;
 
 signals:
-	void added_custom_action(ActionWidget* widget);
-	void removed_custom_action(int index);
+	void added_custom_define(ActionDefine* definition);
+	void updated_custom_define(ActionDefine* definition);
+	void removed_custom_define(ActionDefine* definition);
 
 public slots:
 	ActionWidget* create_action_widget();
-	void remove_action_widget(int index);
+	void remove_action_tab(int index);
+	void remove_action_widget(ActionWidget* widget);
 	void update_custom_action(ActionWidget* widget);
 
 	void show_new_custom_tab();
@@ -66,7 +69,6 @@ private slots:
 private:
 	Ui::SetupWindow *ui;
 	ActionWidget* new_tab_widget;
-	std::vector<ActionWidget*> list_custom_actions;
 
 	std::vector<QTextEdit*> code_edits;
 

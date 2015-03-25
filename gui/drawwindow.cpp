@@ -67,10 +67,12 @@ DrawWindow::DrawWindow(QWidget *parent) :
 
 	installEventFilter(this);
 
-	QObject::connect(	setupWindow,		&SetupWindow::added_custom_action,
-						this,				&DrawWindow::add_custom_action);
-	QObject::connect(	setupWindow,		&SetupWindow::removed_custom_action,
-						this,				&DrawWindow::remove_custom_action);
+	QObject::connect(	setupWindow,		&SetupWindow::added_custom_define,
+						this,				&DrawWindow::add_custom_define);
+	QObject::connect(	setupWindow,		&SetupWindow::updated_custom_define,
+						this,				&DrawWindow::update_custom_define);
+	QObject::connect(	setupWindow,		&SetupWindow::removed_custom_define,
+						this,				&DrawWindow::remove_custom_define);
 
 	QObject::connect(	ui->graphicsView,	&GraphicsViewEdit::mouse_pressed,
 						this,				&DrawWindow::add_move);
@@ -235,39 +237,46 @@ void DrawWindow::end_snap()
 	isSnapping = false;
 }
 
-void DrawWindow::add_custom_action(ActionWidget *source)
+void DrawWindow::add_custom_define(ActionDefine* definition)
 {
-	ActionDefine* new_action = new ActionDefine();
-	ActionTool* new_tool = new ActionTool(	source->get_name(),
-											definitions::icon[source->get_icon()],
-											new_action,
-											this);
-	new_action->set_tool(new_tool);
-	new_action->set_widget(source);
-	list_custom_actions.push_back(new_action);
+	list_defines.push_back(definition);
+	ActionTool* new_tool = new ActionTool("New Action", 0, definition, ui->scrollArea_actions);
+	definition->set_tool(new_tool);
+	int tool_number = list_defines.size()+2;
+	int tool_index = tool_number-1;
+	ui->layout_tools->insertWidget(tool_index, definition->get_tool());
+	definition->update_data_from_widget();
 }
-void DrawWindow::remove_custom_action(int index)
+void DrawWindow::update_custom_define(ActionDefine *definition)
 {
-	list_custom_actions.erase(list_custom_actions.begin() + index);
-	// TODO: Delete saved data in files
+	definition->update_data_from_widget();
 }
-void DrawWindow::update_custom_action(ActionWidget *source)
+void DrawWindow::remove_custom_define(ActionDefine* definition)
 {
-	source->getDefine()->set_tool_name(source->get_name());
-	source->getDefine()->set_tool_icon(source->get_icon());
+	int define_list_size = list_defines.size();
+	int index_selected = define_list_size-1;
+	for (int i=0; i<define_list_size; i++) {
+		if (list_defines[i] == definition) {
+			index_selected = i;
+			break;
+		}
+	}
+	list_defines.erase(list_defines.begin()+index_selected);
+	ui->layout_tools->removeWidget(definition->get_tool());
+	delete definition;
 }
 
 void DrawWindow::on_pushButton_setup_clicked()
 {
-	setupWindow->show();
+	setupWindow->exec();
 }
 void DrawWindow::on_pushButton_help_clicked()
 {
-	helpWindow->show();
+	helpWindow->exec();
 }
 void DrawWindow::on_pushButton_about_clicked()
 {
-	aboutWindow->show();
+	aboutWindow->exec();
 }
 
 void DrawWindow::on_pushButton_generateProgram_clicked()
