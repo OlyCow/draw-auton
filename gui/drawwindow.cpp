@@ -291,6 +291,9 @@ void DrawWindow::on_pushButton_generateProgram_clicked()
 															15,
 															this);
 	write_progress->setMinimumDuration(500);
+	write_progress->setFixedSize(280, 75);
+	write_progress->setWindowTitle("Generating program...");
+	write_progress->exec();
 	QFile output_program(output_filename);
 	output_program.open(QIODevice::ReadWrite | QIODevice::Text);
 	QTextStream output_stream(&output_program);
