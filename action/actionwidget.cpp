@@ -157,9 +157,11 @@ void ActionWidget::param_changed()
 {
 	int current_index = comboBox_param->currentIndex();
 	if (comboBox_param->lineEdit()->text().size() == 0) {
-		emit param_cleared(current_index);
-		comboBox_param->removeItem(current_index);
-		comboBox_param->hidePopup();
+		if (comboBox_param->count() > 0) {
+			emit param_cleared(current_index);
+			comboBox_param->removeItem(current_index);
+			comboBox_param->hidePopup();
+		}
 	} else {
 		bool isUnique = true;
 		int originalIndex = 0;
