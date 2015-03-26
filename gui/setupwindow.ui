@@ -2,6 +2,9 @@
 <ui version="4.0">
  <class>SetupWindow</class>
  <widget class="QDialog" name="SetupWindow">
+  <property name="windowModality">
+   <enum>Qt::WindowModal</enum>
+  </property>
   <property name="geometry">
    <rect>
     <x>0</x>
@@ -83,8 +86,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>572</width>
-            <height>457</height>
+            <width>570</width>
+            <height>458</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_scrollArea0">
@@ -191,8 +194,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>154</width>
-            <height>254</height>
+            <width>570</width>
+            <height>458</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout_scrollArea1">
@@ -402,8 +405,8 @@
            <rect>
             <x>0</x>
             <y>0</y>
-            <width>558</width>
-            <height>547</height>
+            <width>553</width>
+            <height>549</height>
            </rect>
           </property>
           <layout class="QVBoxLayout" name="verticalLayout">

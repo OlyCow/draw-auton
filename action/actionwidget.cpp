@@ -42,6 +42,9 @@ ActionWidget::ActionWidget(ActionDefine* parentDefine, QWidget *parentWidget) :
 	lineEdit_declare->setFocusPolicy(Qt::ClickFocus);
 	lineEdit_declare->setClearButtonEnabled(true);
 
+	label_call_A->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
+	label_call_B->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
+
 	comboBox_param->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
 	comboBox_param->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	comboBox_param->setFocusPolicy(Qt::ClickFocus);
@@ -154,9 +157,11 @@ void ActionWidget::param_changed()
 {
 	int current_index = comboBox_param->currentIndex();
 	if (comboBox_param->lineEdit()->text().size() == 0) {
-		emit param_cleared(current_index);
-		comboBox_param->removeItem(current_index);
-		comboBox_param->hidePopup();
+		if (comboBox_param->count() > 0) {
+			emit param_cleared(current_index);
+			comboBox_param->removeItem(current_index);
+			comboBox_param->hidePopup();
+		}
 	} else {
 		bool isUnique = true;
 		int originalIndex = 0;

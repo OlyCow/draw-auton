@@ -11,6 +11,7 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	dir_data(QCoreApplication::applicationDirPath())
 {
 	ui->setupUi(this);
+	create_action_widget();
 	QFontDatabase::addApplicationFont(":/fonts/DroidSansMono.ttf");
 
 	dir_data = QCoreApplication::applicationDirPath() + "data/";
@@ -61,6 +62,31 @@ SetupWindow::SetupWindow(QWidget *parent) :
 		code_edits[i]->setTabStopWidth(tab_width);
 	}
 
+	QFile file_actions_key(path_dir + definitions::path_actions_key);
+	file_actions_key.open(QFile::ReadOnly | QFile::Text);
+	QTextStream stream_read_key(&file_actions_key);
+	for (int i=0; !stream_read_key.atEnd(); i++) {
+		QString action_name = stream_read_key.readLine();
+		QDir dir_read = dir_data;
+		dir_read.cd(action_name + "/");
+		QString path_read = dir_read.absolutePath();
+		QString action_icon = read_file(path_read + "/icon.txt");
+		QString action_declare = read_file(path_read + "/declare.txt");
+		QString action_define = read_file(path_read + "/define.txt");
+
+		ActionWidget* new_action = create_action_widget();
+		ActionDefine* new_define = new_action->get_parent();
+		ui->tabWidget_actions_custom->setCurrentIndex(i);
+
+		new_action->set_icon(action_icon.toInt());
+		new_action->set_name(action_name);
+		new_action->set_declare(action_declare);
+		new_action->set_define(action_define);
+
+		new_define->update_data_from_widget();
+		update_custom_action(new_action);
+	}
+
 	QString read_buffer;
 	read_buffer = read_file(path_dir + definitions::path_keywords);
 	SetupWindow::keywords = read_buffer.split("\n");
@@ -72,8 +98,6 @@ SetupWindow::SetupWindow(QWidget *parent) :
 		code_edits[i]->installEventFilter(this);
 	}
 
-	create_action_widget();
-
 	QObject::connect(	ui->tabWidget_actions_custom,	&QTabWidget::tabCloseRequested,
 						this,							&SetupWindow::remove_action_tab);
 }
@@ -84,9 +108,21 @@ SetupWindow::~SetupWindow()
 	delete new_tab_widget;
 }
 
+std::vector<ActionWidget*> SetupWindow::get_custom_widgets()
+{
+	QTabWidget* tab_widget = ui->tabWidget_actions_custom;
+	int widget_count = tab_widget->count() - 1;
+	std::vector<ActionWidget*> return_container;
+	for (int i=0; i<widget_count; i++) {
+		return_container.push_back(qobject_cast<ActionWidget*>(tab_widget->widget(i)));
+	}
+	return return_container;
+}
+
 ActionWidget* SetupWindow::create_action_widget()
 {
 	QTabWidget* tab_widget = ui->tabWidget_actions_custom;
+	ActionWidget* old_widget = new_tab_widget;
 
 	ActionDefine* new_define = new ActionDefine();
 	ActionWidget* new_widget = new ActionWidget(new_define);
@@ -110,7 +146,7 @@ ActionWidget* SetupWindow::create_action_widget()
 						this,		&SetupWindow::create_action_widget);
 
 	new_tab_widget = new_widget;
-	return new_widget;
+	return old_widget;
 }
 
 void SetupWindow::remove_action_tab(int index)
@@ -142,6 +178,12 @@ void SetupWindow::update_custom_action(ActionWidget *widget)
 	}
 	ui->tabWidget_actions_custom->setTabText(	ui->tabWidget_actions_custom->currentIndex(),
 												tab_name);
+
+	QString declare_text = widget->lineEdit_declare->text();
+	declare_text = declare_text.section("(", 0, 0);
+	declare_text += "(";
+	widget->label_call_A->setText(declare_text);
+
 	emit updated_custom_define(widget->get_parent());
 }
 
@@ -195,7 +237,7 @@ QString SetupWindow::format_code(QString input)
 		output += "<br />";
 	}
 	output.chop(6); // last "<br />
-	QRegularExpression find_line_comment("\/{2,}+.*");
+	QRegularExpression find_line_comment("\\/{2,}+.*");
 	QRegularExpressionMatch line_comment_match = find_line_comment.match(output);
 	for (int i=0; i<line_comment_match.capturedTexts().size(); i++) {
 		QString original = line_comment_match.captured(i);
@@ -209,7 +251,7 @@ QString SetupWindow::format_code(QString input)
 		QString replaced = "<font color=\"Maroon\">"+original+"</font>";
 		output.replace(original, replaced);
 	}
-	QRegularExpression find_block_comment("\/\\*.*?\\*\/");
+	QRegularExpression find_block_comment("\\/\\*.*?\\*\\/");
 	find_block_comment.setPatternOptions(QRegularExpression::MultilineOption);
 	QRegularExpressionMatch block_comment_match = find_block_comment.match(output);
 	for (int i=0; i<block_comment_match.capturedTexts().size(); i++) {

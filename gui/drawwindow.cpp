@@ -67,6 +67,10 @@ DrawWindow::DrawWindow(QWidget *parent) :
 
 	installEventFilter(this);
 
+	std::vector<ActionWidget*> list_custom_actions = setupWindow->get_custom_widgets();
+	for (unsigned int i=0; i<list_custom_actions.size(); i++) {
+		add_custom_define(list_custom_actions[i]->get_parent());
+	}
 	QObject::connect(	setupWindow,		&SetupWindow::added_custom_define,
 						this,				&DrawWindow::add_custom_define);
 	QObject::connect(	setupWindow,		&SetupWindow::updated_custom_define,
@@ -89,9 +93,9 @@ DrawWindow::~DrawWindow()
 {
 	on_pushButton_clear_clicked();
 
-	delete currentLine;
-	delete circleHome;
-	delete circleCurrent;
+//	delete currentLine;
+//	delete circleHome;
+//	delete circleCurrent;
 
 	delete ui;
 	delete setupWindow;
@@ -291,6 +295,9 @@ void DrawWindow::on_pushButton_generateProgram_clicked()
 															15,
 															this);
 	write_progress->setMinimumDuration(500);
+	write_progress->setFixedSize(280, 75);
+	write_progress->setWindowTitle("Generating program...");
+	write_progress->exec();
 	QFile output_program(output_filename);
 	output_program.open(QIODevice::ReadWrite | QIODevice::Text);
 	QTextStream output_stream(&output_program);

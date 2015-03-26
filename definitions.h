@@ -10,6 +10,7 @@ namespace definitions {
 extern const std::vector<QString> path_code_blocks;
 extern const QString path_keywords;
 extern const QString path_functions;
+extern const QString path_actions_key;
 
 enum IconPos {
 	ICON_APERTURE = 0,
