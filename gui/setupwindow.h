@@ -40,6 +40,8 @@ public:
 	explicit SetupWindow(QWidget *parent = 0);
 	~SetupWindow();
 
+	std::vector<ActionWidget*> get_custom_widgets();
+
 	static QString format_code(QString input);
 	static QString read_file(QString path);
 	static void write_file(QString path, QString input);

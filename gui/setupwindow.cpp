@@ -65,18 +65,26 @@ SetupWindow::SetupWindow(QWidget *parent) :
 	QFile file_actions_key(path_dir + definitions::path_actions_key);
 	file_actions_key.open(QFile::ReadOnly | QFile::Text);
 	QTextStream stream_read_key(&file_actions_key);
-	QString buff = stream_read_key.readAll();
-	while (!stream_read_key.atEnd()) {
+	for (int i=0; !stream_read_key.atEnd(); i++) {
 		QString action_name = stream_read_key.readLine();
 		QDir dir_read = dir_data;
 		dir_read.cd(action_name + "/");
 		QString path_read = dir_read.absolutePath();
-		QFile read_icon = path_read + "/icon.txt";
-		QFile read_declare = path_read + "/declare.txt";
+		QString action_icon = read_file(path_read + "/icon.txt");
+		QString action_declare = read_file(path_read + "/declare.txt");
+		QString action_define = read_file(path_read + "/define.txt");
+
 		ActionWidget* new_action = create_action_widget();
 		ActionDefine* new_define = new_action->get_parent();
-		new_define->set_name(&action_name);
+		ui->tabWidget_actions_custom->setCurrentIndex(i);
+
+		new_action->set_icon(action_icon.toInt());
+		new_action->set_name(action_name);
+		new_action->set_declare(action_declare);
+		new_action->set_define(action_define);
+
 		new_define->update_data_from_widget();
+		update_custom_action(new_action);
 	}
 
 	QString read_buffer;
@@ -98,6 +106,17 @@ SetupWindow::~SetupWindow()
 {
 	delete ui;
 	delete new_tab_widget;
+}
+
+std::vector<ActionWidget*> SetupWindow::get_custom_widgets()
+{
+	QTabWidget* tab_widget = ui->tabWidget_actions_custom;
+	int widget_count = tab_widget->count() - 1;
+	std::vector<ActionWidget*> return_container;
+	for (int i=0; i<widget_count; i++) {
+		return_container.push_back(qobject_cast<ActionWidget*>(tab_widget->widget(i)));
+	}
+	return return_container;
 }
 
 ActionWidget* SetupWindow::create_action_widget()

@@ -67,6 +67,10 @@ DrawWindow::DrawWindow(QWidget *parent) :
 
 	installEventFilter(this);
 
+	std::vector<ActionWidget*> list_custom_actions = setupWindow->get_custom_widgets();
+	for (unsigned int i=0; i<list_custom_actions.size(); i++) {
+		add_custom_define(list_custom_actions[i]->get_parent());
+	}
 	QObject::connect(	setupWindow,		&SetupWindow::added_custom_define,
 						this,				&DrawWindow::add_custom_define);
 	QObject::connect(	setupWindow,		&SetupWindow::updated_custom_define,
