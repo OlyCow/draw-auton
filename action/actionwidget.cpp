@@ -42,6 +42,9 @@ ActionWidget::ActionWidget(ActionDefine* parentDefine, QWidget *parentWidget) :
 	lineEdit_declare->setFocusPolicy(Qt::ClickFocus);
 	lineEdit_declare->setClearButtonEnabled(true);
 
+	label_call_A->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
+	label_call_B->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
+
 	comboBox_param->setStyleSheet("font: 10pt \"Droid Sans Mono\"");
 	comboBox_param->setSizePolicy(QSizePolicy::Expanding, QSizePolicy::Fixed);
 	comboBox_param->setFocusPolicy(Qt::ClickFocus);

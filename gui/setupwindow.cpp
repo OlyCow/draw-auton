@@ -178,6 +178,12 @@ void SetupWindow::update_custom_action(ActionWidget *widget)
 	}
 	ui->tabWidget_actions_custom->setTabText(	ui->tabWidget_actions_custom->currentIndex(),
 												tab_name);
+
+	QString declare_text = widget->lineEdit_declare->text();
+	declare_text = declare_text.section("(", 0, 0);
+	declare_text += "(";
+	widget->label_call_A->setText(declare_text);
+
 	emit updated_custom_define(widget->get_parent());
 }
 

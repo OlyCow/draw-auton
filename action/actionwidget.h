@@ -51,7 +51,7 @@ signals:
 	void info_cleared(ActionWidget*);
 	void info_updated(ActionWidget*);
 	void param_added(QString*);
-	void param_cleared(int index);
+	void param_cleared(int);
 
 public slots:
 	void info_changed();
