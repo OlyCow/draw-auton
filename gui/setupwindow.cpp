@@ -194,6 +194,28 @@ void SetupWindow::on_pushButton_save_clicked()
 		write_file(	path_dir + definitions::path_code_blocks[i],
 					*(code_vars[i])	);
 	}
+
+	QString data_key;
+	std::vector<ActionWidget*> list_custom_widgets = get_custom_widgets();
+	for (int i=0; i<list_custom_widgets.size(); i++) {
+		ActionDefine* custom_define = list_custom_widgets[i]->get_parent();
+		QString name = *(custom_define->get_name());
+		QString declare = *(custom_define->get_define());
+		QString define = *(custom_define->get_declare());
+		QString icon = QString::number(custom_define->get_icon());
+		data_key += name + "\n";
+		QDir dir_action(path_dir + "/" + name + "/");
+		if (!dir_action.exists()) {
+			dir_action = path_dir;
+			dir_action.mkdir(name + "/");
+			dir_action.cd(name + "/");
+		}
+		QString path_action = dir_action.absolutePath();
+		write_file(path_action + "/icon.txt", icon);
+		write_file(path_action + "/declare.txt", declare);
+		write_file(path_action + "/define.txt", define);
+	}
+	write_file(path_dir + definitions::path_actions_key, data_key);
 }
 
 void SetupWindow::show_new_custom_tab()
