@@ -25,7 +25,8 @@ SOURCES += main.cpp\
     action/actiontool.cpp \
     action/actionturn.cpp \
     action/actionwidget.cpp \
-    action/actiondefine.cpp
+    action/actiondefine.cpp \
+    action/actionparam.cpp
 
 HEADERS  += \
     actionlist.h \
@@ -41,7 +42,8 @@ HEADERS  += \
     action/actiontool.h \
     action/actionturn.h \
     action/actionwidget.h \
-    action/actiondefine.h
+    action/actiondefine.h \
+    action/actionparam.h
 
 FORMS    += \
     gui/aboutwindow.ui \
