@@ -64,6 +64,7 @@ void ActionDefine::update_data_from_widget()
 	name = widget->get_name();
 	declare = widget->get_declare();
 	define = widget->get_define();
+	list_param = widget->get_params();
 	update_tool_with_data();
 }
 

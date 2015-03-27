@@ -127,6 +127,16 @@ ActionWidget::~ActionWidget()
 	delete layout_scroll;
 }
 
+std::vector<ActionParam*> ActionWidget::get_params()
+{
+	std::vector<ActionParam*> return_list;
+	for (int i=0; i<comboBox_param->count(); i++) {
+		ActionParam* new_param = new ActionParam(0, comboBox_param->itemText(i));
+		return_list.push_back(new_param);
+	}
+	return return_list;
+}
+
 void ActionWidget::info_changed()
 {
 	bool do_add = false;

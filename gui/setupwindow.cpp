@@ -73,6 +73,15 @@ SetupWindow::SetupWindow(QWidget *parent) :
 		QString action_icon = read_file(path_read + "/icon.txt");
 		QString action_declare = read_file(path_read + "/declare.txt");
 		QString action_define = read_file(path_read + "/define.txt");
+		QString action_param_buf = read_file(path_read + "/params.txt");
+		QStringList action_param_list = action_param_buf.split("\n");
+		std::vector<ActionParam*> action_param;
+		for (int j=0; j<action_param_list.size(); j++) {
+			int param_icon = action_param_list[j].section(": ", 0, 0).toInt();
+			QString param_text = action_param_list[j].section(": ", 1, 1);
+			ActionParam* new_param = new ActionParam(param_icon, param_text);
+			action_param.push_back(new_param);
+		}
 
 		ActionWidget* new_action = create_action_widget();
 		ActionDefine* new_define = new_action->get_parent();
@@ -82,6 +91,9 @@ SetupWindow::SetupWindow(QWidget *parent) :
 		new_action->set_name(action_name);
 		new_action->set_declare(action_declare);
 		new_action->set_define(action_define);
+		for (unsigned int j=0; j<action_param.size(); j++) {
+			new_action->add_param(action_param[j]);
+		}
 
 		new_define->update_data_from_widget();
 		update_custom_action(new_action);

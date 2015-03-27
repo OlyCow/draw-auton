@@ -41,11 +41,13 @@ public:
 	void set_name(QString name)			{ lineEdit_name->setText(name); }
 	void set_declare(QString declare)	{ lineEdit_declare->setText(declare); }
 	void set_define(QString define)		{ textEdit_define->setText(define); }
+	void add_param(ActionParam* param)	{ comboBox_param->addItem(param->get_text()); }
 
 	int get_icon()			{ return comboBox_icon->currentIndex(); }
 	QString* get_name()		{ return new QString(lineEdit_name->text()); }
 	QString* get_declare()	{ return new QString(lineEdit_declare->text()); }
 	QString* get_define()	{ return new QString(textEdit_define->toPlainText()); }
+	std::vector<ActionParam*> get_params();
 
 signals:
 	void info_added();
