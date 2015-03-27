@@ -8,6 +8,7 @@
 #include <QObject>
 
 #include "definitions.h"
+#include "actionparam.h"
 #include "actiontool.h"
 #include "actionwidget.h"
 
@@ -19,9 +20,9 @@ public:
 	ActionDefine();
 	~ActionDefine();
 
-	void add_param(QString* param)	{ list_param.push_back(param); }
-	QString* get_param(int index)	{ return list_param[index]; }
-	void remove_param(int index)	{ list_param.erase(list_param.begin()+index); }
+	void add_param(ActionParam* param)		{ list_param.push_back(param); }
+	ActionParam* get_param(int index)		{ return list_param[index]; }
+	int get_param_count()					{ return list_param.size(); }
 
 	void set_icon(int index)				{ icon = index; }
 	void set_name(QString* input)			{ name = input; }
@@ -41,6 +42,9 @@ public slots:
 	void update_data_from_widget();
 	void update_tool_with_data();
 
+	void remove_param(int index)	{ list_param.erase(list_param.begin()+index); }
+	void remove_param(ActionParam* param);
+
 private:
 	ActionTool* tool;
 	ActionWidget* widget;
@@ -49,7 +53,7 @@ private:
 	QString* name;
 	QString* declare;
 	QString* define;
-	std::vector<QString*> list_param;
+	std::vector<ActionParam*> list_param;
 };
 
 #endif // ACTIONDEFINE_H

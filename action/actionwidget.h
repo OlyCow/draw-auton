@@ -16,6 +16,7 @@
 #include <QIcon>
 
 #include "definitions.h"
+#include "actionparam.h"
 
 class ActionDefine;
 class SetupWindow;
@@ -50,7 +51,8 @@ signals:
 	void info_added();
 	void info_cleared(ActionWidget*);
 	void info_updated(ActionWidget*);
-	void param_added(QString*);
+	void param_added(ActionParam*);
+	void param_cleared(ActionParam*);
 	void param_cleared(int);
 
 public slots:

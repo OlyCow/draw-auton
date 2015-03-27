@@ -173,7 +173,8 @@ void ActionWidget::param_changed()
 			}
 		}
 		if (isUnique) {
-			emit param_added(&(comboBox_param->currentText()));
+			ActionParam* new_param = new ActionParam(0, comboBox_param->currentText());
+			emit param_added(new_param);
 			comboBox_param->addItem(comboBox_param->currentText());
 		} else {
 			comboBox_param->lineEdit()->clear();

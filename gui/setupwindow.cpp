@@ -197,12 +197,20 @@ void SetupWindow::on_pushButton_save_clicked()
 
 	QString data_key;
 	std::vector<ActionWidget*> list_custom_widgets = get_custom_widgets();
-	for (int i=0; i<list_custom_widgets.size(); i++) {
+	for (unsigned int i=0; i<list_custom_widgets.size(); i++) {
 		ActionDefine* custom_define = list_custom_widgets[i]->get_parent();
 		QString name = *(custom_define->get_name());
+		QString icon = QString::number(custom_define->get_icon());
 		QString declare = *(custom_define->get_define());
 		QString define = *(custom_define->get_declare());
-		QString icon = QString::number(custom_define->get_icon());
+		QString params;
+		for (int i=0; i<custom_define->get_param_count(); i++) {
+			ActionParam* custom_param = custom_define->get_param(i);
+			params += QString::number(custom_param->get_icon());
+			params += ": ";
+			params += custom_param->get_text();
+			params += "\n";
+		}
 		data_key += name + "\n";
 		QDir dir_action(path_dir + "/" + name + "/");
 		if (!dir_action.exists()) {
@@ -214,6 +222,7 @@ void SetupWindow::on_pushButton_save_clicked()
 		write_file(path_action + "/icon.txt", icon);
 		write_file(path_action + "/declare.txt", declare);
 		write_file(path_action + "/define.txt", define);
+		write_file(path_action + "/params.txt", params);
 	}
 	write_file(path_dir + definitions::path_actions_key, data_key);
 }
