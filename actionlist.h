@@ -6,6 +6,7 @@
 #include <vector>
 
 #include "action.h"
+#include "actioncustom.h"
 
 class ActionList
 {

@@ -10,6 +10,7 @@
 #include "action.h"
 
 enum MoveDirection {
+	MOVE_UNKNOWN = -1,
 	MOVE_FORWARD = 0,
 	MOVE_BACKWARD = 1
 };

@@ -14,8 +14,7 @@ void ActionList::addAction(Action* input)
 
 void ActionList::addAction(Action* input, int pos)
 {
-	std::vector<Action*>::iterator pointer = base_list.begin();
-	pointer += pos;
+	std::vector<Action*>::iterator pointer = base_list.begin() + pos;
 	base_list.insert(pointer, input);
 	current_pos = pos;
 }
@@ -45,7 +44,11 @@ QString ActionList::getCalls()
 	QString output;
 	for (unsigned int i=0; i<base_list.size(); i++) {
 		output += "\t";
-		output += (base_list[i])->getCall();
+		if ((base_list[i])->isType() == TYPE_CUSTOM) {
+			output += dynamic_cast<ActionCustom*>(base_list[i])->getCall();
+		} else {
+			output += (base_list[i])->getCall();
+		}
 	}
 	return output;
 }

@@ -22,6 +22,8 @@ public:
 
 	ActionType isType()	{return TYPE_CUSTOM;}
 
+	QString getCall();
+
 	ActionDefine* getDefine() {return actionDefine;}
 
 private:
