@@ -22,6 +22,8 @@
 #include <QGraphicsLineItem>
 #include <QGraphicsEllipseItem>
 
+//#include <QTimer>
+
 #include <QImage>
 #include <QPainter>
 

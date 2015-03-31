@@ -118,38 +118,40 @@ void DrawWindow::showEvent(QShowEvent* event)
 
 void DrawWindow::add_move(QPointF start)
 {
-	isDragging = true;
-	QPointF rounded = ui->graphicsView->mapToScene(start.toPoint());
-	if (isSnapping) {
-		int round_x = 0;
-		int round_y = 0;
-		round_x = static_cast<int>(rounded.x());
-		round_y = static_cast<int>(rounded.y());
-		round_x = round(round_x/3.0);
-		round_y = round(round_y/3.0);
-		round_x *= 3;
-		round_y *= 3;
-		rounded = QPointF(round_x, round_y);
-	}
-	if (list_history->getSize() == 0) {
-		startPoint = rounded;
-		circleHome = field.addEllipse(	startPoint.x()-4,
-										startPoint.y()-4,
-										8,
-										8					);
-		circleHome->setPen(QPen(QBrush(QColor("orangered")), 2));
-		circleHome->setBrush(QBrush(Qt::yellow));
-	} else {
-		startPoint = endPoint; // TODO: is this safe?
-	}
-	endPoint = rounded;
-	currentLine = field.addLine(	startPoint.x(),
-									startPoint.y(),
-									endPoint.x(),
-									endPoint.y()	);
-	currentLine->setPen(QPen(QBrush(Qt::black), 3, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
-	if (ui->toolButton_reverse->isChecked()) {
-		currentLine->setPen(QPen(QBrush(Qt::black), 3, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+	if (ui->toolButton_drive->isChecked() || ui->toolButton_reverse->isChecked()) {
+		isDragging = true;
+		QPointF rounded = ui->graphicsView->mapToScene(start.toPoint());
+		if (isSnapping) {
+			int round_x = 0;
+			int round_y = 0;
+			round_x = static_cast<int>(rounded.x());
+			round_y = static_cast<int>(rounded.y());
+			round_x = round(round_x/3.0);
+			round_y = round(round_y/3.0);
+			round_x *= 3;
+			round_y *= 3;
+			rounded = QPointF(round_x, round_y);
+		}
+		if (list_history->getSize() == 0) {
+			startPoint = rounded;
+			circleHome = field.addEllipse(	startPoint.x()-4,
+											startPoint.y()-4,
+											8,
+											8					);
+			circleHome->setPen(QPen(QBrush(QColor("orangered")), 2));
+			circleHome->setBrush(QBrush(Qt::yellow));
+		} else {
+			startPoint = endPoint; // TODO: is this safe?
+		}
+		endPoint = rounded;
+		currentLine = field.addLine(	startPoint.x(),
+										startPoint.y(),
+										endPoint.x(),
+										endPoint.y()	);
+		currentLine->setPen(QPen(QBrush(Qt::black), 2, Qt::SolidLine, Qt::RoundCap, Qt::RoundJoin));
+		if (ui->toolButton_reverse->isChecked()) {
+			currentLine->setPen(QPen(QBrush(Qt::black), 2, Qt::DashLine, Qt::RoundCap, Qt::RoundJoin));
+		}
 	}
 }
 
@@ -194,42 +196,61 @@ void DrawWindow::end_move(QPointF end)
 								startPoint.y(),
 								endPoint.x(),
 								endPoint.y()	);
-	}
-	isDragging = false;
-	MoveDirection direction = MOVE_FORWARD;
-	if (ui->toolButton_reverse->isChecked()) {
-		direction = MOVE_BACKWARD;
-	}
-	ActionMove* new_move = new ActionMove(direction, startPoint, endPoint);
-	if (list_history->getSize() > 0) {
-		Action* last_action_buf = list_history->getAction(list_history->getSize()-1);
-		ActionMove* last_action = dynamic_cast<ActionMove*>(last_action_buf);
-		QPointF vect_A(last_action->getStart() - last_action->getEnd());
-		QPointF vect_B(endPoint - startPoint);
-		float angle_A = atan2(vect_A.y(), vect_A.x());
-		float angle_B = atan2(vect_B.y(), vect_B.x());
-		float angle =  angle_A - angle_B;
-		angle = angle * 180.0 / 3.14159;
-		if (angle > 180) {
-			angle -= 360;
-		}
-		if (angle < -180) {
-			angle += 360;
-		}
+		isDragging = false;
+		MoveDirection direction = MOVE_FORWARD;
 		if (ui->toolButton_reverse->isChecked()) {
-			angle += 180;
-			angle = fmod(angle, 180);
+			direction = MOVE_BACKWARD;
 		}
-		TurnDirection direction = TURN_LEFT;
-		if (angle < 0) {
-			direction = TURN_RIGHT;
-			angle *= -1;
+		ActionMove* new_move = new ActionMove(direction, startPoint, endPoint);
+		ActionMove* prev_move = NULL;
+		for (int i=0; i<list_history->getSize(); i++) {
+			// TODO: this loop can be more efficient--start from end and break?
+			if (list_history->getAction(i)->isType() == TYPE_MOVE) {
+				prev_move = dynamic_cast<ActionMove*>(list_history->getAction(i));
+			}
 		}
-		ActionTurn* turn = new ActionTurn(direction, startPoint, angle);
-		list_history->addAction(turn);
+		if (prev_move != NULL) {
+			QPointF vect_A(prev_move->getStart() - prev_move->getEnd());
+			QPointF vect_B(endPoint - startPoint);
+			float angle_A = atan2(vect_A.y(), vect_A.x());
+			float angle_B = atan2(vect_B.y(), vect_B.x());
+			float angle =  angle_A - angle_B;
+			if (angle > 180) {
+				angle -= 360;
+			}
+			if (angle < -180) {
+				angle += 360;
+			}
+			if (ui->toolButton_reverse->isChecked()) {
+				angle += 180;
+				angle = fmod(angle, 180);
+			}
+			TurnDirection direction = TURN_LEFT;
+			if (angle < 0) {
+				direction = TURN_RIGHT;
+				angle *= -1;
+			}
+			ActionTurn* turn = new ActionTurn(direction, startPoint, angle);
+			list_history->addAction(turn);
+		}
+		list_history->addAction(new_move);
+		list_lines.push_back(currentLine);
+	} else {
+		ActionTool* pushed_tool = NULL;
+		QList<ActionTool*> list_tools = \
+				ui->layout_scrollArea->findChildren<ActionTool*>(	QString(),
+																	Qt::FindDirectChildrenOnly	);
+		for (int i=0; i<list_tools.size(); i++) {
+			if (list_tools[i]->isChecked()) {
+				pushed_tool = list_tools[i];
+				break;
+			}
+		}
+		if (pushed_tool != NULL) {
+			ActionCustom* new_action = new ActionCustom(pushed_tool->get_parent(),startPoint);
+			list_history->addAction(new_action);
+		}
 	}
-	list_history->addAction(new_move);
-	list_lines.push_back(currentLine);
 }
 
 void DrawWindow::start_snap()
@@ -294,10 +315,11 @@ void DrawWindow::on_pushButton_generateProgram_clicked()
 															0,
 															15,
 															this);
-	write_progress->setMinimumDuration(500);
+	write_progress->setMinimumDuration(0);
 	write_progress->setFixedSize(280, 75);
 	write_progress->setWindowTitle("Generating program...");
-	write_progress->exec();
+	write_progress->show();
+//	QTimer* progress_timer = new QTimer(this);
 	QFile output_program(output_filename);
 	output_program.open(QIODevice::ReadWrite | QIODevice::Text);
 	QTextStream output_stream(&output_program);
@@ -360,10 +382,15 @@ void DrawWindow::on_pushButton_exportDiagram_clicked()
 
 void DrawWindow::on_pushButton_undo_clicked()
 {
-	if (list_history->getSize() > 0) {
+	int list_size_old = list_history->getSize();
+	if (list_size_old > 0) {
+		Action* deleted_action = list_history->getAction(list_size_old - 1);
+		if (deleted_action->isType() == TYPE_MOVE) {
+			field.removeItem(currentLine);
+			list_lines.pop_back();
+			list_history->deleteAction(); // the turn move (deleted out-of-order)
+		}
 		list_history->deleteAction();
-		field.removeItem(currentLine);
-		list_lines.pop_back();
 		if (list_history->getSize() == 0) {
 			currentLine = NULL;
 			endPoint = QPointF(0, 0);
@@ -372,9 +399,7 @@ void DrawWindow::on_pushButton_undo_clicked()
 		} else {
 			list_history->deleteAction();
 			currentLine = list_lines.back();
-			ActionMove* past =
-					dynamic_cast<ActionMove*>
-					(list_history->getAction(list_history->getSize()-1));
+			Action* past = list_history->getAction(list_history->getSize()-1);
 			endPoint = past->getEnd();
 		}
 	}
