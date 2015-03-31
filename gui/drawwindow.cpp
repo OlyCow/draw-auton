@@ -388,16 +388,17 @@ void DrawWindow::on_pushButton_undo_clicked()
 		if (deleted_action->isType() == TYPE_MOVE) {
 			field.removeItem(currentLine);
 			list_lines.pop_back();
-			list_history->deleteAction(); // the turn move (deleted out-of-order)
+			list_history->deleteAction();
+			if (list_size_old > 1) {
+				list_history->deleteAction();
+			}
 		}
-		list_history->deleteAction();
 		if (list_history->getSize() == 0) {
 			currentLine = NULL;
 			endPoint = QPointF(0, 0);
 			field.removeItem(circleHome);
 			circleHome = NULL;
 		} else {
-			list_history->deleteAction();
 			currentLine = list_lines.back();
 			Action* past = list_history->getAction(list_history->getSize()-1);
 			endPoint = past->getEnd();
