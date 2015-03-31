@@ -94,6 +94,19 @@ SetupWindow::SetupWindow(QWidget *parent) :
 		for (unsigned int j=0; j<action_param.size(); j++) {
 			new_action->add_param(action_param[j]);
 		}
+		int updated_param_size = new_action->comboBox_param->count();
+		std::vector<int> bad_indices;
+		for (int j=0; j<updated_param_size; j++) {
+			if (new_action->comboBox_param->itemText(j) == "") {
+				bad_indices.push_back(j);
+			}
+		}
+		for (unsigned int j=0; j<bad_indices.size(); j++) {
+			new_action->comboBox_param->removeItem(bad_indices[j]);
+			for (unsigned int k=0; k<bad_indices.size(); k++) {
+				bad_indices[k] -= 1;
+			}
+		}
 
 		new_define->update_data_from_widget();
 		update_custom_action(new_action);
@@ -213,8 +226,8 @@ void SetupWindow::on_pushButton_save_clicked()
 		ActionDefine* custom_define = list_custom_widgets[i]->get_parent();
 		QString name = *(custom_define->get_name());
 		QString icon = QString::number(custom_define->get_icon());
-		QString declare = *(custom_define->get_define());
-		QString define = *(custom_define->get_declare());
+		QString declare = *(custom_define->get_declare());
+		QString define = *(custom_define->get_define());
 		QString params;
 		for (int i=0; i<custom_define->get_param_count(); i++) {
 			ActionParam* custom_param = custom_define->get_param(i);
